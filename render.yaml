@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: kiot-cdt-pat
+    env: docker
+    dockerfilePath: ./Dockerfile
+    region: singapore
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
