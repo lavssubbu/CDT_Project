@@ -245,6 +245,11 @@ export default function App() {
   const [selectedBandFilter, setSelectedBandFilter] = useState('All'); // 'All' | '0-39' | '40-49' | '50-59' | '60-100'
   const [interviewFilter, setInterviewFilter] = useState('All'); // 'All' | 'Completed' | 'Pending'
 
+  // Placed Students Directory Modal States
+  const [showPlacedModal, setShowPlacedModal] = useState(false);
+  const [placedCompanyFilter, setPlacedCompanyFilter] = useState('All'); // 'All' | 'Hexaware Technologies' | 'Expleo'
+  const [placedSearch, setPlacedSearch] = useState('');
+
   // Universal Flexible Assessment Excel/CSV Importer States
   const [flexibleFile, setFlexibleFile] = useState(null);
   const [flexibleWorkbook, setFlexibleWorkbook] = useState(null);
@@ -277,6 +282,7 @@ export default function App() {
 
   // Mock Interview States
   const [interviewTranscript, setInterviewTranscript] = useState([]);
+  const [interviewSection, setInterviewSection] = useState('mock'); // 'aptitude' | 'verbal' | 'technical' | 'coding' | 'mock'
   const [isInterviewing, setIsInterviewing] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [resumeUploadStatus, setResumeUploadStatus] = useState('');
@@ -773,14 +779,258 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     }
   };
 
+  const evaluatePreviousAnswer = (section, qIdx, answerText) => {
+    const ans = (answerText || '').trim().toLowerCase();
+    if (!ans || /idk|skip|dont know|no idea|pass|dunno|not sure|dont remember/i.test(ans)) {
+      return {
+        isCorrect: false,
+        feedback: '⚠️ Question Skipped / No Answer Provided.'
+      };
+    }
+
+    if (section === 'aptitude') {
+      if (qIdx === 0) {
+        const isRight = /(77(\.\d+)?|78(\.\d+)?|80|67\.5)/.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! The return speed drops to 67.5 km/h (450 km takes 6.67 hrs), making the total round-trip average speed ≈ 77.14 km/h (Total Dist 900 km ÷ Total Time 11.67 hrs).`
+            : `❌ Incorrect. The step-by-step mathematical solution is:\n1. Onward Time = 450 km ÷ 90 km/h = 5 hours.\n2. Return Speed = 90 × (1 - 0.25) = 67.5 km/h → Return Time = 450 ÷ 67.5 = 6.67 hours.\n3. Average Speed = Total Distance (900 km) ÷ Total Time (11.67 hrs) = 77.14 km/h.`
+        };
+      }
+      if (qIdx === 1) {
+        const isRight = /\b8\b|eight|8\s*hours|8\s*hrs/.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! In 4 hours, Pipelines A & B together complete 5/9 of the capacity. Pipeline B takes exactly (4/9) ÷ (1/18) = 8 more hours alone.`
+            : `❌ Incorrect. The correct answer is 8 hours.\nStep-by-Step: Combined 4-hr work = 4 × (1/12 + 1/18) = 20/36 = 5/9 capacity. Remaining capacity = 4/9. Time for B = (4/9) ÷ (1/18) = (4/9) × 18 = 8 hours.`
+        };
+      }
+      if (qIdx === 2) {
+        const isRight = (/\b24\b/.test(ans) && /\b9\b/.test(ans)) || /24\s*hours|total.*24|peak.*9/.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Total compute hours = 3 + 7 + 5 + 9 = 24 hours, with 9 hours as the peak execution window (tracked via single-pass sum and max variables).`
+            : `❌ Incorrect. The correct answer is 24 hours total with 9 hours peak.\nCalculation: Total compute = 3 + 7 + 5 + 9 = 24 hours. The peak workload is max(3, 7, 5, 9) = 9 hours.`
+        };
+      }
+      if (qIdx === 3) {
+        const isRight = /17\s*:\s*8|850\s*:\s*400|17\/8|85\s*:\s*40|17\s*to\s*8/.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Initial Worker = 750, I/O = 450. New Worker = 850, New I/O = 400. The simplified ratio is 850 : 400 = 17 : 8.`
+            : `❌ Incorrect. The correct simplified ratio is 17 : 8.\nCalculation: Worker threads = 5/10 × 1500 = 750; I/O threads = 3/10 × 1500 = 450. New Worker = 750 + 100 = 850; New I/O = 450 - 50 = 400. Simplified Ratio = 850 : 400 = 17 : 8.`
+        };
+      }
+      if (qIdx === 4) {
+        const isRight = /\b169\b|13\^2|13\s*squared|thirteen\s*squared/.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! The sequence represents squares of consecutive prime numbers (2²=4, 3²=9, 5²=25, 7²=49, 11²=121). The next prime is 13, and 13² = 169.`
+            : `❌ Incorrect. The next number is 169.\nExplanation: The terms are squares of consecutive primes (2²=4, 3²=9, 5²=25, 7²=49, 11²=121). The next prime number is 13, so 13² = 169.`
+        };
+      }
+    }
+
+    if (section === 'verbal') {
+      if (qIdx === 0) {
+        const isRight = /qrsp|qsrp|\bq\s*r\s*s\s*p\b|\bq\s*s\s*r\s*p\b/i.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! The logical sequence is QRSP: Decision to launch campaign (Q) ➔ Target audience (R) ➔ Media channels (S) ➔ Sales increase result (P).`
+            : `❌ Incorrect. The correct logical order is QRSP.\nExplanation: (Q) initiates the marketing decision ➔ (R) defines the demographic ➔ (S) specifies the platform channels ➔ (P) states the 20% sales increase.`
+        };
+      }
+      if (qIdx === 1) {
+        const isRight = /\bb\b|bolt from the blue|bolt\s*from\s*the\s*blue/i.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Option (B) 'Bolt from the blue' means a complete, sudden surprise.`
+            : `❌ Incorrect. The correct answer is (B) Bolt from the blue.\nExplanation: 'Bolt from the blue' refers to a sudden, completely unexpected event. 'A damp squib' means an anti-climactic failure.`
+        };
+      }
+      if (qIdx === 2) {
+        const isRight = /\ba\b|frenetic/i.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Option (A) 'FRENETIC' is the exact synonym for 'FRANTIC' (fast, energetic, and chaotic pace).`
+            : `❌ Incorrect. The correct synonym is (A) FRENETIC.\nExplanation: 'Frantic' means characterized by rapid, disordered, and agitated activity, synonymous with 'frenetic'.`
+        };
+      }
+      if (qIdx === 3) {
+        const isRight = /\bwere\b|was to were|was should be were|plural|engineers were/i.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! In 'Neither...nor' compound subjects, the verb agrees with the closer subject ('database engineers' is plural, so it must be 'were available').`
+            : `❌ Incorrect. The grammatical error is the singular verb 'was'.\nExplanation: With 'neither...nor', the verb agrees with the subject nearest to it. Since 'database engineers' is plural, the correct verb is 'were available'.`
+        };
+      }
+      if (qIdx === 4) {
+        const isRight = ans.split(/\s+/).length >= 8;
+        return {
+          isCorrect: isRight,
+          feedback: `✅ Articulate verbal delivery! Your spoken communication demonstrates clear structured thought.`
+        };
+      }
+    }
+
+    if (section === 'technical') {
+      if (qIdx === 0) {
+        const isRight = (/overload/i.test(ans) || /compile/i.test(ans)) && (/overrid/i.test(ans) || /runtime|dynamic/i.test(ans) || /vtable|virtual/i.test(ans));
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Method Overloading is resolved at compile-time (static polymorphism with different signatures), while Method Overriding is dynamic runtime polymorphism dispatched via virtual method tables (vtable/vptr).`
+            : `❌ Incomplete.\nKey Concept: Method Overloading = Same method name, different signatures resolved at compile-time. Method Overriding = Subclass redefines parent method with exact signature, dispatched dynamically at runtime via a vtable.`
+        };
+      }
+      if (qIdx === 1) {
+        const isRight = (/mutual exclusion|hold and wait|no preemption|circular wait/i.test(ans) || /coffman/i.test(ans)) || /safe state|safe sequence/i.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! The 4 Coffman conditions are Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait. Banker's Algorithm avoids deadlock by only granting requests that preserve a Safe State sequence.`
+            : `❌ Incomplete.\nThe 4 essential Coffman conditions for deadlock are: (1) Mutual Exclusion, (2) Hold and Wait, (3) No Preemption, and (4) Circular Wait. Banker's Algorithm ensures safe resource allocation by checking for a Safe State execution sequence.`
+        };
+      }
+      if (qIdx === 2) {
+        const isRight = /syn.*ack|syn-ack/i.test(ans) && (/time_wait|msl|duplicate|ack/i.test(ans) || ans.length > 20);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! TCP 3-Way Handshake: SYN ➔ SYN-ACK ➔ ACK. The TIME_WAIT state lasts for 2MSL (Maximum Segment Lifetime) to ensure the final ACK arrives and stray duplicate packets dissipate.`
+            : `❌ Incomplete.\n1. Handshake Sequence: SYN (Client) ➔ SYN-ACK (Server) ➔ ACK (Client).\n2. TIME_WAIT Purpose: Keeps connection open for 2MSL to guarantee final ACK delivery and drain duplicate packets from the network.`
+        };
+      }
+      if (qIdx === 3) {
+        const isRight = (/where.*having|having.*where|group by|aggregat/i.test(ans)) && (/atomicity|consistency|isolation|durability|acid/i.test(ans) || ans.length > 25);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! WHERE filters individual rows before grouping, whereas HAVING filters aggregated groups after GROUP BY. ACID stands for Atomicity, Consistency, Isolation, and Durability.`
+            : `❌ Incomplete.\n1. WHERE filters rows before aggregation; HAVING filters groups after GROUP BY.\n2. ACID = Atomicity (all or nothing), Consistency (preserves invariants), Isolation (concurrency control), Durability (persisted via WAL).`
+        };
+      }
+      if (qIdx === 4) {
+        const isRight = (/o\(log n\)|log n/i.test(ans) && /o\(1\)|o\(n\)|collision|hash/i.test(ans)) || ans.length > 25;
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Balanced BSTs and B-Trees provide O(log N) search (B-Trees optimized for block I/O). Hash Tables provide average O(1) search, degrading to O(N) only under severe hash collisions.`
+            : `❌ Incomplete.\nComparison: Balanced BST = O(log N). B-Tree = O(log N) optimized for disk paging. Hash Table = O(1) average lookup, with worst-case O(N) upon collisions (handled by chaining/open addressing).`
+        };
+      }
+    }
+
+    if (section === 'coding') {
+      if (qIdx === 0) {
+        const isRight = (/hashmap|frequency|map|count/i.test(ans) && /odd|modulo|% 2/i.test(ans)) || /o\(n\)/i.test(ans) || ans.length > 25;
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct Algorithm! Build a frequency map in O(N), filter odd keys (num % 2 !== 0), track max frequency, and select the smallest key among ties.`
+            : `❌ Missing core steps.\nAlgorithm: (1) Count frequencies with HashMap in O(N). (2) Filter keys where key % 2 != 0. (3) Find highest frequency, picking the minimum key on ties. (4) If no odd keys exist, return -1.`
+        };
+      }
+      if (qIdx === 1) {
+        const isRight = /prefix|cumulative|o\(1\)|precompute|nearest/i.test(ans) || ans.length > 25;
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Precomputing prefix sums of frogs '*' alongside nearest stone indices allows each range query [start, end] to compute frogs between enclosing stones in O(1) time.`
+            : `❌ Optimal Solution: Build a prefix sum array of frogs where prefix[i] is the number of '*' up to index i. For each query, find the enclosing stones, returning prefix[end_stone] - prefix[start_stone] in O(1).`
+        };
+      }
+      if (qIdx === 2) {
+        const isRight = (/5\.8/.test(ans) && /2\.3/.test(ans)) || (/sum|total/i.test(ans) && /max|heaviest/i.test(ans) && /o\(n\)/i.test(ans));
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Total weight is 5.8 (1.2 + 0.5 + 2.3 + 1.8) and the heaviest ingredient is 2.3, computed in a single O(N) pass with O(1) auxiliary space.`
+            : `❌ Incomplete.\nFor input [1.2, 0.5, 2.3, 1.8]:\n1. Total Weight = 1.2 + 0.5 + 2.3 + 1.8 = 5.8\n2. Heaviest Ingredient = 2.3\nAlgorithm: Single pass maintaining running sum and max in O(N) time and O(1) space.`
+        };
+      }
+      if (qIdx === 3) {
+        const isRight = /hashmap|map|target - |complement|o\(n\)|index/i.test(ans) || ans.length > 25;
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! In a single pass, check if (target - num) exists in the HashMap. If found, return both indices; otherwise, store current num and index into the map. Time: O(N), Space: O(N).`
+            : `❌ Optimal Approach: Iterate through nums with a HashMap. For each num, calculate complement = target - num. If complement is in map, return [map[complement], currentIndex]. Else map[num] = currentIndex. Time complexity is O(N).`
+        };
+      }
+    }
+
+    if (section === 'mock') {
+      if (qIdx === 0) {
+        return {
+          isCorrect: true,
+          feedback: `✅ Thank you for your introduction and resume overview!`
+        };
+      }
+      if (qIdx === 1) {
+        const isRight = /(77(\.\d+)?|78(\.\d+)?|80|67\.5)/.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct calculation! Average round-trip speed is 77.14 km/h (Total Dist 900 km ÷ Total Time 11.67 hrs).`
+            : `❌ Incorrect. Onward time = 450/90 = 5 hrs. Return speed = 67.5 km/h → 450/67.5 = 6.67 hrs. Average speed = 900 / 11.67 = 77.14 km/h.`
+        };
+      }
+      if (qIdx === 2) {
+        const isRight = /qrsp|qsrp/i.test(ans) || /bolt from the blue|surprise/i.test(ans);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct! Sequence is QRSP and 'Bolt from the blue' signifies a complete, unexpected surprise.`
+            : `❌ Sequence should be QRSP (Decision ➔ Target demographic ➔ Social channels ➔ Sales increase). 'Bolt from the blue' means a sudden, unexpected event.`
+        };
+      }
+      if (qIdx === 3) {
+        const isRight = (/overload/i.test(ans) || /overrid/i.test(ans)) && (/deadlock|coffman/i.test(ans) || /syn|ack/i.test(ans) || ans.length > 25);
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Solid technical defense! Method overloading is compile-time while overriding is runtime dynamic dispatch. TCP handshake uses SYN, SYN-ACK, ACK.`
+            : `❌ Technical Summary: Overloading = compile-time polymorphism. Overriding = runtime polymorphism with vtables. OS Deadlocks need 4 Coffman conditions. TCP handshake is SYN ➔ SYN-ACK ➔ ACK.`
+        };
+      }
+      if (qIdx === 4) {
+        const isRight = /hashmap|frequency|odd|% 2|o\(n\)/i.test(ans) || ans.length > 25;
+        return {
+          isCorrect: isRight,
+          feedback: isRight
+            ? `✅ Correct algorithm! Frequency counting with HashMap in O(N) time and filtering smallest odd key with maximum frequency.`
+            : `❌ Key Algorithm: Map frequencies in O(N), filter odd keys, find maximum frequency, and pick the smallest key on ties.`
+        };
+      }
+      if (qIdx === 5) {
+        return {
+          isCorrect: true,
+          feedback: `✅ Solid project scalability defense and structured STAR behavioral articulation!`
+        };
+      }
+    }
+
+    return {
+      isCorrect: true,
+      feedback: `✓ Answer recorded.`
+    };
+  };
+
   const generateDynamicAdaptiveQuestion = (userAnswerText, nextIndex, updatedTranscript) => {
     const text = (userAnswerText || '').toLowerCase();
     const skills = (parsedResumeDetails && parsedResumeDetails.skills && parsedResumeDetails.skills.length > 0) ? parsedResumeDetails.skills : ['your core skills'];
     const projects = (parsedResumeDetails && parsedResumeDetails.projects && parsedResumeDetails.projects.length > 0) ? parsedResumeDetails.projects : ['your primary project'];
-    const coreSubjects = (parsedResumeDetails && parsedResumeDetails.coreSubjects && parsedResumeDetails.coreSubjects.length > 0) ? parsedResumeDetails.coreSubjects : ['Core Technical Fundamentals'];
-
     const primarySkill = skills[0] || 'your technical stack';
-    const secondarySkill = skills[1] || 'core engineering';
     const primaryProject = projects[0] || 'your major project';
 
     const isReportRequested = /end interview|stop interview|finish interview|generate report|end assessment/i.test(text);
@@ -788,251 +1038,168 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     let roundLabel = '';
     let question = '';
 
-    if (isReportRequested || nextIndex >= 17) {
-      roundLabel = 'Section 6: Comprehensive BerriBot Sectionwise Merit Scorecard';
-
-      const userAnswers = updatedTranscript.filter(item => item.sender === 'user').map(i => i.text);
-      const combinedAnswers = userAnswers.join(' ');
-      const totalWords = combinedAnswers.split(/\s+/).filter(Boolean).length;
-      
-      const hasTechKw = /java|spring|boot|react|python|sql|api|dsa|b-tree|index|heap|stack|garbage|hashmap|array|oops|database|node|express|mongo|docker|jwt|c\#|cpp|c\+\+|flutter|embedded|microcontroller|matlab|vlsi|pcb|html|css|aws|azure/i.test(combinedAnswers);
-      const hasStarKw = /situation|task|action|result|team|conflict|resolution|deadline|agile|lead/i.test(combinedAnswers);
-
-      const techKnowledgeScore = Math.min(20, Math.max(14, 15 + (hasTechKw ? 4 : 1) + (totalWords > 80 ? 1 : 0)));
-      const codingDomainScore = Math.min(20, Math.max(14, 15 + (hasTechKw ? 4 : 1)));
-      const projDefenseScore = Math.min(15, Math.max(10, 11 + (totalWords > 100 ? 3 : 1)));
-      const commFluencyScore = Math.min(15, Math.max(11, 12 + (totalWords > 60 ? 2 : 1)));
-      const problemSolvingScore = Math.min(10, Math.max(7, 8 + (hasTechKw ? 2 : 0)));
-      const confidenceScore = Math.min(10, Math.max(7, 8 + (totalWords > 50 ? 2 : 1)));
-      const hrBehavioralScore = Math.min(5, Math.max(4, 4 + (hasStarKw ? 1 : 0)));
-      const professionalismScore = 5;
-
-      const totalMarks = techKnowledgeScore + codingDomainScore + projDefenseScore + commFluencyScore + problemSolvingScore + confidenceScore + hrBehavioralScore + professionalismScore;
-      const recommendation = totalMarks >= 85 ? 'Strong Hire (Recommended for Tier-1 Drives)' : totalMarks >= 75 ? 'Hire with Training' : 'Needs Further Technical Preparation';
-
-      const candidateStrengths = [];
-      const areasForImprovement = [];
-
-      if (hasTechKw) {
-        candidateStrengths.push(`Demonstrated solid domain vocabulary across resume skills (${skills.slice(0, 3).join(', ')}).`);
-      } else {
-        areasForImprovement.push('Incorporate deeper technical jargon, framework terminology, and architectural concepts in your answers.');
+    // ==========================================
+    // 1. APTITUDE PRACTICE MODULE (5 Questions)
+    // ==========================================
+    if (interviewSection === 'aptitude') {
+      if (isReportRequested || nextIndex >= 5) {
+        roundLabel = 'Aptitude Practice Module - Official Scorecard';
+        const evalResult = evaluateTranscriptAnswers(updatedTranscript);
+        const aptiScore = evalResult.overallScore;
+        
+        question = `🎉 Aptitude & Quantitative Practice Round Completed for ${activeStudent.name}!\n\n` +
+          `📊 Section Score: ${aptiScore}/100 (${aptiScore >= 75 ? 'Proficient' : aptiScore >= 60 ? 'Developing' : 'Foundation Level'})\n\n` +
+          `🌟 Demonstrated Strengths:\n• Step-by-step mathematical logic and calculation reasoning.\n• Formula application across speed-distance, work-time, and ratios.\n\n` +
+          `💡 Recommended Practice:\n• Continue practicing questions from CDT Aptitude Bank (HW1, Hexaware Test Papers & Ratios).\n• Focus on speed optimization under timed mock conditions.`;
+        return { question, roundLabel };
       }
 
-      if (hasStarKw) {
-        candidateStrengths.push(`Effective behavioral structuring using Situation, Task, Action, and Result (STAR method) when defending '${primaryProject}'.`);
-      } else {
-        areasForImprovement.push('When answering HR/Behavioral questions, explicitly structure your response into Situation, Task, Action, and quantifiable Result.');
+      if (nextIndex === 1) {
+        roundLabel = 'Section 1: Aptitude (Question 2 of 5 - Work & Capacity Pipelines)';
+        question = `Question 2 of 5 (Work & Time - from CDT HWAss1SetA):\n\nTwo data ingestion pipelines A and B can populate a data lake in 12 hours and 18 hours respectively. If both pipelines operate together for 4 hours and then Pipeline A is throttled down, how many more hours will Pipeline B take alone to fill the remaining lake capacity? Walk me through your equations.`;
+      } else if (nextIndex === 2) {
+        roundLabel = 'Section 1: Aptitude (Question 3 of 5 - Timekeeper Clocks & Total Hours)';
+        question = `Question 3 of 5 (Clocks & Workloads - from CDT SM&SI 4&5):\n\nA server cluster logs active batch job durations: 3 hrs, 7 hrs, 5 hrs, and 9 hrs. Calculate the cumulative system compute hours and explain how you determine the peak execution load window in a single pass.`;
+      } else if (nextIndex === 3) {
+        roundLabel = 'Section 1: Aptitude (Question 4 of 5 - Ratios & Resource Pooling)';
+        question = `Question 4 of 5 (Ratios & Connection Pooling - from CDT HW1):\n\nA thread pool at ${targetCompany} divides 1,500 active threads across Worker Tasks, I/O Operations, and System Monitors in the ratio 5 : 3 : 2. If 100 new Worker Task threads are spawned while 50 I/O threads terminate, what is the new simplified ratio of Worker Task threads to I/O threads?`;
+      } else if (nextIndex === 4) {
+        roundLabel = 'Section 1: Aptitude (Question 5 of 5 - Number Series & Prime Logic)';
+        question = `Question 5 of 5 (Number Series & Logic - from CDT HW1):\n\nAnalyze the following mathematical progression: 4, 9, 25, 49, 121, ?. What is the next number in this sequence, and what is the exact underlying prime number exponent rule governing the progression?`;
       }
-
-      if (totalWords > 80) {
-        candidateStrengths.push('Elaborate, articulate communication with strong spoken detail and technical confidence.');
-      } else {
-        areasForImprovement.push('Elaborate further on technical trade-offs and code implementation details rather than concise summaries.');
-      }
-
-      question = `🎉 Comprehensive Placement Interview Analysis for ${activeStudent.name}:\n\n` +
-        `🌟 Key Candidate Strengths:\n` + candidateStrengths.map(s => `• ${s}`).join('\n') + `\n\n` +
-        `💡 Targeted Areas for Improvement:\n` + (areasForImprovement.length ? areasForImprovement.map(a => `• ${a}`).join('\n') : `• Maintain current high level of technical rigor and continue mock practice.`) + `\n\n` +
-        `🗣️ Spoken Communication & Fluency Analysis:\n• Fluency & Vocabulary: Clear technical articulation with strong subject matter confidence.\n• Pacing & Delivery: Steady pacing across technical defense and HR behavioral rounds.\n\n` +
-        `📊 100-Mark Rubric Score Breakdown:\n• Technical & Coding: ${techKnowledgeScore + codingDomainScore}/40\n• Project Architecture & Defense: ${projDefenseScore}/15\n• Communication & Problem Solving: ${commFluencyScore + problemSolvingScore}/25\n• HR, Behavioral & Confidence: ${confidenceScore + hrBehavioralScore + professionalismScore}/20\n• Overall Placement Score: ${totalMarks}/100\n\n` +
-        `📌 Final Placement Readiness Verdict: ${recommendation}`;
-
-      if (HEXAWARE_MOCK_RECORDS[activeStudent.registerNo]) {
-        HEXAWARE_MOCK_RECORDS[activeStudent.registerNo].techHrScore = totalMarks;
-        HEXAWARE_MOCK_RECORDS[activeStudent.registerNo].aptiProgScore = Math.round(totalMarks * 0.95);
-        HEXAWARE_MOCK_RECORDS[activeStudent.registerNo].status = recommendation.startsWith('Strong') ? 'QUALIFIED' : 'PENDING';
-      }
-
       return { question, roundLabel };
     }
 
-    // Extract technologies & topics mentioned by student in their answer
-    const mentionedTechs = [];
-    if (text.includes('react')) mentionedTechs.push('React.js');
-    if (text.includes('node')) mentionedTechs.push('Node.js');
-    if (text.includes('spring') || text.includes('boot')) mentionedTechs.push('Spring Boot');
-    if (text.includes('python')) mentionedTechs.push('Python');
-    if (text.includes('java')) mentionedTechs.push('Java');
-    if (text.includes('c#') || text.includes('csharp')) mentionedTechs.push('C#');
-    if (text.includes('c++') || text.includes('cpp')) mentionedTechs.push('C++');
-    if (text.includes('embedded')) mentionedTechs.push('Embedded C');
-    if (text.includes('flutter')) mentionedTechs.push('Flutter');
-    if (text.includes('sql') || text.includes('database') || text.includes('postgres') || text.includes('mysql')) mentionedTechs.push('Database & SQL');
-    if (text.includes('api') || text.includes('rest')) mentionedTechs.push('REST APIs');
-    if (text.includes('mongo')) mentionedTechs.push('MongoDB');
-    if (text.includes('docker') || text.includes('aws')) mentionedTechs.push('Cloud/DevOps');
-    if (text.includes('jwt') || text.includes('auth')) mentionedTechs.push('Authentication');
+    // ==========================================
+    // 2. VERBAL ABILITY MODULE (5 Questions)
+    // ==========================================
+    if (interviewSection === 'verbal') {
+      if (isReportRequested || nextIndex >= 5) {
+        roundLabel = 'Verbal Ability Practice Module - Official Scorecard';
+        const evalResult = evaluateTranscriptAnswers(updatedTranscript);
+        const verbalScore = evalResult.overallScore;
 
-    const activeTech = mentionedTechs.length > 0 ? mentionedTechs[0] : primarySkill;
-    const seed = (activeStudent && activeStudent.registerNo) ? String(activeStudent.registerNo).split('').reduce((a, c) => a + c.charCodeAt(0), 0) : 0;
-    const setIdx = seed % 3;
+        question = `🎉 Verbal Ability & Placement Communication Round Completed for ${activeStudent.name}!\n\n` +
+          `📊 Section Score: ${verbalScore}/100 (${verbalScore >= 75 ? 'Fluent & Articulate' : 'Proficient with Practice'})\n\n` +
+          `🌟 Key Strengths:\n• Cohesive sentence construction and logical flow deduction.\n• Good understanding of corporate idioms and grammar rules.\n\n` +
+          `💡 Recommended Practice:\n• Continue practicing Sentence Ordering (PQRS) and Subject-Verb Agreement questions from the CDT Hexaware Verbal Bank.`;
+        return { question, roundLabel };
+      }
+
+      if (nextIndex === 1) {
+        roundLabel = 'Section 2: Verbal Ability (Question 2 of 5 - Idioms & Business Phrases)';
+        question = `Question 2 of 5 (Idioms & Phrases - from CDT HWAss2SetB):\n\nChoose the correct idiom for the bold part: 'A surprise interview call from a Tier-1 IT company on my birthday was an unexpected event.'\n(A) A damp squib\n(B) Bolt from the blue\n(C) A field day\n(D) A mare's nest\n\nExplain the meaning of 'Bolt from the blue' in professional engineering communications.`;
+      } else if (nextIndex === 2) {
+        roundLabel = 'Section 2: Verbal Ability (Question 3 of 5 - Vocabulary & Precision)';
+        question = `Question 3 of 5 (Vocabulary & Synonyms - from CDT Hexaware Verbal Bank):\n\nWhich word is closest in meaning to 'FRANTIC'?\n(A) FRENETIC\n(B) SANE\n(C) FOOLISH\n(D) DISPOSSESSED\n\nUse the word 'frenetic' in a sentence explaining system incident response during a production release.`;
+      } else if (nextIndex === 3) {
+        roundLabel = 'Section 2: Verbal Ability (Question 4 of 5 - Error Spotting & Grammar)';
+        question = `Question 4 of 5 (Error Spotting & Grammar - from CDT Hexaware Verbal Bank):\n\nIdentify the grammatical error in this sentence:\n'Neither the lead software architect nor the database engineers was available during the server outage.'\n\nExplain the subject-verb agreement rule for compound subjects connected by 'neither...nor'.`;
+      } else if (nextIndex === 4) {
+        roundLabel = 'Section 2: Verbal Ability (Question 5 of 5 - Spoken Articulation & Pitch)';
+        question = `Question 5 of 5 (Spoken Articulation & Elevator Pitch):\n\nDeliver a 60-second spoken pitch describing how your communication skills helped resolve a technical disagreement in your team during your final year engineering project.`;
+      }
+      return { question, roundLabel };
+    }
+
+    // ==========================================
+    // 3. TECHNICAL DOMAIN MODULE (5 Questions)
+    // ==========================================
+    if (interviewSection === 'technical') {
+      if (isReportRequested || nextIndex >= 5) {
+        roundLabel = 'Technical Domain Assessment - Official Scorecard';
+        const evalResult = evaluateTranscriptAnswers(updatedTranscript);
+        const techScore = evalResult.overallScore;
+
+        question = `🎉 Technical Domain Assessment Completed for ${activeStudent.name}!\n\n` +
+          `📊 Technical Score: ${techScore}/100 (${techScore >= 80 ? 'Tier-1 Technical Ready' : 'Solid Domain Foundation'})\n\n` +
+          `🌟 Core Strengths:\n• Mastery of OOPs dynamic polymorphism & OS deadlock conditions.\n• Clear understanding of TCP 3-way handshakes and SQL ACID guarantees.\n\n` +
+          `💡 Recommended Practice:\n• Continue reviewing CDT MCQ sets for Computer Networks, Operating Systems, DBMS & Data Structures.`;
+        return { question, roundLabel };
+      }
+
+      if (nextIndex === 1) {
+        roundLabel = 'Section 3: Technical Domain (Question 2 of 5 - Operating Systems & Deadlocks)';
+        question = `Question 2 of 5 (Operating Systems - from CDT MCQ OS Set 1):\n\nWhat are the 4 Coffman conditions necessary for a Deadlock to occur in an Operating System? How does Dijkstra's Banker's Algorithm ensure safe state resource allocation?`;
+      } else if (nextIndex === 2) {
+        roundLabel = 'Section 3: Technical Domain (Question 3 of 5 - Computer Networks & TCP)';
+        question = `Question 3 of 5 (Computer Networks - from CDT MCQ Networks Set 1):\n\nDescribe the TCP 3-Way Handshake (SYN, SYN-ACK, ACK) mechanism during connection establishment, and explain why TCP requires a TIME_WAIT state during teardown.`;
+      } else if (nextIndex === 3) {
+        roundLabel = 'Section 3: Technical Domain (Question 4 of 5 - DBMS & SQL Transactions)';
+        question = `Question 4 of 5 (DBMS & SQL - from CDT MCQ DBMS Set 1):\n\nExplain the distinction between the WHERE clause and the HAVING clause in SQL queries with GROUP BY. Also explain the 4 ACID properties in transaction management.`;
+      } else if (nextIndex === 4) {
+        roundLabel = 'Section 3: Technical Domain (Question 5 of 5 - Data Structures & Trees)';
+        question = `Question 5 of 5 (Data Structures - from CDT MCQ DS Set 1):\n\nCompare searching in a Balanced Binary Search Tree (AVL/Red-Black), a B-Tree, and a Hash Table. What are the average and worst-case time complexities, and how do you handle hash collisions?`;
+      }
+      return { question, roundLabel };
+    }
+
+    // ==========================================
+    // 4. HANDS-ON CODING MODULE (4 Problems)
+    // ==========================================
+    if (interviewSection === 'coding') {
+      if (isReportRequested || nextIndex >= 4) {
+        roundLabel = 'Hands-On Coding Assessment - Official Scorecard';
+        const evalResult = evaluateTranscriptAnswers(updatedTranscript);
+        const codingScore = evalResult.overallScore;
+
+        question = `🎉 Hands-On Coding & DSA Assessment Completed for ${activeStudent.name}!\n\n` +
+          `📊 Coding & Algorithm Score: ${codingScore}/100 (${codingScore >= 80 ? 'Competitive Coding Ready' : 'Proficient Logic'})\n\n` +
+          `🌟 Algorithm Strengths:\n• Clean frequency counting, two-pointer, and prefix-sum logic.\n• Good understanding of Big-O time and space trade-offs.\n\n` +
+          `💡 Recommended Practice:\n• Use the BerriBot Online Compiler IDE to practice daily LeetCode/HackerRank coding challenges from the CDT Coding Skills repository.`;
+        return { question, roundLabel };
+      }
+
+      if (nextIndex === 1) {
+        roundLabel = 'Section 4: Coding Challenge (Problem 2 of 4 - Frogs and Stones Axis Prefix Sum)';
+        question = `Challenge 2 of 4 (Frogs & Stones Axis - from CDT HWAss1SetA):\n\nA 1D axis is represented by a string of frogs '*' and stones '|'. Given start and end index arrays, calculate the number of frogs enclosed between pairs of stones for each query.\n\nExplain your prefix-sum precomputation approach to answer each range query in O(1) time complexity. (You can test in the Online Compiler IDE below!)`;
+      } else if (nextIndex === 2) {
+        roundLabel = 'Section 4: Coding Challenge (Problem 3 of 4 - Royal Baker Cake Ingredients)';
+        question = `Challenge 3 of 4 (Royal Baker Ingredients - from CDT SM&SI 1,2,3):\n\nThe royal baker prepares a recipe with N ingredients of floating-point weights [1.2, 0.5, 2.3, 1.8]. Write an algorithm to compute the total weight and find the heaviest ingredient in a single O(N) pass without extra space.`;
+      } else if (nextIndex === 3) {
+        roundLabel = 'Section 4: Coding Challenge (Problem 4 of 4 - Two-Sum Optimal O(N) HashMap)';
+        question = `Challenge 4 of 4 (Two-Sum Problem):\n\nGiven an integer array nums and an integer target, write or explain a function in ${primarySkill} to return indices of the two numbers that add up to target in O(N) time complexity using a Hash Map without nested loops.`;
+      }
+      return { question, roundLabel };
+    }
+
+    // ==========================================
+    // 5. FULL MOCK INTERVIEW MODE (6 Stages)
+    // ==========================================
+    if (isReportRequested || nextIndex >= 6) {
+      roundLabel = 'Full Mock Interview - 360° Comprehensive Merit Scorecard';
+      const evalResult = evaluateTranscriptAnswers(updatedTranscript);
+      const totalMarks = evalResult.overallScore;
+      const recommendation = totalMarks >= 85 ? 'Strong Hire (Recommended for Tier-1 Placement Drives)' : totalMarks >= 75 ? 'Hire with Training' : 'Needs Further Technical Preparation';
+
+      question = `🎉 360° Placement Interview Completed for ${activeStudent.name} (${targetCompany} - ${targetRole})!\n\n` +
+        `📊 100-Mark Rubric Score Breakdown:\n` +
+        `• Aptitude & Quants: ${evalResult.aptiScore}/25\n` +
+        `• Verbal & Communication: ${evalResult.commScore}/25\n` +
+        `• Technical Core CS: ${evalResult.techScore}/25\n` +
+        `• Hands-On Coding & DSA: ${evalResult.codingScore}/25\n` +
+        `• Overall Placement Score: ${totalMarks}/100\n\n` +
+        `🌟 Candidate Strengths:\n• Demonstrated clear technical articulation across resume projects ('${primaryProject}') and core skills (${skills.slice(0, 3).join(', ')}).\n• Structured STAR responses and analytical problem solving.\n\n` +
+        `💡 Areas for Improvement:\n• Continue daily mock sessions to maintain conversational ease under timed pressure.\n\n` +
+        `📌 Final Placement Verdict: ${recommendation}`;
+      return { question, roundLabel };
+    }
 
     if (nextIndex === 1) {
-      roundLabel = 'Section 1: Aptitude (Question 2 of 8 - Quants Speed, Distance & Network Throttling)';
-      if (setIdx === 0) {
-        question = `Great mathematical calculation, ${activeStudent.name}! Question 2 of 8 (Quants - Speed & Network Throttling):\n\n` +
-                   `In an HCLTech hybrid cloud topology, a telemetry data packet travels 600 kilometers from an edge gateway to a central database at a steady speed of 120 km/h. During the return acknowledgment trip, network bandwidth throttling reduces packet transmission speed by 25%. Furthermore, due to multi-region routing, the return path distance is 20% longer than the onward path. What is the average speed of the telemetry packet over the entire round-trip journey?`;
-      } else if (setIdx === 1) {
-        question = `Great mathematical calculation, ${activeStudent.name}! Question 2 of 8 (Quants - Speed & Congestion Throttling):\n\n` +
-                   `A telemetry network ping packet travels 450 km to a regional server at 90 km/h. On the return path, link congestion reduces transmission speed by 30%, while packet re-routing increases the return route distance by 10%. What is the average speed of the packet over the complete round-trip journey? Walk me through your calculations.`;
-      } else {
-        question = `Great mathematical calculation, ${activeStudent.name}! Question 2 of 8 (Quants - Speed & Path Diversification):\n\n` +
-                   `A fiber optic data signal travels 800 km from Edge Gateway Alpha to Database Hub Beta at 160 km/h. On the return acknowledgment path, signal attenuation drops speed by 20%, while path diversification lengthens the return route by 25%. What is the average round-trip speed of the signal?`;
-      }
+      roundLabel = 'Full Mock Interview - Round 2: Aptitude & Quantitative Logic';
+      question = `Round 2: Aptitude (from CDT HW1 & Hexaware Test 1):\n\nA telemetry data packet travels 450 km at 90 km/h. If link congestion delays the return journey by 25%, what is the average round-trip speed in km/h? Walk me through your step-by-step mathematical logic.`;
     } else if (nextIndex === 2) {
-      roundLabel = 'Section 1: Aptitude (Question 3 of 8 - Quants Percentages & Fixed Budget Optimization)';
-      if (setIdx === 0) {
-        question = `Excellent speed calculation! Question 3 of 8 (Quants - Percentages & Budget Optimization):\n\n` +
-                   `An enterprise IT client hires Hexaware Technologies to deploy an AI recruitment engine under a fixed-budget software contract. Hexaware initially allocates 60% of total budget for cloud infrastructure and 40% for engineering salaries. If cloud infrastructure costs unexpectedly inflate by 20% due to GPU demand, while engineering salaries are reduced by 15% through automation toolsets, by what overall percentage does total project execution cost increase or decrease?`;
-      } else if (setIdx === 1) {
-        question = `Excellent speed calculation! Question 3 of 8 (Quants - Percentages & Infrastructure Costing):\n\n` +
-                   `A software migration project allocates 70% of total budget to server hardware and 30% to software licensing. If hardware costs increase by 15% due to supply chain delays, while licensing costs decrease by 10% through bulk enterprise discounts, what is the net percentage change in total project budget execution?`;
-      } else {
-        question = `Excellent speed calculation! Question 3 of 8 (Quants - Percentages & Cloud Transformation):\n\n` +
-                   `A cloud transformation initiative splits its budget as 50% cloud hosting and 50% DevOps payroll. If hosting fees surge by 25% due to data egress, while DevOps payroll is reduced by 20% via automated pipelines, by what overall percentage does the net project cost change?`;
-      }
+      roundLabel = 'Full Mock Interview - Round 3: Verbal Ability & Discourse Flow';
+      question = `Round 3: Verbal Ability & Logical Communication (from CDT Hexaware Verbal Bank):\n\nRearrange these sentences in logical order:\n(P) As a result, sales in the region increased by 20% within six months.\n(Q) The company decided to launch a new marketing campaign.\n(R) This was aimed at attracting younger customers.\n(S) The campaign focused heavily on social media platforms.\n\nState the correct sequence and explain the business meaning of the idiom 'Bolt from the blue'.`;
     } else if (nextIndex === 3) {
-      roundLabel = 'Section 1: Aptitude (Question 4 of 8 - Quants Ratios & Connection Pooling)';
-      if (setIdx === 0) {
-        question = `Spot on! Question 4 of 8 (Quants - Ratios & Database Connection Pooling):\n\n` +
-                   `A database connection pool at HCLTech maintains an active ratio of Read-Only queries, Write-Insert transactions, and Administrative tasks in the proportion 7 : 4 : 1 across 1,440 total concurrent connections. During a peak traffic influx, 120 additional Write-Insert connections are acquired from the idle pool while 60 Read-Only connections are closed. What is the new simplified ratio of Read-Only connections to Write-Insert connections in the active pool?`;
-      } else if (setIdx === 1) {
-        question = `Spot on! Question 4 of 8 (Quants - Ratios & Thread Allocation):\n\n` +
-                   `A thread pool at Hexaware divides 1,500 active threads across Worker Tasks, I/O Operations, and System Monitors in the ratio 5 : 3 : 2. During high CPU utilization, 100 new Worker Task threads are spawned while 50 I/O threads terminate. What is the new simplified ratio of Worker Task threads to I/O threads in the pool?`;
-      } else {
-        question = `Spot on! Question 4 of 8 (Quants - Ratios & Cache Buffer Allocation):\n\n` +
-                   `A microservice memory manager allocates 1,200 MB of cache memory across Heap, Stack, and Off-Heap buffers in the ratio 8 : 3 : 1. If Heap buffer allocation increases by 160 MB while Stack allocation decreases by 60 MB, what is the new simplified ratio of Heap memory to Stack memory?`;
-      }
+      roundLabel = 'Full Mock Interview - Round 4: Technical Core CS & OOPs Defense';
+      question = `Round 4: Core Technical CS Assessment (from CDT MCQs Bank):\n\n1. Explain the distinction between Method Overloading and Method Overriding (Runtime Polymorphism).\n2. What are the 4 Coffman conditions for an OS Deadlock, and how does the TCP 3-Way Handshake work?`;
     } else if (nextIndex === 4) {
-      roundLabel = 'Section 1: Aptitude (Question 5 of 8 - Logical Reasoning Network Topologies)';
-      if (setIdx === 0) {
-        question = `Great ratio reduction! Question 5 of 8 (Logical Reasoning - Ring Topology Microservices):\n\n` +
-                   `Six microservice modules (labelled Alpha, Beta, Gamma, Delta, Epsilon, and Zeta) are deployed in a circular ring network topology for real-time load balancing at Hexaware. Alpha is positioned directly opposite to Delta. Beta is seated immediately to the right of Alpha and two positions away from Epsilon. If Zeta is not adjacent to Alpha, which microservice module is positioned immediately to the left of Delta?`;
-      } else if (setIdx === 1) {
-        question = `Great ratio reduction! Question 5 of 8 (Logical Reasoning - Linear Pipeline Sequence):\n\n` +
-                   `Six microservice worker nodes (P1, P2, P3, P4, P5, P6) are arranged in a linear pipeline sequence. P1 must execute before P4. P3 is placed immediately adjacent to P5. P6 is positioned at the very end of the pipeline. If P2 is placed immediately before P3, which node occupies the third position in the pipeline?`;
-      } else {
-        question = `Great ratio reduction! Question 5 of 8 (Logical Reasoning - Star Topology Hub Routing):\n\n` +
-                   `Five cloud server nodes (Node A, Node B, Node C, Node D, Node E) are connected in a star network topology with Node A as the central hub. Node B is connected directly to Node A. Node C is connected to Node B. Node D is two hops away from Node E through Node A. Which node serves as the intermediate gateway between Node C and Node D?`;
-      }
+      roundLabel = 'Full Mock Interview - Round 5: Hands-on Coding Logic & Algorithm Complexity';
+      question = `Round 5: Algorithm Logic & Complexity (from CDT HWAss2SetA):\n\nYou are given an array of integers of size N. Write or explain an algorithm to find the smallest odd number with highest frequency in O(N) time and O(N) space. (Feel free to open the Online Compiler IDE below!)`;
     } else if (nextIndex === 5) {
-      roundLabel = 'Section 1: Aptitude (Question 6 of 8 - Number Series & Progression Pattern)';
-      if (setIdx === 0) {
-        question = `Clear logical deduction! Question 6 of 8 (Logical Reasoning - Prime Square Series):\n\n` +
-                   `Analyze the following mathematical series pattern commonly tested in placement rounds: 4, 9, 25, 49, 121, ?. What is the next number in this sequence, and what is the exact underlying mathematical or prime number rule governing the progression?`;
-      } else if (setIdx === 1) {
-        question = `Clear logical deduction! Question 6 of 8 (Logical Reasoning - Cubic Sequence Pattern):\n\n` +
-                   `Consider this numerical sequence commonly featured in HCLTech placement exams: 1, 8, 27, 64, 125, ?. What is the next number in this sequence, and what mathematical exponent rule defines the series?`;
-      } else {
-        question = `Clear logical deduction! Question 6 of 8 (Logical Reasoning - Quadratic Progression Pattern):\n\n` +
-                   `Evaluate this mathematical progression: 2, 6, 12, 20, 30, ?. What is the next number in the series, and what algebraic n² + n rule governs each term?`;
-      }
-    } else if (nextIndex === 6) {
-      roundLabel = 'Section 1: Aptitude (Question 7 of 8 - Logical Syllogisms)';
-      if (setIdx === 0) {
-        question = `Spot on! Question 7 of 8 (Logical Reasoning - Microservice Syllogisms):\n\n` +
-                   `Evaluate the logical validity of the following placement reasoning statements:\n` +
-                   `Statements: All APIs are Services. Some Services are Microservices. No Microservice is a Legacy Monolith.\n` +
-                   `Conclusion I: Some APIs are Microservices.\n` +
-                   `Conclusion II: No Legacy Monolith is a Service.\n` +
-                   `Which conclusion logically follows, and why?`;
-      } else if (setIdx === 1) {
-        question = `Spot on! Question 7 of 8 (Logical Reasoning - Database Syllogisms):\n\n` +
-                   `Evaluate the logical validity of the following statements:\n` +
-                   `Statements: All Databases are Storage Engines. All Storage Engines are Persistent Systems. No Persistent System is In-Memory.\n` +
-                   `Conclusion I: All Databases are Persistent Systems.\n` +
-                   `Conclusion II: No Database is In-Memory.\n` +
-                   `Which conclusion logically follows? Explain your reasoning.`;
-      } else {
-        question = `Spot on! Question 7 of 8 (Logical Reasoning - Process Thread Syllogisms):\n\n` +
-                   `Evaluate the logical validity of the following placement statements:\n` +
-                   `Statements: Some Threads are Processes. All Processes are Executables. No Executable is Static Data.\n` +
-                   `Conclusion I: Some Threads are Executables.\n` +
-                   `Conclusion II: No Process is Static Data.\n` +
-                   `Which conclusion logically follows? Explain your reasoning.`;
-      }
-    } else if (nextIndex === 7) {
-      roundLabel = 'Section 1: Aptitude (Question 8 of 8 - Verbal Ability Technical Grammar)';
-      if (setIdx === 0) {
-        question = `Great verbal clarity! Question 8 of 8 (Verbal Ability - Technical Grammar Refinement):\n\n` +
-                   `In executive business communication at HCLTech, sentence precision and grammatical accuracy are mandatory. Correct and refine the following statement for professional delivery: 'Me and my engineering team had built the AI recruitment platform and we was able to handle all exceptions without no memory leaks.' Detail your grammar corrections.`;
-      } else if (setIdx === 1) {
-        question = `Great verbal clarity! Question 8 of 8 (Verbal Ability - Executive Grammar Refinement):\n\n` +
-                   `Correct and refine the following sentence for executive placement presentation at Hexaware: 'Him and I developed the microservice system and it run very fast without no system crashes or delays.' Detail your grammatical modifications.`;
-      } else {
-        question = `Great verbal clarity! Question 8 of 8 (Verbal Ability - Enterprise Communication Refinement):\n\n` +
-                   `Correct and refine the following statement for professional engineering communication: 'Us developers has optimized the database queries so that its executing in less then two milliseconds without no overhead.' Detail your grammar corrections.`;
-      }
-    } else if (nextIndex === 8) {
-      roundLabel = 'Section 2: Technical Domain (MCQ 1 of 5 - OOPs Fundamentals)';
-      if (setIdx === 0) {
-        question = `Moving to Section 2: Technical Domain (MCQ 1 of 5 - OOPs):\n\nWhen a subclass overrides a method defined in a parent class with the exact same signature, what OOP concept is applied? (A) Method Overloading (B) Runtime Polymorphism / Method Overriding (C) Encapsulation (D) Data Hiding`;
-      } else if (setIdx === 1) {
-        question = `Moving to Section 2: Technical Domain (MCQ 1 of 5 - OOPs Abstraction):\n\nWhich OOP mechanism allows defining method declarations without implementation in a base class, forcing derived subclasses to provide concrete logic? (A) Interface / Abstract Class (B) Encapsulation (C) Static Binding (D) Composition`;
-      } else {
-        question = `Moving to Section 2: Technical Domain (MCQ 1 of 5 - OOPs Encapsulation):\n\nRestricting direct access to object attributes and exposing private fields strictly via public getters and setters enforces which OOP principle? (A) Inheritance (B) Encapsulation (C) Dynamic Dispatch (D) Operator Overloading`;
-      }
-    } else if (nextIndex === 9) {
-      roundLabel = 'Section 2: Technical Domain (MCQ 2 of 5 - SQL & DBMS)';
-      if (setIdx === 0) {
-        question = `Question 2 of 5 (SQL & DBMS):\n\nWhich SQL clause is used to filter aggregated data records AFTER a GROUP BY clause? (A) WHERE (B) HAVING (C) ORDER BY (D) DISTINCT`;
-      } else if (setIdx === 1) {
-        question = `Question 2 of 5 (SQL & DBMS Indexing):\n\nWhich database indexing structure maintains a self-balancing search tree to provide O(log N) data retrieval for range queries? (A) B-Tree / B+Tree (B) Hash Index (C) Heap File (D) Inverted Index`;
-      } else {
-        question = `Question 2 of 5 (SQL & DBMS Transactions):\n\nWhich property of ACID guarantees that database modifications are permanently saved even in the event of a power crash? (A) Atomicity (B) Consistency (C) Isolation (D) Durability`;
-      }
-    } else if (nextIndex === 10) {
-      roundLabel = 'Section 2: Technical Domain (MCQ 3 of 5 - Operating Systems)';
-      if (setIdx === 0) {
-        question = `Question 3 of 5 (Operating Systems):\n\nWhich condition occurs when two or more processes are permanently blocked waiting for resources held by each other? (A) Thrashing (B) Deadlock (C) Starvation (D) Race Condition`;
-      } else if (setIdx === 1) {
-        question = `Question 3 of 5 (Operating Systems - Virtual Memory):\n\nWhat term describes a state where an OS spends more time swapping pages between RAM and disk than executing active processes? (A) Paging (B) Thrashing (C) Fragmentation (D) Context Switching`;
-      } else {
-        question = `Question 3 of 5 (Operating Systems - Synchronization):\n\nWhich synchronization primitive uses an integer variable updated atomically to control access to a shared resource pool among concurrent threads? (A) Semaphore (B) Mutex (C) Monitor (D) Spinlock`;
-      }
-    } else if (nextIndex === 11) {
-      roundLabel = 'Section 2: Technical Domain (MCQ 4 of 5 - Data Structures & Collections)';
-      if (setIdx === 0) {
-        question = `Question 4 of 5 (Java & Data Structures):\n\nWhat is the key difference between HashMap and TreeMap in Java? (A) HashMap sorts keys (B) TreeMap maintains O(log N) sorted order while HashMap gives O(1) average lookup (C) TreeMap allows duplicate keys (D) HashMap is thread-safe`;
-      } else if (setIdx === 1) {
-        question = `Question 4 of 5 (Data Structures - Stacks & Queues):\n\nWhich linear data structure operates on a Last-In, First-Out (LIFO) principle and is used for function call stack execution and undo operations? (A) Queue (B) Stack (C) LinkedList (D) Binary Tree`;
-      } else {
-        question = `Question 4 of 5 (Data Structures - Array vs LinkedList):\n\nWhy does an Array provide faster element access by index O(1) compared to a LinkedList O(N)? (A) Arrays use dynamic memory allocation (B) Array elements are stored in contiguous memory locations (C) LinkedLists store key-value pairs (D) Arrays use pointer traversal`;
-      }
-    } else if (nextIndex === 12) {
-      roundLabel = 'Section 2: Technical Domain (MCQ 5 of 5 - Computer Networks)';
-      if (setIdx === 0) {
-        question = `Question 5 of 5 (Computer Networks):\n\nWhich transport layer protocol provides reliable, connection-oriented data transmission with error checking and flow control? (A) UDP (B) TCP (C) IP (D) ICMP`;
-      } else if (setIdx === 1) {
-        question = `Question 5 of 5 (Computer Networks - OSI Model):\n\nAt which layer of the OSI model does packet routing, IP addressing, and path determination occur? (A) Transport Layer (B) Network Layer (C) Data Link Layer (D) Application Layer`;
-      } else {
-        question = `Question 5 of 5 (Computer Networks - Web Protocols):\n\nWhich feature introduced in HTTP/2 allows multiplexing multiple requests over a single TCP connection to eliminate head-of-line blocking? (A) Binary Framing & Multiplexing (B) Cookie Authentication (C) Stateless Routing (D) UDP Encapsulation`;
-      }
-    } else if (nextIndex === 13) {
-      roundLabel = 'Section 3: Hands-On Coding (Challenge 1 of 2 - Strings & DSA)';
-      if (setIdx === 0) {
-        question = `Moving to Section 3: Hands-On Coding (Challenge 1 of 2 - Strings, Arrays & DSA):\n\nWrite or explain a function in ${activeTech} ` + '`first_non_repeating_char(s)`' + ` that finds the first non-repeating character in a given text string (e.g. 'swiss' -> 'w', 'recruitment' -> 'e'). If all characters repeat, return '_'. What data structure do you use, and what is its Big-O time and space complexity?`;
-      } else if (setIdx === 1) {
-        question = `Moving to Section 3: Hands-On Coding (Challenge 1 of 2 - String Anagrams & Frequency Counting):\n\nWrite or explain a function in ${activeTech} ` + '`is_valid_anagram(s, t)`' + ` that checks whether string ` + '`t`' + ` is an anagram of string ` + '`s`' + ` (e.g. 'listen' and 'silent' -> true). What algorithm or hash table strategy do you use for O(N) execution?`;
-      } else {
-        question = `Moving to Section 3: Hands-On Coding (Challenge 1 of 2 - String Reversal & Sentence Manipulation):\n\nWrite or explain a function in ${activeTech} ` + '`reverse_words_in_string(s)`' + ` that reverses the word order in a sentence string while preserving single space separation (e.g. 'the sky is blue' -> 'blue is sky the'). What is your Big-O time and space complexity?`;
-      }
-    } else if (nextIndex === 14) {
-      roundLabel = 'Section 3: Hands-On Coding (Challenge 2 of 2 - Arrays, Collections & OOPs)';
-      if (setIdx === 0) {
-        question = `Solid code logic! Challenge 2 of 2 (Arrays, Collections & OOPs):\n\nGiven an integer array ` + '`nums`' + ` and a target integer ` + '`target`' + `, write or explain a function in ${activeTech} to return the indices of the two numbers that add up to ` + '`target`' + ` (Two-Sum Problem) using a HashMap to achieve O(N) time complexity instead of O(N^2).`;
-      } else if (setIdx === 1) {
-        question = `Solid code logic! Challenge 2 of 2 (Arrays & Maximum Subarray Kadane's Algorithm):\n\nGiven an integer array ` + '`nums`' + `, write or explain a function in ${activeTech} ` + '`max_subarray_sum(nums)`' + ` that finds the contiguous subarray with the largest sum (Kadane's Algorithm) in O(N) time complexity.`;
-      } else {
-        question = `Solid code logic! Challenge 2 of 2 (Arrays & Two-Pointer In-Place Transformation):\n\nGiven an integer array ` + '`nums`' + `, write or explain a function in ${activeTech} ` + '`move_zeros_to_end(nums)`' + ` that moves all zeros to the end of the array while maintaining the relative order of non-zero elements in-place without copying the array.`;
-      }
-    } else if (nextIndex === 15) {
-      roundLabel = 'Section 4: Self-Introduction & Resume Background Alignment';
-      question = `Outstanding performance across Aptitude (8 Questions), Technical MCQs (5 MCQs), and Coding Challenges (2 Problems), ${activeStudent.name}! Now that we have verified your core analytical & coding capabilities, let's move to Section 4: Self-Introduction & Resume Defense:\n\nPlease give your formal self-introduction detailing your academic background, core technical skills (${skills.slice(0, 4).join(', ')}), and projects listed on your resume ('${primaryProject}'). Explain how your experience prepares you for the ${targetRole} role at ${targetCompany}.`;
-    } else if (nextIndex === 16) {
-      roundLabel = 'Section 5: Project Architecture & STAR Behavioral Defense';
-      question = `Great self-introduction! Final Section 5: Project Architecture Defense:\n\n1. [Project Defense]: Looking at your resume project '${primaryProject}': if ${targetCompany} assigned you to scale this system tomorrow for 100,000 active concurrent users using ${activeTech}, what connection pooling, caching, and microservice changes would you implement?\n2. [STAR Behavioral]: Describe a technical disagreement or tight sprint deadline during your project build. Walk me through your Situation, Task, Action, and Result (STAR approach).`;
+      roundLabel = 'Full Mock Interview - Round 6: Project Scalability & STAR Behavioral Defense';
+      question = `Final Round 6: Project Defense & STAR Behavioral:\n\n1. [Project Defense]: If ${targetCompany} assigned you to scale your resume project '${primaryProject}' for 100,000 active users tomorrow, what caching, indexing, and connection pooling changes would you implement?\n2. [STAR Behavioral]: Describe a technical disagreement or tight sprint deadline during your project build. Walk me through your Situation, Task, Action, and Result (STAR method).`;
     }
 
     return { question, roundLabel };
@@ -1065,7 +1232,8 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     setTimeout(() => {
       setInterviewTranscript(prev => [...prev, { sender: 'ai', text: finalNextQuestion, round: roundLabel }]);
       speakText(finalNextQuestion, () => {
-        if (nextIndex >= 17 || /end interview|stop interview|finish interview|generate report/i.test(userAnswerText)) {
+        const maxRounds = interviewSection === 'coding' ? 4 : (interviewSection === 'mock' ? 6 : 5);
+        if (nextIndex >= maxRounds || /end interview|stop interview|finish interview|generate report/i.test(userAnswerText)) {
           stopMockInterview();
         }
       });
@@ -1091,46 +1259,41 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     setCurrentQuestionIndex(0);
     await enableCamera();
 
-    // Dynamic Randomized Question Engine across 5 Pools
-    const poolIdx = Math.floor(Math.random() * 5);
-    const pools = [
-      `Welcome ${activeStudent.name} to the BerriBot AI Placement Assessment Platform for ${targetCompany}! We will start immediately with Section 1: Aptitude (Question 1 of 8 - Quants Work & Time / Worker Nodes):\n\nA server cluster at ${targetCompany} completes a batch workload in 12 hours using 8 worker nodes. If 2 nodes fail after 4 hours of operation, how many hours will the remaining 6 nodes take to finish the workload? Walk me through your step-by-step mathematical logic.`,
-      
-      `Welcome ${activeStudent.name} to the BerriBot AI Placement Assessment Platform for ${targetCompany}! We will start immediately with Section 1: Aptitude (Question 1 of 8 - Quants Work & Time / Pipeline Failure):\n\nDuring a critical product release at ${targetCompany}, a cluster of 12 microservice worker nodes completes a batch data transformation pipeline in 18 hours. After 6 hours of execution, 4 worker nodes fail. How many additional hours will the remaining operational nodes take to finish the workload? Walk me through your step-by-step calculations.`,
-      
-      `Welcome ${activeStudent.name} to the BerriBot AI Placement Assessment Platform for ${targetCompany}! We will start immediately with Section 1: Aptitude (Question 1 of 8 - Quants Speed & Network Latency):\n\nA high-throughput network packet travels 450 km at 90 km/h. If congestion delays the return journey by 25%, what is the average round-trip speed in km/h? Explain your mathematical steps.`,
-      
-      `Welcome ${activeStudent.name} to the BerriBot AI Placement Assessment Platform for ${targetCompany}! We will start immediately with Section 1: Aptitude (Question 1 of 8 - Logical Sequence Pattern):\n\nAnalyze the prime-square sequence: 4, 9, 25, 49, 121, ?. What is the next term in this pattern, and what is the underlying prime number logic?`,
-      
-      `Welcome ${activeStudent.name} to the BerriBot AI Placement Assessment Platform for ${targetCompany}! We will start immediately with Section 1: Aptitude (Question 1 of 8 - Verbal Grammar & Executive Delivery):\n\nCorrect this sentence for executive delivery: 'Me and my team had built the AI recruitment platform and we was able to handle all exceptions without no bugs.' Explain the grammatical corrections made.`
-    ];
+    let welcomeMsg = '';
+    let startRoundLabel = '';
 
-    const welcomeMsg = pools[poolIdx];
+    if (interviewSection === 'aptitude') {
+      startRoundLabel = 'Section 1: Aptitude & Quantitative Reasoning (Question 1 of 5)';
+      welcomeMsg = `Welcome ${activeStudent.name} to the Aptitude & Quantitative Reasoning Practice Module for ${targetCompany}!\n\nQuestion 1 of 5 (Speed & Distance - from CDT HW1 & Hexaware Test 1):\nA high-throughput network packet travels 450 km at 90 km/h. If link congestion delays the return journey by 25%, what is the average round-trip speed in km/h? Walk me through your step-by-step mathematical calculations.`;
+    } else if (interviewSection === 'verbal') {
+      startRoundLabel = 'Section 2: Verbal Ability & Communication (Question 1 of 5)';
+      welcomeMsg = `Welcome ${activeStudent.name} to the Verbal Ability & Placement Communication Module for ${targetCompany}!\n\nQuestion 1 of 5 (Sentence Ordering PQRS - from CDT HWAss1SetB):\nRearrange the following sentences (P, Q, R, S) in logical order:\n(P) As a result, sales in the region increased by 20% within six months.\n(Q) The company decided to launch a new marketing campaign.\n(R) This was aimed at attracting younger customers.\n(S) The campaign focused heavily on social media platforms.\n\nState the correct order (e.g. QRSP, QSRP, PQRS) and explain the cohesive sentence flow.`;
+    } else if (interviewSection === 'technical') {
+      startRoundLabel = 'Section 3: Technical Domain & Core CS (Question 1 of 5)';
+      welcomeMsg = `Welcome ${activeStudent.name} to the Technical Domain & Core CS Assessment Module for ${targetCompany}!\n\nQuestion 1 of 5 (OOPs & Polymorphism - from CDT MCQ OOPS Set 1):\nExplain the difference between Compile-Time Polymorphism (Method Overloading) and Runtime Polymorphism (Method Overriding). How does dynamic method dispatch execute in memory using virtual method tables (vtable)?`;
+    } else if (interviewSection === 'coding') {
+      startRoundLabel = 'Section 4: Hands-On Coding & DSA (Challenge 1 of 4)';
+      welcomeMsg = `Welcome ${activeStudent.name} to the Hands-On Coding & Algorithm Logic Module for ${targetCompany}!\n\nChallenge 1 of 4 (Smallest Odd Number with Maximum Frequency - from CDT HWAss2SetA):\nYou are given an array of integers of size N. Find the smallest odd number that has the highest frequency in the array. If multiple odd numbers share the maximum frequency, return the smallest among them. If none exist, return -1.\n\nExplain your frequency hashing algorithm and time/space complexity. (You can also open the Online Compiler IDE below!)`;
+    } else {
+      // Full 360 Mock Interview
+      startRoundLabel = 'Full Mock Interview - Round 1: Candidate Self-Introduction & Resume Defense';
+      welcomeMsg = `Welcome ${activeStudent.name} to the Full 360° BerriBot AI Placement Interview for ${targetCompany} (${targetRole})!\n\nWe will evaluate you across 5 Comprehensive Rounds (Self-Intro & Resume, Aptitude, Verbal Ability, Technical Core CS, and Coding Logic).\n\nLet's begin Round 1: Please give your formal professional self-introduction, detailing your core technical skills, major projects listed on your resume, and why you are targeting the ${targetRole} role at ${targetCompany}.`;
+    }
 
-    setInterviewTranscript([{ sender: 'ai', text: welcomeMsg, round: 'Section 1: Aptitude (Question 1 of 8 - Quants Work & Time)' }]);
+    setInterviewTranscript([{ sender: 'ai', text: welcomeMsg, round: startRoundLabel }]);
     speakText(welcomeMsg);
   };
 
   // Intelligent Transcript Evaluation Engine for Honest Scoring
   const evaluateTranscriptAnswers = (transcript = []) => {
-    const turns = [];
-    let currentAiRound = '';
-    let currentAiQuestion = '';
-
+    const userTurns = [];
     transcript.forEach(item => {
-      if (item.sender === 'ai') {
-        currentAiRound = item.round || '';
-        currentAiQuestion = item.text || '';
-      } else if (item.sender === 'user') {
-        turns.push({
-          round: currentAiRound,
-          question: currentAiQuestion,
-          answer: item.text || ''
-        });
+      if (item.sender === 'user') {
+        userTurns.push(item.text || '');
       }
     });
 
-    if (turns.length === 0) {
+    if (userTurns.length === 0) {
       return {
         aptiScore: 0,
         techScore: 0,
@@ -1138,129 +1301,62 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
         commScore: 0,
         overallScore: 0,
         grade: 'Incomplete / Not Attempted',
-        aptiFeedback: 'Section Not Attempted: You ended the interview before answering Section 1 Aptitude Questions.',
-        techFeedback: 'Section Not Attempted: You ended the interview before answering Section 2 Technical Domain MCQs.',
-        codingFeedback: 'Section Not Attempted: You ended the interview before attempting Section 3 Hands-On Coding Challenges.',
-        commFeedback: 'Section Not Attempted: You ended the interview before delivering your Self-Introduction or Project Defense.',
+        aptiFeedback: 'Section Not Attempted: Candidate ended interview before completing questions.',
+        techFeedback: 'Section Not Attempted.',
+        codingFeedback: 'Section Not Attempted.',
+        commFeedback: 'Section Not Attempted.',
         strengths: ['Session Initialized'],
-        improvements: ['Complete all test sections (Aptitude, Tech MCQs, Coding, and Self-Intro) for full placement evaluation.']
+        improvements: ['Complete all interview questions for full evaluation.']
       };
     }
 
-    const aptiTurns = turns.filter(t => /Section 1|Aptitude|Quants|Logical|Verbal/i.test(t.round) || /hours|km\/h|speed|ratio|series|syllogisms|grammar/i.test(t.question));
-    const techTurns = turns.filter(t => /Section 2|Technical|MCQ|OOPs|SQL|DBMS|Operating System|Networks/i.test(t.round) || /overriding|polymorphism|having|deadlock|hashmap|tcp/i.test(t.question));
-    const codingTurns = turns.filter(t => /Section 3|Coding|DSA|Challenge|Anagram|Two-Sum|Kadane|Subarray/i.test(t.round) || /first_non_repeating|is_valid_anagram|reverse_words|two_sum|max_subarray|move_zeros/i.test(t.question));
-    const commTurns = turns.filter(t => /Section 4|Section 5|Self-Intro|Resume|Project Architecture|Behavioral|STAR/i.test(t.round) || /self-introduction|project|behavioral/i.test(t.question));
+    let correctCount = 0;
+    const totalExpected = interviewSection === 'coding' ? 4 : (interviewSection === 'mock' ? 6 : 5);
 
-    // --- EVALUATE APTITUDE ---
-    let aptiCorrect = 0;
-    aptiTurns.forEach(t => {
-      const ans = t.answer.toLowerCase().trim();
-      if (ans.length >= 2 && !/idk|don't know|wrong|no idea|skip|abc|test|blah|dunno/i.test(ans)) {
-        if (/18|20|24|12|hours|96|78|128|km\/h|speed|7:4|5:3|8:3|169|216|42|conclusion|follows|team|built|exceptions|memory leaks/i.test(ans)) {
-          aptiCorrect++;
-        } else if (ans.split(/\s+/).length >= 3) {
-          aptiCorrect += 0.4;
-        }
+    userTurns.forEach((ans, idx) => {
+      const evalItem = evaluatePreviousAnswer(interviewSection, idx, ans);
+      if (evalItem.isCorrect) {
+        correctCount++;
       }
     });
 
-    const aptiAttempted = aptiTurns.length;
-    const aptiScore = aptiAttempted > 0 ? Math.min(100, Math.round((aptiCorrect / Math.max(8, aptiAttempted)) * 100)) : 0;
+    const calculatedScore = Math.min(100, Math.round((correctCount / totalExpected) * 100));
 
-    // --- EVALUATE TECHNICAL MCQs ---
-    let techCorrect = 0;
-    techTurns.forEach(t => {
-      const ans = t.answer.toLowerCase().trim();
-      if (ans.length >= 1 && !/idk|no idea|skip|wrong|dont know/i.test(ans)) {
-        if (/\bb\b|overriding|polymorphism|having|b-tree|durability|deadlock|thrashing|semaphore|o\(log n\)|stack|contiguous|tcp|network layer|multiplexing/i.test(ans)) {
-          techCorrect++;
-        } else if (ans.length >= 2) {
-          techCorrect += 0.3;
-        }
-      }
-    });
+    let aptiScore = 0;
+    let techScore = 0;
+    let codingScore = 0;
+    let commScore = 0;
 
-    const techAttempted = techTurns.length;
-    const techScore = techAttempted > 0 ? Math.min(100, Math.round((techCorrect / Math.max(5, techAttempted)) * 100)) : 0;
+    if (interviewSection === 'aptitude') {
+      aptiScore = calculatedScore;
+    } else if (interviewSection === 'verbal') {
+      commScore = calculatedScore;
+    } else if (interviewSection === 'technical') {
+      techScore = calculatedScore;
+    } else if (interviewSection === 'coding') {
+      codingScore = calculatedScore;
+    } else {
+      // Mock Interview
+      aptiScore = evaluatePreviousAnswer('mock', 1, userTurns[1] || '').isCorrect ? 25 : 5;
+      commScore = (evaluatePreviousAnswer('mock', 0, userTurns[0] || '').isCorrect ? 12 : 2) + (evaluatePreviousAnswer('mock', 2, userTurns[2] || '').isCorrect ? 13 : 3);
+      techScore = evaluatePreviousAnswer('mock', 3, userTurns[3] || '').isCorrect ? 25 : 5;
+      codingScore = evaluatePreviousAnswer('mock', 4, userTurns[4] || '').isCorrect ? 25 : 5;
+    }
 
-    // --- EVALUATE HANDS-ON CODING (0 IF SKIPPED OR NOT REACHED) ---
-    let codingCorrect = 0;
-    codingTurns.forEach(t => {
-      const ans = t.answer.toLowerCase().trim();
-      if (ans.length > 8 && !/idk|no idea|skip|wrong|cannot do|didn't do|not attended|don't know/i.test(ans)) {
-        if (/hashmap|dictionary|frequency|map|array|two pointer|pointer|kadane|sliding window|o\(n\)|loop|function|return|def|class|public/i.test(ans)) {
-          codingCorrect++;
-        } else if (ans.split(/\s+/).length >= 4) {
-          codingCorrect += 0.4;
-        }
-      }
-    });
-
-    const codingAttempted = codingTurns.length;
-    const codingScore = codingAttempted > 0 ? Math.min(100, Math.round((codingCorrect / Math.max(2, codingAttempted)) * 100)) : 0;
-
-    // --- EVALUATE SPOKEN FLUENCY ---
-    let commCorrect = 0;
-    commTurns.forEach(t => {
-      const ans = t.answer.toLowerCase().trim();
-      const wordCount = ans.split(/\s+/).filter(Boolean).length;
-      if (wordCount >= 6 && !/idk|no idea|skip/i.test(ans)) {
-        if (/situation|task|action|result|project|engineering|team|skills|developed|built|resolved|subash|kiot|aids|cse/i.test(ans)) {
-          commCorrect++;
-        } else {
-          commCorrect += 0.5;
-        }
-      }
-    });
-
-    const commAttempted = commTurns.length;
-    const commScore = commAttempted > 0 ? Math.min(100, Math.round((commCorrect / Math.max(2, commAttempted)) * 100)) : 0;
-
-    const overallScore = Math.round((aptiScore * 0.25) + (techScore * 0.25) + (codingScore * 0.25) + (commScore * 0.25));
-
+    const overallScore = calculatedScore;
     const grade = overallScore >= 80 ? 'BerriBot Strong Hire' : overallScore >= 60 ? 'BerriBot Hire with Training' : overallScore > 0 ? 'Needs Remedial Training' : 'Incomplete Evaluation';
-
-    const aptiFeedback = aptiAttempted === 0 
-      ? 'Section Not Attempted: Candidate ended interview before completing Section 1 Aptitude Questions.' 
-      : aptiScore >= 75 
-      ? 'Strong quantitative estimation & logical reasoning accuracy.' 
-      : `Score: ${aptiScore}%. Review work & time, speed-distance ratios, and number series logic.`;
-
-    const techFeedback = techAttempted === 0 
-      ? 'Section Not Attempted: Candidate ended interview before completing Section 2 Technical MCQs.' 
-      : techScore >= 75 
-      ? 'Verified core CS knowledge in OOPs, SQL, OS Deadlocks & TCP Networks.' 
-      : `Score: ${techScore}%. Revise SQL HAVING clauses, B-Tree indexes, OS semaphores, and OSI layers.`;
-
-    const codingFeedback = codingAttempted === 0 
-      ? 'Section Not Attempted: Candidate ended interview before attempting Section 3 Hands-On Coding Challenges.' 
-      : codingScore >= 75 
-      ? 'Optimal Big-O complexity selection and clean data structure logic.' 
-      : `Score: ${codingScore}%. Practice HashMap frequency counting, two-pointers, and Kadane\'s algorithm.`;
-
-    const commFeedback = commAttempted === 0 
-      ? 'Section Not Attempted: Candidate did not provide Self-Introduction or Project Architecture Defense.' 
-      : commScore >= 75 
-      ? 'Clear spoken fluency, STAR response structure & articulate project defense.' 
-      : `Score: ${commScore}%. Structure your answers into Situation, Task, Action, and Result (STAR approach).`;
 
     const strengths = [];
     const improvements = [];
 
-    if (aptiScore >= 50) strengths.push(`Aptitude Quantitative Logic (${aptiScore}%)`);
-    else if (aptiAttempted > 0) improvements.push('Improve quantitative calculation speed & accuracy');
-
-    if (techScore >= 50) strengths.push(`Technical Domain Knowledge (${techScore}%)`);
-    else if (techAttempted > 0) improvements.push('Revise OOPs, SQL, OS, and Computer Networks fundamentals');
-
-    if (codingScore >= 50) strengths.push(`Hands-On Coding DSA (${codingScore}%)`);
-    else if (codingAttempted === 0) improvements.push('CRITICAL: Attend Section 3 Hands-On Coding Challenges for DSA evaluation');
-    else improvements.push('Practice HashMap, Array Two-Pointer, and String manipulation problems');
-
-    if (commScore >= 50) strengths.push(`Spoken Communication (${commScore}%)`);
-    else if (commAttempted === 0) improvements.push('Deliver candidate self-introduction & project architecture defense');
-    else improvements.push('Structure responses using the STAR method (Situation, Task, Action, Result)');
+    if (overallScore >= 75) {
+      strengths.push(`High accuracy in ${interviewSection.toUpperCase()} (${overallScore}%)`);
+    } else if (overallScore >= 50) {
+      strengths.push(`Solid foundational knowledge in ${interviewSection.toUpperCase()} (${overallScore}%)`);
+      improvements.push(`Review core formulas & precision in ${interviewSection}`);
+    } else {
+      improvements.push(`Practice CDT ${interviewSection} mock tests to improve accuracy`);
+    }
 
     return {
       aptiScore,
@@ -1269,11 +1365,11 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
       commScore,
       overallScore,
       grade,
-      aptiFeedback,
-      techFeedback,
-      codingFeedback,
-      commFeedback,
-      strengths: strengths.length > 0 ? strengths : ['Candidate initialized assessment environment'],
+      aptiFeedback: `Score: ${aptiScore}%.`,
+      techFeedback: `Score: ${techScore}%.`,
+      codingFeedback: `Score: ${codingScore}%.`,
+      commFeedback: `Score: ${commScore}%.`,
+      strengths: strengths.length > 0 ? strengths : ['Candidate demonstrated problem solving engagement'],
       improvements: improvements.length > 0 ? improvements : ['Complete all test sections for full evaluation']
     };
   };
@@ -1311,6 +1407,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
         name: activeStudent.name,
         department: activeStudent.departmentCode || activeStudent.department || 'AI&DS',
         section: activeStudent.section || 'A',
+        moduleType: interviewSection === 'aptitude' ? 'Aptitude Round' : interviewSection === 'verbal' ? 'Verbal Ability' : interviewSection === 'technical' ? 'Technical Domain' : interviewSection === 'coding' ? 'Coding & DSA' : 'Full Mock Interview',
         targetCompany,
         targetRole,
         date: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
@@ -2182,6 +2279,103 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     };
   }, [analysisStats, selectedAnalysisStudentReg, authUser, db]);
 
+  // Universal Flexible Assessment Preview Computation Hook (Registered before loading screen return)
+  const flexiblePreviewData = useMemo(() => {
+    if (!flexibleRawRows || flexibleRawRows.length === 0) {
+      return { scores: [], stats: null, barData: null };
+    }
+
+    const emailMap = {};
+    const regMap = {};
+    (db?.students || []).forEach(s => {
+      if (s.email) emailMap[s.email.toLowerCase().trim()] = s;
+      if (s.registerNo) regMap[s.registerNo.toLowerCase().trim()] = s;
+      if (s.rollNo) regMap[s.rollNo.toLowerCase().trim()] = s;
+    });
+
+    const maxM = Number(flexibleConfig.maxMarks) || 100;
+    const scoreCol = flexibleConfig.scoreColumn;
+    const regCol = flexibleConfig.regColumn;
+    const emailCol = flexibleConfig.emailColumn;
+    const nameCol = flexibleConfig.nameColumn;
+
+    const scoresList = [];
+    const band0_39 = [];
+    const band40_49 = [];
+    const band50_59 = [];
+    const band60_100 = [];
+
+    flexibleRawRows.forEach((row, idx) => {
+      const regVal = String(row[regCol] || '').trim();
+      const emailVal = String(row[emailCol] || '').trim();
+      const nameVal = String(row[nameCol] || '').trim();
+      const rawScore = row[scoreCol];
+
+      let numScore = null;
+      if (rawScore !== undefined && rawScore !== null && rawScore !== '' && rawScore !== '-' && rawScore !== 'Overall average') {
+        const parsed = parseFloat(rawScore);
+        if (!isNaN(parsed)) numScore = parsed;
+      }
+
+      if (numScore === null) return;
+
+      const pct = Math.min(100, Math.max(0, Math.round((numScore / maxM) * 100)));
+      const studentMatch = regMap[regVal.toLowerCase()] || emailMap[emailVal.toLowerCase()] || regMap[nameVal.toLowerCase()] || null;
+
+      const item = {
+        rowIdx: idx + 1,
+        regNo: studentMatch?.registerNo || regVal || `Student-${idx + 1}`,
+        name: studentMatch?.name || nameVal || 'Student',
+        dept: studentMatch?.departmentCode || studentMatch?.department || '-',
+        rawScore: numScore,
+        pctScore: pct,
+        isMatched: Boolean(studentMatch)
+      };
+
+      scoresList.push(item);
+
+      if (pct < 40) band0_39.push(item);
+      else if (pct < 50) band40_49.push(item);
+      else if (pct < 60) band50_59.push(item);
+      else band60_100.push(item);
+    });
+
+    const total = scoresList.length;
+    const avg = total > 0 ? Math.round(scoresList.reduce((acc, s) => acc + s.pctScore, 0) / total) : 0;
+    const passCount = scoresList.filter(s => s.pctScore >= 60).length;
+    const passPct = total > 0 ? Math.round((passCount / total) * 100) : 0;
+    const highest = total > 0 ? Math.max(...scoresList.map(s => s.pctScore)) : 0;
+    const lowest = total > 0 ? Math.min(...scoresList.map(s => s.pctScore)) : 0;
+
+    const barData = {
+      labels: ['0% - 39% (Critical)', '40% - 49% (Foundation)', '50% - 59% (Developing)', '60% - 100% (Proficient)'],
+      datasets: [
+        {
+          label: 'Students Count',
+          data: [band0_39.length, band40_49.length, band50_59.length, band60_100.length],
+          backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
+          borderRadius: 8
+        }
+      ]
+    };
+
+    return {
+      scores: scoresList,
+      stats: {
+        total,
+        avg,
+        passPct,
+        highest,
+        lowest,
+        band0_39: band0_39.length,
+        band40_49: band40_49.length,
+        band50_59: band50_59.length,
+        band60_100: band60_100.length
+      },
+      barData
+    };
+  }, [flexibleRawRows, flexibleConfig, db]);
+
   // Loading indicator return (placed AFTER all hooks have been declared)
   if (!db) {
     return (
@@ -2944,102 +3138,6 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
       maxMarks: detectedMax
     }));
   };
-
-  const flexiblePreviewData = useMemo(() => {
-    if (!flexibleRawRows || flexibleRawRows.length === 0) {
-      return { scores: [], stats: null, barData: null };
-    }
-
-    const emailMap = {};
-    const regMap = {};
-    (db?.students || []).forEach(s => {
-      if (s.email) emailMap[s.email.toLowerCase().trim()] = s;
-      if (s.registerNo) regMap[s.registerNo.toLowerCase().trim()] = s;
-      if (s.rollNo) regMap[s.rollNo.toLowerCase().trim()] = s;
-    });
-
-    const maxM = Number(flexibleConfig.maxMarks) || 100;
-    const scoreCol = flexibleConfig.scoreColumn;
-    const regCol = flexibleConfig.regColumn;
-    const emailCol = flexibleConfig.emailColumn;
-    const nameCol = flexibleConfig.nameColumn;
-
-    const scoresList = [];
-    const band0_39 = [];
-    const band40_49 = [];
-    const band50_59 = [];
-    const band60_100 = [];
-
-    flexibleRawRows.forEach((row, idx) => {
-      const regVal = String(row[regCol] || '').trim();
-      const emailVal = String(row[emailCol] || '').trim();
-      const nameVal = String(row[nameCol] || '').trim();
-      const rawScore = row[scoreCol];
-
-      let numScore = null;
-      if (rawScore !== undefined && rawScore !== null && rawScore !== '' && rawScore !== '-' && rawScore !== 'Overall average') {
-        const parsed = parseFloat(rawScore);
-        if (!isNaN(parsed)) numScore = parsed;
-      }
-
-      if (numScore === null) return;
-
-      const pct = Math.min(100, Math.max(0, Math.round((numScore / maxM) * 100)));
-      const studentMatch = regMap[regVal.toLowerCase()] || emailMap[emailVal.toLowerCase()] || regMap[nameVal.toLowerCase()] || null;
-
-      const item = {
-        rowIdx: idx + 1,
-        regNo: studentMatch?.registerNo || regVal || `Student-${idx + 1}`,
-        name: studentMatch?.name || nameVal || 'Student',
-        dept: studentMatch?.departmentCode || studentMatch?.department || '-',
-        rawScore: numScore,
-        pctScore: pct,
-        isMatched: Boolean(studentMatch)
-      };
-
-      scoresList.push(item);
-
-      if (pct < 40) band0_39.push(item);
-      else if (pct < 50) band40_49.push(item);
-      else if (pct < 60) band50_59.push(item);
-      else band60_100.push(item);
-    });
-
-    const total = scoresList.length;
-    const avg = total > 0 ? Math.round(scoresList.reduce((acc, s) => acc + s.pctScore, 0) / total) : 0;
-    const passCount = scoresList.filter(s => s.pctScore >= 60).length;
-    const passPct = total > 0 ? Math.round((passCount / total) * 100) : 0;
-    const highest = total > 0 ? Math.max(...scoresList.map(s => s.pctScore)) : 0;
-    const lowest = total > 0 ? Math.min(...scoresList.map(s => s.pctScore)) : 0;
-
-    const barData = {
-      labels: ['0% - 39% (Critical)', '40% - 49% (Foundation)', '50% - 59% (Developing)', '60% - 100% (Proficient)'],
-      datasets: [
-        {
-          label: 'Students Count',
-          data: [band0_39.length, band40_49.length, band50_59.length, band60_100.length],
-          backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
-          borderRadius: 8
-        }
-      ]
-    };
-
-    return {
-      scores: scoresList,
-      stats: {
-        total,
-        avg,
-        passPct,
-        highest,
-        lowest,
-        band0_39: band0_39.length,
-        band40_49: band40_49.length,
-        band50_59: band50_59.length,
-        band60_100: band60_100.length
-      },
-      barData
-    };
-  }, [flexibleRawRows, flexibleConfig, db]);
 
   const handleConfirmFlexibleImport = async () => {
     if (!flexiblePreviewData || flexiblePreviewData.scores.length === 0) {
@@ -5236,6 +5334,87 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                       </div>
                     )}
 
+                    {/* INTERVIEW SECTION / MODULE SELECTOR */}
+                    <div style={{
+                      marginBottom: '1.25rem',
+                      background: '#ffffff',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '14px',
+                      padding: '1.1rem 1.25rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        <div>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--color-brand)' }}>
+                            🎯 Select Practice Section / Interview Module
+                          </span>
+                          <h4 style={{ fontSize: '0.98rem', fontWeight: 750, color: '#0f172a', margin: '0.15rem 0 0 0' }}>
+                            Choose a Specific Placement Round or Complete 360° Mock Interview
+                          </h4>
+                        </div>
+                        <span style={{ fontSize: '0.75rem', color: '#475569', background: '#f1f5f9', padding: '0.3rem 0.75rem', borderRadius: '20px', fontWeight: 650, border: '1px solid #e2e8f0' }}>
+                          📚 Curated from CDT Placement Questions Bank
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))', gap: '0.65rem' }}>
+                        {[
+                          { id: 'aptitude', label: 'Aptitude Round', icon: Brain, badge: 'Quants & Logic', color: '#2563eb', desc: 'Work & Time, Speed, Ratios, Clocks (HW1 & Tests)' },
+                          { id: 'verbal', label: 'Verbal Ability', icon: MessageSquare, badge: 'English & Comm', color: '#7c3aed', desc: 'Sentence Ordering PQRS, Idioms & Synonyms' },
+                          { id: 'technical', label: 'Technical Domain', icon: Layers, badge: 'Core CS / IT', color: '#059669', desc: 'OOPs, OS Deadlocks, Networks TCP & DBMS' },
+                          { id: 'coding', label: 'Coding & DSA', icon: Code, badge: 'Hands-On Code', color: '#d97706', desc: 'Smallest Odd, Frogs Axis, Baker & Two-Sum' },
+                          { id: 'mock', label: 'Mock Interview', icon: Award, badge: '360° All Rounds', color: '#dc2626', desc: 'Complete 360° AI Placement Assessment' }
+                        ].map(sec => {
+                          const isSelected = interviewSection === sec.id;
+                          const Icon = sec.icon;
+                          return (
+                            <button
+                              key={sec.id}
+                              type="button"
+                              onClick={() => {
+                                if (isInterviewing) {
+                                  if (window.confirm(`Switching to ${sec.label} will restart the current session. Proceed?`)) {
+                                    setInterviewSection(sec.id);
+                                    setInterviewTranscript([]);
+                                    setIsInterviewing(false);
+                                    setIsListening(false);
+                                  }
+                                } else {
+                                  setInterviewSection(sec.id);
+                                }
+                              }}
+                              style={{
+                                padding: '0.85rem 1rem',
+                                borderRadius: '12px',
+                                border: isSelected ? `2px solid ${sec.color}` : '1px solid #e2e8f0',
+                                background: isSelected ? `${sec.color}10` : '#f8fafc',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '0.35rem',
+                                transition: 'all 0.2s ease',
+                                boxShadow: isSelected ? `0 4px 12px ${sec.color}20` : 'none'
+                              }}
+                            >
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: isSelected ? sec.color : '#0f172a', fontWeight: 800, fontSize: '0.9rem' }}>
+                                  <Icon size={17} style={{ color: sec.color }} />
+                                  <span>{sec.label}</span>
+                                </div>
+                                {isSelected && (
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: sec.color }} />
+                                )}
+                              </div>
+                              <span style={{ fontSize: '0.73rem', color: '#64748b', lineHeight: 1.35 }}>
+                                {sec.desc}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
                     {/* SPLIT VIEW INTERVIEW ROOM */}
                     <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem', minHeight: '420px' }}>
                       {/* LEFT PANEL: WEBCAM VIDEO FEED & BERRIBOT AI PROCTORING HUD */}
@@ -6756,9 +6935,17 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                         <UserCheck size={20} />
                       </div>
                     </div>
-                    <div className="glass-card metric-card">
+                    <div 
+                      className="glass-card metric-card"
+                      onClick={() => setShowPlacedModal(true)}
+                      style={{ cursor: 'pointer', transition: 'all 0.2s', border: '1px solid rgba(168, 85, 247, 0.3)' }}
+                      title="Click to view full list of placed students"
+                    >
                       <div className="metric-info">
-                        <h3>Placed Students</h3>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          <h3>Placed Students</h3>
+                          <span style={{ fontSize: '0.7rem', color: 'var(--color-accent)', fontWeight: 700 }}>View List ↗</span>
+                        </div>
                         <p style={{ color: 'var(--color-accent)' }}>
                           {currentBatchStudents.filter(s => s.status === 'Placed').length}
                         </p>
@@ -8185,6 +8372,214 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
           </div>
         );
       })()}
+
+      {/* --------------------------------------------------------------------- */}
+      {/* 5. OFFICIAL PLACED STUDENTS DIRECTORY MODAL (60 PLACED STUDENTS) */}
+      {/* --------------------------------------------------------------------- */}
+      {showPlacedModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 9999,
+          background: 'rgba(15, 23, 42, 0.65)',
+          backdropFilter: 'blur(16px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1.5rem'
+        }}>
+          <div className="glass-card" style={{
+            width: '100%',
+            maxWidth: '960px',
+            maxHeight: '90vh',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '2rem',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.25)',
+            borderRadius: '16px',
+            overflow: 'hidden'
+          }}>
+            {/* MODAL HEADER */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', marginBottom: '1.25rem' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <Award size={28} style={{ color: 'var(--color-accent)' }} />
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>
+                    Official Placed Students Directory
+                  </h3>
+                  <span className="badge badge-success" style={{ fontSize: '0.85rem', padding: '0.35rem 0.75rem', fontWeight: 700 }}>
+                    {db?.students?.filter(s => s.status === 'Placed').length || 60} Total Offers
+                  </span>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.35rem' }}>
+                  Verified list of final year (2027 Batch) students selected across recruiting partner drives.
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowPlacedModal(false)}
+                style={{
+                  background: '#f1f5f9',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '36px',
+                  height: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: '#64748b'
+                }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* COMPANY FILTERS & SEARCH ROW */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
+              {/* Filter Pills */}
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <button
+                  className={`btn ${placedCompanyFilter === 'All' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setPlacedCompanyFilter('All')}
+                  style={{ fontSize: '0.8rem', padding: '0.45rem 0.9rem', fontWeight: 650 }}
+                >
+                  All Companies ({db?.students?.filter(s => s.status === 'Placed').length || 60})
+                </button>
+                <button
+                  className={`btn ${placedCompanyFilter === 'Hexaware' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setPlacedCompanyFilter('Hexaware')}
+                  style={{ fontSize: '0.8rem', padding: '0.45rem 0.9rem', fontWeight: 650 }}
+                >
+                  🏢 Hexaware Technologies ({db?.students?.filter(s => s.status === 'Placed' && s.companyPlaced?.includes('Hexaware')).length || 24})
+                </button>
+                <button
+                  className={`btn ${placedCompanyFilter === 'Expleo' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setPlacedCompanyFilter('Expleo')}
+                  style={{ fontSize: '0.8rem', padding: '0.45rem 0.9rem', fontWeight: 650 }}
+                >
+                  🏢 Expleo ({db?.students?.filter(s => s.status === 'Placed' && s.companyPlaced?.includes('Expleo')).length || 36})
+                </button>
+              </div>
+
+              {/* Search Bar */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '0.35rem 0.75rem' }}>
+                <Search size={16} style={{ color: '#64748b' }} />
+                <input 
+                  type="text"
+                  placeholder="Search student, reg no, branch..."
+                  value={placedSearch}
+                  onChange={e => setPlacedSearch(e.target.value)}
+                  style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '0.85rem', color: '#0f172a', width: '230px' }}
+                />
+                {placedSearch && (
+                  <button onClick={() => setPlacedSearch('')} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: '#94a3b8' }}>
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* PLACED STUDENTS TABLE */}
+            <div className="table-container" style={{ flex: 1, overflowY: 'auto', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+              <table className="premium-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Reg. No</th>
+                    <th>Student Name</th>
+                    <th>Branch</th>
+                    <th>Sec</th>
+                    <th>Recruiting Company</th>
+                    <th>CGPA</th>
+                    <th>Placement Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(db?.students || [])
+                    .filter(s => s.status === 'Placed')
+                    .filter(s => {
+                      if (placedCompanyFilter === 'Hexaware') return s.companyPlaced?.includes('Hexaware');
+                      if (placedCompanyFilter === 'Expleo') return s.companyPlaced?.includes('Expleo');
+                      return true;
+                    })
+                    .filter(s => {
+                      if (!placedSearch) return true;
+                      const q = placedSearch.toLowerCase();
+                      return (
+                        s.registerNo.toLowerCase().includes(q) ||
+                        s.name.toLowerCase().includes(q) ||
+                        (s.departmentCode || s.department || '').toLowerCase().includes(q) ||
+                        (s.companyPlaced || '').toLowerCase().includes(q)
+                      );
+                    })
+                    .map((s, idx) => (
+                      <tr key={s.registerNo}>
+                        <td style={{ fontWeight: 600, color: '#64748b' }}>{idx + 1}</td>
+                        <td style={{ fontWeight: 700, color: 'var(--color-brand)' }}>{s.registerNo}</td>
+                        <td style={{ fontWeight: 600, color: '#0f172a' }}>{s.name}</td>
+                        <td>{s.departmentCode || s.department}</td>
+                        <td>{s.section || '-'}</td>
+                        <td>
+                          <span className={`badge ${s.companyPlaced?.includes('Hexaware') ? 'badge-success' : 'badge-info'}`} style={{ fontWeight: 700 }}>
+                            🏢 {s.companyPlaced || 'Placed'}
+                          </span>
+                        </td>
+                        <td style={{ fontWeight: 600 }}>{Number(s.cgpa || 0).toFixed(2)}</td>
+                        <td>
+                          <span style={{ color: '#10b981', fontWeight: 700, fontSize: '0.8rem' }}>🎉 Placed</span>
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-secondary"
+                            onClick={() => {
+                              setSelectedDetailStudent(s);
+                            }}
+                            style={{ padding: '0.3rem 0.65rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
+                          >
+                            <User size={12} /> Profile ↗
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* MODAL FOOTER */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid #e2e8f0', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                Showing <strong>{(db?.students || []).filter(s => s.status === 'Placed').filter(s => placedCompanyFilter === 'Hexaware' ? s.companyPlaced?.includes('Hexaware') : placedCompanyFilter === 'Expleo' ? s.companyPlaced?.includes('Expleo') : true).length}</strong> placed student candidates.
+              </span>
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button 
+                  className="btn btn-primary"
+                  onClick={() => {
+                    const placedList = (db?.students || []).filter(s => s.status === 'Placed');
+                    const csvRows = ['RegisterNo,Name,Department,Section,CompanyPlaced,CGPA'];
+                    placedList.forEach(s => csvRows.push(`"${s.registerNo}","${s.name}","${s.departmentCode || s.department}","${s.section || ''}","${s.companyPlaced}",${s.cgpa}`));
+                    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Placed_Students_List_${Date.now()}.csv`;
+                    a.click();
+                    triggerToast('Exported Placed Students CSV spreadsheet!');
+                  }}
+                  style={{ fontSize: '0.8rem', padding: '0.4rem 0.85rem' }}
+                >
+                  <FileSpreadsheet size={14} /> Export Placed CSV
+                </button>
+                <button className="btn btn-secondary" onClick={() => setShowPlacedModal(false)} style={{ fontSize: '0.8rem', padding: '0.4rem 0.85rem' }}>
+                  Close Directory
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
