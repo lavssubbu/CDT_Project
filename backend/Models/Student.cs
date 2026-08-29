@@ -25,10 +25,14 @@ namespace backend.Models
         public string Avatar { get; set; } = string.Empty;
         public int Attendance { get; set; }
         public string Status { get; set; } = "Unplaced";
+        public string CompanyPlaced { get; set; } = string.Empty;
         public string ResumeText { get; set; } = string.Empty;
 
         // Read-only mapped property to output department code as "department" in JSON
         [NotMapped]
         public string Department => DepartmentCode;
+
+        [NotMapped]
+        public string Company => CompanyPlaced;
     }
 }

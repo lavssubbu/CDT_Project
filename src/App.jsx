@@ -4131,13 +4131,18 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                 <div className="glass-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                     <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Placement Status</span>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 700, color: activeStudent.status === 'Placed' ? 'var(--color-success)' : activeStudent.status === 'Eligible' || activeStudent.status === 'Unplaced' ? 'var(--color-brand)' : 'var(--color-danger)' }}>
-                      {activeStudent.status}
+                    <span style={{ fontSize: '1.4rem', fontWeight: 700, color: activeStudent.status === 'Placed' ? 'var(--color-success)' : activeStudent.placementEligibility === 'Eligible' ? 'var(--color-brand)' : 'var(--color-danger)' }}>
+                      {activeStudent.status === 'Placed' ? 'Placed 🎉' : (activeStudent.status || 'Unplaced')}
                     </span>
+                    {activeStudent.status === 'Placed' && (
+                      <span className="badge badge-success" style={{ fontSize: '0.78rem', fontWeight: 700, width: 'fit-content', padding: '0.2rem 0.6rem' }}>
+                        🏢 {activeStudent.companyPlaced || 'Hexaware Technologies'}
+                      </span>
+                    )}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                      <span>CGPA: <strong style={{ color: '#fff' }}>{Number(activeStudent.cgpa || 0).toFixed(1)}</strong></span>
+                      <span>CGPA: <strong style={{ color: '#0f172a' }}>{Number(activeStudent.cgpa || 0).toFixed(1)}</strong></span>
                       <span>•</span>
-                      <span>Arrears: <strong style={{ color: activeStudent.standingArrears > 0 ? 'var(--color-danger)' : '#fff' }}>{activeStudent.standingArrears}</strong></span>
+                      <span>Arrears: <strong style={{ color: activeStudent.standingArrears > 0 ? 'var(--color-danger)' : '#0f172a' }}>{activeStudent.standingArrears}</strong></span>
                     </div>
                   </div>
                   
@@ -6429,9 +6434,20 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                               {s.attendance}%
                             </td>
                             <td>
-                              <span className={`badge ${s.status === 'Placed' ? 'badge-success' : s.placementEligibility === 'Eligible' ? 'badge-info' : 'badge-danger'}`}>
-                                {s.status === 'Placed' ? 'Placed' : s.placementEligibility}
-                              </span>
+                              {s.status === 'Placed' ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                                  <span className="badge badge-success" style={{ fontWeight: 700, width: 'fit-content' }}>Placed</span>
+                                  {s.companyPlaced && (
+                                    <span style={{ fontSize: '0.72rem', color: '#15803d', fontWeight: 650, whiteSpace: 'nowrap' }}>
+                                      🏢 {s.companyPlaced}
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className={`badge ${s.placementEligibility === 'Eligible' ? 'badge-info' : 'badge-danger'}`}>
+                                  {s.placementEligibility}
+                                </span>
+                              )}
                             </td>
                             <td>
                               <button 
@@ -6745,9 +6761,9 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                   <div className="grid-cols-4" style={{ marginBottom: '1.5rem' }}>
                     <div className="glass-card metric-card">
                       <div className="metric-info">
-                        <h3>Overall Placed</h3>
+                        <h3>Overall Placed {selectedBatch !== 'All' ? `(${selectedBatch === '2028' ? 'III-Yr' : 'IV-Yr'})` : ''}</h3>
                         <p style={{ color: 'var(--color-success)' }}>
-                          {db.students.filter(s => s.status === 'Placed').length}
+                          {currentBatchStudents.filter(s => s.status === 'Placed').length}
                         </p>
                       </div>
                       <div className="metric-icon-wrapper green">
@@ -6758,7 +6774,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                       <div className="metric-info">
                         <h3>Awaiting Drives</h3>
                         <p style={{ color: 'var(--color-brand)' }}>
-                          {db.students.filter(s => s.status === 'Unplaced' && s.placementEligibility === 'Eligible').length}
+                          {currentBatchStudents.filter(s => s.status === 'Unplaced' && s.placementEligibility === 'Eligible').length}
                         </p>
                       </div>
                       <div className="metric-icon-wrapper blue">
@@ -6769,7 +6785,9 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                       <div className="metric-info">
                         <h3>Avg Placement Prob</h3>
                         <p style={{ color: 'var(--color-accent)' }}>
-                          {Math.round(Object.values(studentMetrics).reduce((acc, curr) => acc + curr.placementProb, 0) / Object.keys(studentMetrics).length)}%
+                          {currentBatchStudents.length > 0 
+                            ? Math.round(currentBatchStudents.reduce((acc, s) => acc + (studentMetrics[s.registerNo]?.placementProb || 60), 0) / currentBatchStudents.length)
+                            : 75}%
                         </p>
                       </div>
                       <div className="metric-icon-wrapper purple">
@@ -6780,11 +6798,35 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                       <div className="metric-info">
                         <h3>Arrear Disqualification</h3>
                         <p style={{ color: 'var(--color-danger)' }}>
-                          {db.students.filter(s => s.standingArrears > 0).length}
+                          {currentBatchStudents.filter(s => s.standingArrears > 0).length}
                         </p>
                       </div>
                       <div className="metric-icon-wrapper danger">
                         <XCircle size={20} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* RECRUITING COMPANY PLACEMENTS SUMMARY BANNER */}
+                  <div className="glass-card" style={{ marginBottom: '1.5rem', background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1rem 1.25rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                      <div>
+                        <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          🏢 Official Placed Offers Summary ({currentBatchStudents.filter(s => s.status === 'Placed').length} Students Placed)
+                        </h4>
+                        <p style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '0.2rem' }}>
+                          Verified campus recruitments and offer letters across active hiring partners.
+                        </p>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                        <div style={{ padding: '0.4rem 0.85rem', background: '#ffffff', borderRadius: '8px', border: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Hexaware Technologies</span>
+                          <span className="badge badge-success">{currentBatchStudents.filter(s => s.companyPlaced?.includes('Hexaware')).length} Placed</span>
+                        </div>
+                        <div style={{ padding: '0.4rem 0.85rem', background: '#ffffff', borderRadius: '8px', border: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Expleo</span>
+                          <span className="badge badge-info">{currentBatchStudents.filter(s => s.companyPlaced?.includes('Expleo')).length} Placed</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -6864,9 +6906,20 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                                   {stats.placementProb}%
                                 </td>
                                 <td>
-                                  <span className={`badge ${s.status === 'Placed' ? 'badge-success' : 'badge-info'}`}>
-                                    {s.status === 'Placed' ? 'Placed' : 'Eligible & Ready'}
-                                  </span>
+                                  {s.status === 'Placed' ? (
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                      <span className="badge badge-success" style={{ fontWeight: 700 }}>Placed</span>
+                                      {s.companyPlaced && (
+                                        <span style={{ fontSize: '0.7rem', color: '#15803d', fontWeight: 650 }}>
+                                          {s.companyPlaced}
+                                        </span>
+                                      )}
+                                    </div>
+                                  ) : (
+                                    <span className="badge badge-info">
+                                      Eligible & Ready
+                                    </span>
+                                  )}
                                 </td>
                               </tr>
                             );

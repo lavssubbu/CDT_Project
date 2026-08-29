@@ -54,6 +54,24 @@ if (fs.existsSync(ivFilePath)) {
   const progRows = XLSX.utils.sheet_to_json(progSheet, { header: 1 });
   const commRows = XLSX.utils.sheet_to_json(commSheet, { header: 1 });
   const aptiRows = aptiSheet ? XLSX.utils.sheet_to_json(aptiSheet, { header: 1 }) : [];
+  
+  // Extract real company placed information from Attend. sheet
+  const attendSheet = ivWb.Sheets['Attend.'];
+  const attendRows = attendSheet ? XLSX.utils.sheet_to_json(attendSheet, { header: 1 }) : [];
+  const placedMap = {};
+  if (attendRows.length > 5) {
+    for (let r = 5; r < attendRows.length; r++) {
+      const row = attendRows[r];
+      if (!row) continue;
+      const reg = String(row[2] || "").trim();
+      let company = String(row[12] || "").trim();
+      const statusDiv = String(row[14] || "").trim();
+      if (reg && reg.match(/^\d{10,14}$/) && (company || statusDiv.toLowerCase().includes('placed'))) {
+        if (!company || company === "Hexaware") company = "Hexaware Technologies";
+        placedMap[reg] = company;
+      }
+    }
+  }
 
   const studentPhones = {};
   commRows.slice(5).forEach(row => {
@@ -116,6 +134,8 @@ if (fs.existsSync(ivFilePath)) {
     const cgpa = parseFloat(row[12]) || 7.0;
     const arrears = parseInt(row[14]) || 0;
     const mobile = studentPhones[reg] || "9876543210";
+    const company = placedMap[reg] || "";
+    const isPlaced = Boolean(company);
 
     allStudents.push({
       registerNo: reg,
@@ -130,7 +150,8 @@ if (fs.existsSync(ivFilePath)) {
       mobile: mobile,
       avatar: `https://images.unsplash.com/photo-${1500000000000 + studentIndex % 1000}?w=150&auto=format&fit=crop&q=60`,
       attendance: Math.round(80 + (reg.charCodeAt(reg.length - 1) % 18)),
-      status: arrears === 0 && cgpa >= 8.2 && (studentIndex % 7 === 0) ? "Placed" : "Unplaced"
+      status: isPlaced ? "Placed" : "Unplaced",
+      companyPlaced: company
     });
 
     // IV Year Prog scores
@@ -285,7 +306,8 @@ if (fs.existsSync(iiiFilePath)) {
       mobile: mobile || "9876543210",
       avatar: `https://images.unsplash.com/photo-${1500000000000 + studentIndex % 1000}?w=150&auto=format&fit=crop&q=60`,
       attendance: att,
-      status: "Unplaced"
+      status: "Unplaced",
+      companyPlaced: ""
     });
   });
 

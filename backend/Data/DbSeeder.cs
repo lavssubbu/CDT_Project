@@ -40,13 +40,35 @@ namespace backend.Data
 
                         if (data.Students != null && data.Students.Any())
                         {
-                            var existingRegs = context.Students.Select(s => s.RegisterNo).ToHashSet();
-                            var newStudents = data.Students.Where(s => !existingRegs.Contains(s.RegisterNo)).ToList();
+                            var existingStudents = context.Students.ToDictionary(s => s.RegisterNo);
+                            var newStudents = new List<Student>();
+                            bool updatedExisting = false;
+
+                            foreach (var s in data.Students)
+                            {
+                                if (existingStudents.TryGetValue(s.RegisterNo, out var exist))
+                                {
+                                    if (exist.Status != s.Status || exist.CompanyPlaced != s.CompanyPlaced)
+                                    {
+                                        exist.Status = s.Status;
+                                        exist.CompanyPlaced = s.CompanyPlaced;
+                                        updatedExisting = true;
+                                    }
+                                }
+                                else
+                                {
+                                    newStudents.Add(s);
+                                }
+                            }
+
                             if (newStudents.Any())
                             {
                                 context.Students.AddRange(newStudents);
+                            }
+                            if (newStudents.Any() || updatedExisting)
+                            {
                                 context.SaveChanges();
-                                Console.WriteLine($"Seeded {newStudents.Count} new students (Total now: {context.Students.Count()}).");
+                                Console.WriteLine($"Synced students: {newStudents.Count} new, updated placement statuses for {existingStudents.Count} records.");
                             }
                         }
 
