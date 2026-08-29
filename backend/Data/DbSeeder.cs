@@ -11,70 +11,85 @@ namespace backend.Data
     {
         public static void SeedData(AppDbContext context)
         {
-            // Seed only if database is completely fresh
-            if (!context.Departments.Any())
+            var seedFilePath = Path.Combine(Directory.GetCurrentDirectory(), "seed_data.json");
+            if (File.Exists(seedFilePath))
             {
-                var seedFilePath = Path.Combine(Directory.GetCurrentDirectory(), "seed_data.json");
-                if (File.Exists(seedFilePath))
+                try
                 {
-                    try
+                    var json = File.ReadAllText(seedFilePath);
+                    var data = JsonSerializer.Deserialize<SeedDataWrapper>(json, new JsonSerializerOptions
                     {
-                        var json = File.ReadAllText(seedFilePath);
-                        var data = JsonSerializer.Deserialize<SeedDataWrapper>(json, new JsonSerializerOptions
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                    if (data != null)
+                    {
+                        Console.WriteLine("Checking database sync with seed_data.json...");
+
+                        if (data.Departments != null && data.Departments.Any())
                         {
-                            PropertyNameCaseInsensitive = true
-                        });
+                            var existingDeptCodes = context.Departments.Select(d => d.Code).ToHashSet();
+                            var newDepts = data.Departments.Where(d => !existingDeptCodes.Contains(d.Code)).ToList();
+                            if (newDepts.Any())
+                            {
+                                context.Departments.AddRange(newDepts);
+                                context.SaveChanges();
+                                Console.WriteLine($"Seeded {newDepts.Count} new departments.");
+                            }
+                        }
 
-                        if (data != null)
+                        if (data.Students != null && data.Students.Any())
                         {
-                            Console.WriteLine("Seeding Database with real AY 2026-2027 student profiles...");
-
-                            if (data.Departments != null && data.Departments.Any())
+                            var existingRegs = context.Students.Select(s => s.RegisterNo).ToHashSet();
+                            var newStudents = data.Students.Where(s => !existingRegs.Contains(s.RegisterNo)).ToList();
+                            if (newStudents.Any())
                             {
-                                context.Departments.AddRange(data.Departments);
+                                context.Students.AddRange(newStudents);
                                 context.SaveChanges();
-                                Console.WriteLine($"Seeded {data.Departments.Count} departments.");
+                                Console.WriteLine($"Seeded {newStudents.Count} new students (Total now: {context.Students.Count()}).");
                             }
+                        }
 
-                            if (data.Students != null && data.Students.Any())
+                        if (data.Assessments != null && data.Assessments.Any())
+                        {
+                            var existingAssIds = context.Assessments.Select(a => a.Id).ToHashSet();
+                            var newAss = data.Assessments.Where(a => !existingAssIds.Contains(a.Id)).ToList();
+                            if (newAss.Any())
                             {
-                                context.Students.AddRange(data.Students);
+                                context.Assessments.AddRange(newAss);
                                 context.SaveChanges();
-                                Console.WriteLine($"Seeded {data.Students.Count} students.");
+                                Console.WriteLine($"Seeded {newAss.Count} new assessments.");
                             }
+                        }
 
-                            if (data.Assessments != null && data.Assessments.Any())
+                        if (data.Performances != null && data.Performances.Any())
+                        {
+                            // If performance count in DB is significantly less, sync new performances
+                            int currentPerfCount = context.Performances.Count();
+                            if (currentPerfCount < data.Performances.Count)
                             {
-                                context.Assessments.AddRange(data.Assessments);
-                                context.SaveChanges();
-                                Console.WriteLine($"Seeded {data.Assessments.Count} assessments.");
-                            }
-
-                            if (data.Performances != null && data.Performances.Any())
-                            {
-                                // Seed in chunks if list is very large to avoid memory issues on SQL server
                                 int chunkSize = 1000;
-                                for (int i = 0; i < data.Performances.Count; i += chunkSize)
+                                for (int i = currentPerfCount; i < data.Performances.Count; i += chunkSize)
                                 {
                                     var chunk = data.Performances.Skip(i).Take(chunkSize);
                                     context.Performances.AddRange(chunk);
                                     context.SaveChanges();
                                 }
-                                Console.WriteLine($"Seeded {data.Performances.Count} performance score rows.");
-                            }
-
-                            if (data.Notifications != null && data.Notifications.Any())
-                            {
-                                context.Notifications.AddRange(data.Notifications);
-                                context.SaveChanges();
-                                Console.WriteLine($"Seeded {data.Notifications.Count} notifications.");
+                                Console.WriteLine($"Seeded additional performances (Total now: {context.Performances.Count()}).");
                             }
                         }
+
+                        if (data.Notifications != null && data.Notifications.Any() && !context.Notifications.Any())
+                        {
+                            context.Notifications.AddRange(data.Notifications);
+                            context.SaveChanges();
+                            Console.WriteLine($"Seeded {data.Notifications.Count} notifications.");
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"ERROR: Database seeding failed: {ex.Message}");
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ERROR: Database seeding failed: {ex.Message}");
                 }
             }
 
