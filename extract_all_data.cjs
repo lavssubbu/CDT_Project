@@ -357,6 +357,76 @@ if (fs.existsSync(iiiFilePath)) {
   }
 }
 
+// ==========================================
+// C. EXTRACT BE23PT810 CODING SKILLS CA
+// ==========================================
+const caFilePath = path.join(__dirname, "BE23PT810_Coding_Skills_CA.xlsx");
+if (fs.existsSync(caFilePath)) {
+  console.log("Processing BE23PT810 Coding Skills CA...");
+  const caWb = XLSX.readFile(caFilePath);
+  const caSheet = caWb.Sheets['Overall Analysis'] || caWb.Sheets[caWb.SheetNames[0]];
+  const caRows = XLSX.utils.sheet_to_json(caSheet, { defval: "" });
+
+  const caAssId = "A_2028_CODING_SKILLS_CA";
+  allAssessments.push({
+    id: caAssId,
+    name: "III-Yr: BE23PT810 Coding Skills CA",
+    platform: "KIOT LMS",
+    category: "Programming",
+    date: "2026-08-25",
+    maxMarks: 100,
+    weightage: 1.0
+  });
+
+  const emailToReg = {};
+  allStudents.forEach(s => {
+    if (s.email) emailToReg[s.email.toLowerCase().trim()] = s.registerNo;
+  });
+
+  let caScoresCount = 0;
+  caRows.forEach(row => {
+    const email = String(row['Email address'] || '').toLowerCase().trim();
+    const regNo = emailToReg[email];
+    if (!regNo) return;
+
+    const totalVal = row['Total'];
+    if (totalVal === undefined || totalVal === null || totalVal === '' || totalVal === '-') return;
+    const total = parseFloat(totalVal);
+    if (isNaN(total)) return;
+
+    const mcq = parseFloat(row['MCQ']) || 0;
+    const debug = parseFloat(row['Debugging']) || 0;
+    const coding = parseFloat(row['Coding '] || row['Coding']) || 0;
+
+    let weakTopics = [];
+    let correctTopics = [];
+
+    if (mcq < 15) weakTopics.push("Core MCQ Concepts");
+    else correctTopics.push("MCQ Foundations");
+
+    if (debug < 30) weakTopics.push("Code Tracing & Debugging");
+    else correctTopics.push("Code Debugging");
+
+    if (coding < 15) weakTopics.push("Algorithms & Logic Building");
+    else correctTopics.push("Algorithm Implementation");
+
+    if (weakTopics.length === 0 && total < 60) weakTopics.push("Data Structures, Logic");
+    if (correctTopics.length === 0) correctTopics.push("Syntax & Basic Logic");
+
+    allPerformances.push({
+      registerNo: regNo,
+      assessmentId: caAssId,
+      platform: "KIOT LMS",
+      skill: "Programming",
+      score: Math.min(100, Math.max(0, Math.round(total))),
+      weakTopics: weakTopics.join(", "),
+      correctTopics: correctTopics.join(", ")
+    });
+    caScoresCount++;
+  });
+  console.log(`Ingested ${caScoresCount} student scores for BE23PT810 Coding Skills CA.`);
+}
+
 // Notifications
 const notifications = [
   { registerNo: "all", message: "AY 2026-2027 Unified Student Database updated: III Year (2028 Batch) and IV Year (2027 Batch) active!", date: new Date().toISOString().replace('T', ' ').substring(0, 16) }

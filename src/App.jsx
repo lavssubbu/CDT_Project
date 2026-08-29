@@ -2615,23 +2615,25 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     const file = e.target.files[0];
     if (!file) return;
 
-    triggerToast('Uploading and processing LMS Excel records...', 'info');
+    triggerToast('Uploading and processing Assessment Excel file...', 'info');
 
-    const baseName = file.name.replace(/\.[^/.]+$/, "");
-    let assessmentName = baseName;
-    if (assessmentName.startsWith("PracticeAssessmentsC-")) {
-      assessmentName = assessmentName.substring("PracticeAssessmentsC-".length);
+    let baseName = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+    if (baseName.startsWith("PracticeAssessmentsC-")) {
+      baseName = baseName.substring("PracticeAssessmentsC-".length);
     }
-    if (assessmentName.endsWith("-grades")) {
-      assessmentName = assessmentName.substring(0, assessmentName.length - "-grades".length);
+    if (baseName.endsWith("-grades")) {
+      baseName = baseName.substring(0, baseName.length - "-grades".length);
     }
 
+    let assessmentName = baseName.trim();
     let category = "Aptitude";
     const lowerName = assessmentName.toLowerCase();
-    if (lowerName.includes("programming") || lowerName.includes("coding")) {
+    if (lowerName.includes("programming") || lowerName.includes("coding") || lowerName.includes("tech")) {
       category = "Programming";
     } else if (lowerName.includes("sql") || lowerName.includes("db")) {
       category = "SQL";
+    } else if (lowerName.includes("comm") || lowerName.includes("verbal") || lowerName.includes("english")) {
+      category = "Communication";
     }
 
     const fileDate = new Date().toISOString().split('T')[0];
@@ -2641,91 +2643,164 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
       try {
         const data = new Uint8Array(evt.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
         
-        const rows = XLSX.utils.sheet_to_json(worksheet);
-        if (rows.length === 0) {
-          triggerToast('Uploaded Excel file is empty', 'error');
-          return;
-        }
-
+        // Build email/roll to reg lookup
         const emailToReg = {};
+        const rollToReg = {};
         db.students.forEach(s => {
-          if (s.email) {
-            emailToReg[s.email.toLowerCase().trim()] = s.registerNo;
-          }
+          if (s.email) emailToReg[s.email.toLowerCase().trim()] = s.registerNo;
+          if (s.registerNo) rollToReg[s.registerNo.toLowerCase().trim()] = s.registerNo;
+          if (s.rollNo) rollToReg[s.rollNo.toLowerCase().trim()] = s.registerNo;
         });
 
-        let csvLines = [];
-        let mappedCount = 0;
+        // Scan all sheets to find the most suitable data sheet
+        let bestSheetName = workbook.SheetNames[0];
+        let bestRows = [];
+        let maxMatches = 0;
+        let bestGradeKey = null;
+        let bestMaxGrade = 100.0;
+        let hasSubComponents = false;
 
-        let gradeKey = null;
-        let maxGrade = 100.0;
-        
-        if (rows.length > 0) {
-          Object.keys(rows[0]).forEach(key => {
-            if (key.startsWith('Grade/')) {
-              gradeKey = key;
-              maxGrade = parseFloat(key.replace('Grade/', '')) || 100.0;
+        for (const sName of workbook.SheetNames) {
+          const ws = workbook.Sheets[sName];
+          const rows = XLSX.utils.sheet_to_json(ws, { defval: "" });
+          if (!rows || rows.length === 0) continue;
+
+          // Detect columns
+          const sampleRow = rows[0];
+          const keys = Object.keys(sampleRow);
+          
+          let gradeKey = null;
+          let maxG = 100.0;
+          let subComp = false;
+
+          // Check for 'Total' or 'Score' or 'Marks' or 'Grade/X'
+          const totalKey = keys.find(k => k.trim().toLowerCase() === 'total' || k.trim().toLowerCase() === 'total (100)' || k.trim().toLowerCase() === 'score' || k.trim().toLowerCase() === 'marks');
+          const gradeSlashKey = keys.find(k => k.startsWith('Grade/'));
+          const mcqKey = keys.find(k => k.trim().toLowerCase().startsWith('mcq'));
+          const debugKey = keys.find(k => k.trim().toLowerCase().startsWith('debugging'));
+          const codingKey = keys.find(k => k.trim().toLowerCase().startsWith('coding'));
+
+          if (totalKey) {
+            gradeKey = totalKey;
+            maxG = 100.0;
+          } else if (gradeSlashKey) {
+            gradeKey = gradeSlashKey;
+            maxG = parseFloat(gradeSlashKey.replace('Grade/', '')) || 100.0;
+          } else if (mcqKey && debugKey) {
+            subComp = true;
+            gradeKey = 'SUBCOMPONENTS';
+            maxG = 100.0;
+          }
+
+          // Count student matches
+          let matchCount = 0;
+          rows.forEach(r => {
+            const email = String(r['Email address'] || r['Email'] || r['email'] || r['E-Mail ID'] || '').toLowerCase().trim();
+            const regOrId = String(r['Register No.'] || r['Register no'] || r['Register No'] || r['Reg No'] || r['ID number'] || r['Roll no'] || r['Roll No'] || '').toLowerCase().trim();
+            if ((email && emailToReg[email]) || (regOrId && (rollToReg[regOrId] || emailToReg[regOrId]))) {
+              matchCount++;
             }
           });
+
+          if (matchCount > maxMatches && gradeKey) {
+            maxMatches = matchCount;
+            bestSheetName = sName;
+            bestRows = rows;
+            bestGradeKey = gradeKey;
+            bestMaxGrade = maxG;
+            hasSubComponents = subComp;
+          }
         }
 
-        if (!gradeKey) {
-          triggerToast("Could not locate a 'Grade/X.X' column in the Excel file.", "error");
+        if (bestRows.length === 0 || maxMatches === 0) {
+          triggerToast('Could not find student records matching your database in the Excel file.', 'error');
           return;
         }
 
-        rows.forEach(row => {
-          const email = String(row['Email address'] || '').toLowerCase().trim();
-          const gradeStr = String(row[gradeKey] || '').trim();
+        let csvLines = [];
+        bestRows.forEach(row => {
+          const email = String(row['Email address'] || row['Email'] || row['email'] || row['E-Mail ID'] || '').toLowerCase().trim();
+          const regOrId = String(row['Register No.'] || row['Register no'] || row['Register No'] || row['Reg No'] || row['ID number'] || row['Roll no'] || r['Roll No'] || '').toLowerCase().trim();
           
-          if (!email || gradeStr === 'Overall average' || gradeStr === '-') {
-            return;
-          }
-
-          const regNo = emailToReg[email];
+          let regNo = emailToReg[email] || rollToReg[regOrId] || emailToReg[regOrId];
           if (!regNo) return;
 
-          const grade = parseFloat(gradeStr);
-          if (isNaN(grade)) return;
+          let score = null;
+          let mcqScore = null;
+          let debugScore = null;
+          let codingScore = null;
 
-          const score = Math.round((grade / maxGrade) * 100);
+          if (hasSubComponents || bestGradeKey === 'SUBCOMPONENTS') {
+            const mcq = parseFloat(row['MCQ'] || row['mcq']) || 0;
+            const debug = parseFloat(row['Debugging'] || row['debugging']) || 0;
+            const coding = parseFloat(row['Coding '] || row['Coding'] || row['coding']) || 0;
+            score = Math.round(mcq + debug + coding);
+            mcqScore = mcq;
+            debugScore = debug;
+            codingScore = coding;
+          } else if (bestGradeKey) {
+            const rawVal = row[bestGradeKey];
+            if (rawVal === undefined || rawVal === null || rawVal === '' || rawVal === '-' || rawVal === 'Overall average') return;
+            const parsed = parseFloat(rawVal);
+            if (isNaN(parsed)) return;
+            score = Math.round((parsed / bestMaxGrade) * 100);
 
-          let weak = "Aptitude Foundations";
-          let correct = "Basic Arithmetic";
-          if (score >= 80) {
-            weak = "";
-            correct = "Quantitative Aptitude, Logical Reasoning, Number Systems";
-          } else if (score >= 60) {
-            weak = "Logical Reasoning";
-            correct = "Quantitative Aptitude, Number Systems";
-          } else {
-            weak = "Quantitative Aptitude, Number Systems, Logical Reasoning";
-            correct = "";
+            // Also check if MCQ/Debugging/Coding sub-scores are present in this row
+            if (row['MCQ'] !== undefined) mcqScore = parseFloat(row['MCQ']);
+            if (row['Debugging'] !== undefined) debugScore = parseFloat(row['Debugging']);
+            if (row['Coding '] !== undefined || row['Coding'] !== undefined) codingScore = parseFloat(row['Coding '] || row['Coding']);
           }
 
-          csvLines.push(`"${regNo}","${assessmentName}","KIOT LMS","${category}","${fileDate}",100,${score},"${weak}","${correct}"`);
-          mappedCount++;
+          if (score === null || isNaN(score)) return;
+          score = Math.min(100, Math.max(0, score));
+
+          // Generate rich topic insights
+          let weakTopics = [];
+          let correctTopics = [];
+
+          if (mcqScore !== null && !isNaN(mcqScore)) {
+            if (mcqScore < 15) weakTopics.push("Core MCQ Concepts");
+            else correctTopics.push("MCQ Foundations");
+          }
+          if (debugScore !== null && !isNaN(debugScore)) {
+            if (debugScore < 30) weakTopics.push("Code Tracing & Debugging");
+            else correctTopics.push("Code Debugging");
+          }
+          if (codingScore !== null && !isNaN(codingScore)) {
+            if (codingScore < 15) weakTopics.push("Algorithms & Logic Building");
+            else correctTopics.push("Algorithm Implementation");
+          }
+
+          if (weakTopics.length === 0 && score < 60) {
+            weakTopics.push(category === "Programming" ? "Data Structures, Logic" : "Logical Reasoning, Quantitative Foundations");
+          }
+          if (correctTopics.length === 0) {
+            correctTopics.push(category === "Programming" ? "Syntax & Basic Logic" : "Basic Arithmetic & Problem Solving");
+          }
+
+          const weakStr = weakTopics.join(", ");
+          const correctStr = correctTopics.join(", ");
+
+          csvLines.push(`"${regNo}","${assessmentName}","KIOT LMS","${category}","${fileDate}",100,${score},"${weakStr}","${correctStr}"`);
         });
 
         if (csvLines.length === 0) {
-          triggerToast('No student records matched your uploaded file', 'error');
+          triggerToast('No valid score rows could be extracted from the sheet.', 'error');
           return;
         }
 
         const csvString = csvLines.join('\n');
         const result = await importCsv(csvString);
-        triggerToast(`Successfully integrated ${result.importedCount} student results from LMS Portal!`);
+        triggerToast(`Successfully integrated ${csvLines.length} student scores from '${file.name}'!`);
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         await loadData(true);
         setSelectedAnalysisAssessment(assessmentName);
         setSelectedAnalysisStudentReg('');
         setActiveTab('analysis');
       } catch (err) {
-        console.error(err);
-        triggerToast('Error reading LMS Excel sheet', 'error');
+        console.error("Excel upload processing error:", err);
+        triggerToast('Error reading and processing Assessment Excel file', 'error');
       }
     };
     reader.readAsArrayBuffer(file);

@@ -26919,6 +26919,15 @@ export const INITIAL_ASSESSMENTS = [
     "date": "2026-04-10",
     "maxMarks": 100,
     "weightage": 1
+  },
+  {
+    "id": "A_2028_CODING_SKILLS_CA",
+    "name": "III-Yr: BE23PT810 Coding Skills CA",
+    "platform": "KIOT LMS",
+    "category": "Programming",
+    "date": "2026-08-25",
+    "maxMarks": 100,
+    "weightage": 1
   }
 ];
 
@@ -208632,6 +208641,4434 @@ export const INITIAL_PERFORMANCES = [
     "score": 22,
     "weakTopics": "Quantitative Ability, Probability",
     "correctTopics": "Logical Reasoning, Numerical Series"
+  },
+  {
+    "registerNo": "611224243001",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243002",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243003",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243004",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243005",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243006",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243007",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243008",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243009",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243010",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243011",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243012",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243013",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243014",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243015",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243016",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243017",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243018",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243019",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243020",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243021",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243022",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243023",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243024",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243025",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243026",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243027",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243028",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243029",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243030",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243031",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243032",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243033",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243034",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243035",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243036",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243037",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243038",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243039",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243040",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 77,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243041",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243042",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243043",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243044",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243045",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243046",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243047",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243048",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243049",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243050",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243051",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243052",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243053",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 74,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243054",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243055",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 74,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243056",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243057",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243058",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243059",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243060",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243061",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243062",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243063",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243064",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243065",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243066",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243067",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243068",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243069",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243070",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243071",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 72,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243072",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243073",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243074",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243075",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243076",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243077",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243078",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243079",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243080",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243081",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243082",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243083",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243084",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243085",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243086",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243087",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243088",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243089",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243090",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243091",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243092",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243093",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243094",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243095",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243096",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 76,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243097",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243098",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243099",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243100",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243101",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243102",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243103",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243104",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243105",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243106",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243108",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243109",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243110",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243111",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243112",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243113",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243114",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243115",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243116",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243117",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243118",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243119",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243120",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243301",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 45,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243302",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243303",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243304",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243305",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 75,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243306",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243307",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243308",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224243309",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244002",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244003",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 48,
+    "weakTopics": "Core MCQ Concepts, Code Tracing & Debugging",
+    "correctTopics": "Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244004",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244005",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 62,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244006",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244009",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 61,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244010",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 76,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244012",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244013",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244015",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244016",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244017",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224244018",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 75,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244019",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 55,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224244021",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244022",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 56,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244023",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244024",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224244025",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244026",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244027",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244028",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244029",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 56,
+    "weakTopics": "Core MCQ Concepts, Code Tracing & Debugging",
+    "correctTopics": "Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244030",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244031",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244032",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 72,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224244034",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244035",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244036",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 66,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244037",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244038",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 69,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244039",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244041",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244046",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244049",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244050",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244051",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244052",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244053",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244054",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 71,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244055",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 77,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244056",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244057",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244058",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 49,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224244059",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 74,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244060",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244302",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 67,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224244301",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 51,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224104003",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104005",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104006",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104007",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104009",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104010",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104011",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104012",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104013",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104015",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104016",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104018",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104020",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 48,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104021",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104022",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104023",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104024",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104025",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104027",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104028",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104029",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104030",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104034",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104036",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104037",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104038",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104039",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104043",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104045",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104046",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104048",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104051",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104054",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104055",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104056",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104059",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104060",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104304",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104311",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 76,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104317",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104061",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104062",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104063",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104066",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104072",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 67,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104076",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 66,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224104077",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 74,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224104084",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104089",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104090",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104093",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104096",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104097",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104098",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104099",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104110",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104111",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 62,
+    "weakTopics": "Core MCQ Concepts, Code Tracing & Debugging",
+    "correctTopics": "Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104112",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224104113",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104114",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 71,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224104115",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104307",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104313",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104121",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104129",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 75,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104132",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104137",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104138",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104142",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104144",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104153",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104155",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 62,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224104156",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104160",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104164",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104168",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 77,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224104169",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104170",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104171",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104172",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 20,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224104302",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104315",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104190",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 63,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104195",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104196",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104202",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104203",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104207",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 77,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104208",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104214",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104216",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104220",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104235",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 49,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224104236",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104237",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104238",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104303",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224104325",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106002",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106003",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106007",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106010",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106011",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106012",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106014",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106017",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106018",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106019",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106020",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106021",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 43,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224106023",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106024",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106025",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106026",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106028",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106030",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106032",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106033",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106034",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106035",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106036",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106037",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106038",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106039",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106040",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106041",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106042",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 76,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106043",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106044",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106045",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106046",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106047",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106048",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 65,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106050",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106051",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106052",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106053",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106054",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106055",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224106056",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 77,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224106057",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106058",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 44,
+    "weakTopics": "Core MCQ Concepts, Algorithms & Logic Building",
+    "correctTopics": "Code Debugging"
+  },
+  {
+    "registerNo": "611224106059",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106060",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106301",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106302",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106303",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 48,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106304",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106062",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106063",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106064",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106065",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106067",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106068",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106070",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106071",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106072",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106073",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106074",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 75,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106075",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106076",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106077",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106079",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106080",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106081",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106082",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106083",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106085",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106086",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106087",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106088",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106089",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106091",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106092",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106093",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 73,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106094",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106095",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 73,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106097",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106098",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106099",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106100",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106101",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 76,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106102",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106103",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106105",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106106",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106108",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106109",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224106110",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106111",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 47,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106112",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106114",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 47,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106115",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106116",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106117",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106118",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106119",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106307",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106308",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106309",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106312",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 50,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106120",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106122",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 81,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106123",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106126",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 57,
+    "weakTopics": "Core MCQ Concepts, Algorithms & Logic Building",
+    "correctTopics": "Code Debugging"
+  },
+  {
+    "registerNo": "611224106127",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106128",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 97,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106129",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 75,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106131",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106132",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106134",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106136",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106137",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106140",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106141",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106143",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106144",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106145",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106146",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106150",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106154",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106155",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106156",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106157",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106161",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106162",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106163",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106164",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 70,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106165",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106166",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106167",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 100,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106168",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106170",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 69,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224106171",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 46,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106172",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106173",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106174",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106175",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224106319",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105004",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105007",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105014",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 41,
+    "weakTopics": "Code Tracing & Debugging, Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations"
+  },
+  {
+    "registerNo": "611224105015",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 71,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105016",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 72,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105022",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105025",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105033",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105041",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105046",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105047",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105048",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 96,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224105054",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 63,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224205002",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205003",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205004",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205005",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205006",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205008",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205009",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205010",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205012",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 78,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205015",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205016",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205022",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 80,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205023",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 94,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205024",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205030",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 70,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205034",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205037",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205039",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 72,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224205040",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 68,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205041",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205047",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 74,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205051",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205052",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205053",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205055",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205061",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205062",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 76,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205064",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 83,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205065",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205067",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205068",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205069",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205072",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205075",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205077",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 87,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205078",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205081",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 75,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224205083",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 93,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205084",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224205086",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205090",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205093",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 99,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205094",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 88,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205095",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205097",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 74,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224205099",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 77,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224205100",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205103",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 91,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205105",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205108",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 98,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205112",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 89,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205115",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 84,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224205120",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114003",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 65,
+    "weakTopics": "Algorithms & Logic Building",
+    "correctTopics": "MCQ Foundations, Code Debugging"
+  },
+  {
+    "registerNo": "611224114012",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 82,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114020",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 95,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114022",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 79,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114030",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 65,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114032",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 85,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114038",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114044",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 92,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114045",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 86,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114052",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 53,
+    "weakTopics": "Code Tracing & Debugging",
+    "correctTopics": "MCQ Foundations, Algorithm Implementation"
+  },
+  {
+    "registerNo": "611224114055",
+    "assessmentId": "A_2028_CODING_SKILLS_CA",
+    "platform": "KIOT LMS",
+    "skill": "Programming",
+    "score": 90,
+    "weakTopics": "",
+    "correctTopics": "MCQ Foundations, Code Debugging, Algorithm Implementation"
   }
 ];
 
@@ -208639,6 +213076,6 @@ export const INITIAL_NOTIFICATIONS = [
   {
     "registerNo": "all",
     "message": "AY 2026-2027 Unified Student Database updated: III Year (2028 Batch) and IV Year (2027 Batch) active!",
-    "date": "2026-08-29 05:41"
+    "date": "2026-08-29 06:16"
   }
 ];
