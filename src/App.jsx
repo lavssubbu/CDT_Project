@@ -206,6 +206,9 @@ export default function App() {
   }, [authUser]);
   const [activeTab, setActiveTab] = useState('dashboard'); // Used for inner navigation in dashboards if needed
   
+  // Batch Filter (2028: III Year | 2027: IV Year)
+  const [selectedBatch, setSelectedBatch] = useState('All'); // 'All' | '2028' | '2027'
+
   // Faculty Filters
   const [facultyDept, setFacultyDept] = useState('All');
   const [facultySec, setFacultySec] = useState('All');
@@ -1802,12 +1805,23 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     return result;
   }, [db]);
 
+  // Current batch students cohort (III Year / IV Year / All)
+  const currentBatchStudents = useMemo(() => {
+    if (!db || !db.students) return [];
+    if (selectedBatch === 'All') return db.students;
+    return db.students.filter(s => 
+      String(s.batch) === String(selectedBatch) || 
+      (selectedBatch === '2028' && (s.registerNo?.startsWith('611224') || s.email?.includes('2k24'))) || 
+      (selectedBatch === '2027' && (s.registerNo?.startsWith('611223') || s.email?.includes('2k23')))
+    );
+  }, [db, selectedBatch]);
+
   // ----------------------------------------------------
   // FILTERED STUDENT LISTS (Faculty view)
   // ----------------------------------------------------
   const filteredStudents = useMemo(() => {
-    if (!db || !db.students) return [];
-    return db.students.filter(student => {
+    if (!currentBatchStudents) return [];
+    return currentBatchStudents.filter(student => {
       const studDept = student.departmentCode || student.department || 'CSE';
       const deptMatch = facultyDept === 'All' || 
                         studDept === facultyDept || 
@@ -1819,7 +1833,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                           student.registerNo.includes(facultySearch);
       return deptMatch && secMatch && searchMatch;
     });
-  }, [db, facultyDept, facultySec, facultySearch]);
+  }, [currentBatchStudents, facultyDept, facultySec, facultySearch]);
 
   const lowPerformers = useMemo(() => {
     if (!db) return [];
@@ -1933,14 +1947,12 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     };
   }, [filteredStudents.length]);
 
-
-
   const companyEligibleStudents = useMemo(() => {
-    if (!db) return {};
+    if (!currentBatchStudents) return {};
     const result = {};
     Object.keys(COMPANY_CRITERIA).forEach(comp => {
       const crit = COMPANY_CRITERIA[comp];
-      result[comp] = db.students.filter(student => {
+      result[comp] = currentBatchStudents.filter(student => {
         const stats = studentMetrics[student.registerNo];
         if (!stats) return false;
         return (
@@ -1953,7 +1965,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
       });
     });
     return result;
-  }, [db, studentMetrics]);
+  }, [currentBatchStudents, studentMetrics]);
 
   const simulatedPlacementProb = useMemo(() => {
     const avgProg = Number(simProgramming);
@@ -1981,15 +1993,25 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
   const analysisStats = useMemo(() => {
     if (!db) return null;
     
-    // Provide fallback assessments if DB assessments list is empty
+    // Filter assessments by batch cohort if specified
     let assessmentsList = db.assessments && db.assessments.length > 0 ? db.assessments : [
       { id: 1, name: 'Weekly Technical Assessment #4', platform: 'LMS Portal', category: 'Programming', date: '2026-08-01' },
       { id: 2, name: 'Data Structures & Algorithms Sprint', platform: 'HackerRank', category: 'Coding', date: '2026-07-28' },
       { id: 3, name: 'Aptitude & Logical Ability Test', platform: 'AMCAT', category: 'Aptitude', date: '2026-07-25' }
     ];
 
+    if (selectedBatch === '2028') {
+      const b28Ass = assessmentsList.filter(a => a.name.includes('III-Yr') || a.id.includes('2028') || a.name.includes('Coding Skills'));
+      if (b28Ass.length > 0) assessmentsList = b28Ass;
+    } else if (selectedBatch === '2027') {
+      const b27Ass = assessmentsList.filter(a => a.name.includes('IV-Yr') || a.id.includes('2027'));
+      if (b27Ass.length > 0) assessmentsList = b27Ass;
+    }
+
     const sortedAssessments = [...assessmentsList].sort((a,b) => new Date(b.date) - new Date(a.date));
-    const targetAssName = selectedAnalysisAssessment || sortedAssessments[0]?.name || 'Weekly Technical Assessment #4';
+    const targetAssName = (selectedAnalysisAssessment && assessmentsList.some(a => a.name === selectedAnalysisAssessment)) 
+      ? selectedAnalysisAssessment 
+      : (sortedAssessments[0]?.name || 'Weekly Technical Assessment #4');
     const selectedAss = assessmentsList.find(a => a.name === targetAssName) || sortedAssessments[0];
     
     // Helper to extract clean numeric hash from string/number ids
@@ -2001,10 +2023,14 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
 
     // Filter or generate fallback performances
     let perfs = (db.performances || []).filter(p => p.assessmentId === selectedAss.id);
+    if (selectedBatch !== 'All') {
+      const batchRegSet = new Set(currentBatchStudents.map(s => s.registerNo));
+      perfs = perfs.filter(p => batchRegSet.has(p.registerNo));
+    }
 
     if (perfs.length === 0) {
       const assSeed = getNumericHash(selectedAss?.id || selectedAss?.name) * 19;
-      perfs = (db.students || []).map((s, idx) => {
+      perfs = (currentBatchStudents || []).map((s, idx) => {
         const charCodeSum = getNumericHash(s.registerNo);
         const calcVal = Math.round(52 + ((charCodeSum * 3 + assSeed + idx * 17) % 46));
         const dynamicScore = Number.isNaN(calcVal) ? 75 : Math.min(98, Math.max(48, calcVal));
@@ -2043,7 +2069,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     
     const topPerfs = perfs.filter(p => (Number(p.score) || 0) === highestScore);
     const topRegs = topPerfs.map(p => p.registerNo);
-    const topStuds = (db.students || []).filter(s => topRegs.includes(s.registerNo));
+    const topStuds = (currentBatchStudents || []).filter(s => topRegs.includes(s.registerNo));
     const topPerformers = topStuds.map(s => s.name).join(', ') || 'Aravind S';
     
     const weakCount = {};
@@ -2088,7 +2114,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
       strongTopics,
       weakTopics
     };
-  }, [db, selectedAnalysisAssessment]);
+  }, [db, selectedAnalysisAssessment, selectedBatch, currentBatchStudents]);
 
   const selectedAnalysisStudent = useMemo(() => {
     if (!analysisStats) return null;
@@ -2927,6 +2953,60 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                 ) : (
                   <Lock size={12} style={{ opacity: 0.6, marginLeft: '2px' }} />
                 )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* BATCH SELECTOR (III Year vs IV Year) */}
+        <div className="batch-switcher" style={{
+          display: 'flex',
+          alignItems: 'center',
+          background: 'rgba(255, 255, 255, 0.05)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '24px',
+          padding: '3px',
+          gap: '4px'
+        }}>
+          {[
+            { id: 'All', label: 'All Batches', count: db?.students?.length || 1765 },
+            { id: '2028', label: 'III Year (2028)', count: db?.students?.filter(s => String(s.batch) === '2028' || s.registerNo?.startsWith('611224') || s.email?.includes('2k24')).length || 1013 },
+            { id: '2027', label: 'IV Year (2027)', count: db?.students?.filter(s => String(s.batch) === '2027' || s.registerNo?.startsWith('611223') || s.email?.includes('2k23')).length || 752 }
+          ].map(b => {
+            const isSelected = selectedBatch === b.id;
+            return (
+              <button
+                key={b.id}
+                onClick={() => setSelectedBatch(b.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '20px',
+                  border: isSelected ? '1px solid var(--color-brand)' : '1px solid transparent',
+                  background: isSelected ? 'rgba(59, 130, 246, 0.25)' : 'transparent',
+                  color: isSelected ? '#ffffff' : 'var(--text-secondary)',
+                  fontWeight: isSelected ? 650 : 500,
+                  fontSize: '0.8rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isSelected ? '0 0 12px rgba(59, 130, 246, 0.3)' : 'none'
+                }}
+                title={`Filter by ${b.label}`}
+              >
+                <GraduationCap size={14} style={{ color: isSelected ? 'var(--color-brand)' : 'inherit' }} />
+                <span>{b.label}</span>
+                <span style={{
+                  fontSize: '0.7rem',
+                  padding: '1px 6px',
+                  borderRadius: '10px',
+                  background: isSelected ? 'var(--color-brand)' : 'rgba(255,255,255,0.08)',
+                  color: '#fff',
+                  fontWeight: 600
+                }}>
+                  {b.count}
+                </span>
               </button>
             );
           })}
@@ -6360,8 +6440,8 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                   <div className="grid-cols-4" style={{ marginBottom: '1.5rem' }}>
                     <div className="glass-card metric-card">
                       <div className="metric-info">
-                        <h3>Total Students</h3>
-                        <p style={{ color: '#fff' }}>{db.students.length}</p>
+                        <h3>Total Students {selectedBatch !== 'All' ? `(${selectedBatch === '2028' ? 'III-Yr' : 'IV-Yr'})` : ''}</h3>
+                        <p style={{ color: '#fff' }}>{currentBatchStudents.length}</p>
                       </div>
                       <div className="metric-icon-wrapper blue">
                         <Users size={20} />
@@ -6371,7 +6451,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                       <div className="metric-info">
                         <h3>Eligible for Placements</h3>
                         <p style={{ color: 'var(--color-success)' }}>
-                          {db.students.filter(s => s.placementEligibility === 'Eligible' && s.standingArrears === 0).length}
+                          {currentBatchStudents.filter(s => s.placementEligibility === 'Eligible' && s.standingArrears === 0).length}
                         </p>
                       </div>
                       <div className="metric-icon-wrapper green">
@@ -6382,7 +6462,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                       <div className="metric-info">
                         <h3>Placed Students</h3>
                         <p style={{ color: 'var(--color-accent)' }}>
-                          {db.students.filter(s => s.status === 'Placed').length}
+                          {currentBatchStudents.filter(s => s.status === 'Placed').length}
                         </p>
                       </div>
                       <div className="metric-icon-wrapper purple">
@@ -6392,7 +6472,11 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                     <div className="glass-card metric-card">
                       <div className="metric-info">
                         <h3>Assessments Synced</h3>
-                        <p style={{ color: 'var(--color-warning)' }}>{db.assessments.length}</p>
+                        <p style={{ color: 'var(--color-warning)' }}>
+                          {selectedBatch === 'All' 
+                            ? db.assessments.length 
+                            : db.assessments.filter(a => selectedBatch === '2028' ? a.name.includes('III-Yr') || a.id.includes('2028') : a.name.includes('IV-Yr') || a.id.includes('2027')).length}
+                        </p>
                       </div>
                       <div className="metric-icon-wrapper warning">
                         <FileText size={20} />
@@ -6404,36 +6488,36 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                   <div className="grid-cols-2">
                     <div className="glass-card">
                       <h3 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
-                        Training Paths Distribution
+                        Training Paths Distribution {selectedBatch !== 'All' ? `(Batch ${selectedBatch})` : ''}
                       </h3>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '0.5rem 0' }}>
                         <div>
                           <div style={{ display: 'flex', justifycontent: 'space-between', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                             <span style={{ color: 'var(--color-success)', fontWeight: 600 }}>Path Green (Advanced - Competitive Coding)</span>
-                            <span>{db.students.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Green')).length} Students</span>
+                            <span>{currentBatchStudents.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Green')).length} Students</span>
                           </div>
                           <div style={{ height: '6px', borderRadius: '3px', background: 'rgba(255,255,255,0.05)' }}>
-                            <div style={{ height: '100%', background: 'var(--color-success)', width: `${(db.students.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Green')).length / db.students.length) * 100}%`, borderRadius: '3px' }}></div>
+                            <div style={{ height: '100%', background: 'var(--color-success)', width: `${(currentBatchStudents.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Green')).length / Math.max(1, currentBatchStudents.length)) * 100}%`, borderRadius: '3px' }}></div>
                           </div>
                         </div>
                         
                         <div>
                           <div style={{ display: 'flex', justifycontent: 'space-between', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                             <span style={{ color: 'var(--color-warning)', fontWeight: 600 }}>Path Yellow (Intermediate - Skill Improvement)</span>
-                            <span>{db.students.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Yellow')).length} Students</span>
+                            <span>{currentBatchStudents.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Yellow')).length} Students</span>
                           </div>
                           <div style={{ height: '6px', borderRadius: '3px', background: 'rgba(255,255,255,0.05)' }}>
-                            <div style={{ height: '100%', background: 'var(--color-warning)', width: `${(db.students.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Yellow')).length / db.students.length) * 100}%`, borderRadius: '3px' }}></div>
+                            <div style={{ height: '100%', background: 'var(--color-warning)', width: `${(currentBatchStudents.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Yellow')).length / Math.max(1, currentBatchStudents.length)) * 100}%`, borderRadius: '3px' }}></div>
                           </div>
                         </div>
 
                         <div>
                           <div style={{ display: 'flex', justifycontent: 'space-between', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                             <span style={{ color: 'var(--color-danger)', fontWeight: 600 }}>Path Red (Foundation - Core Programming)</span>
-                            <span>{db.students.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Red')).length} Students</span>
+                            <span>{currentBatchStudents.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Red')).length} Students</span>
                           </div>
                           <div style={{ height: '6px', borderRadius: '3px', background: 'rgba(255,255,255,0.05)' }}>
-                            <div style={{ height: '100%', background: 'var(--color-danger)', width: `${(db.students.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Red')).length / db.students.length) * 100}%`, borderRadius: '3px' }}></div>
+                            <div style={{ height: '100%', background: 'var(--color-danger)', width: `${(currentBatchStudents.filter(s => (studentMetrics[s.registerNo]?.trainingPath === 'Red')).length / Math.max(1, currentBatchStudents.length)) * 100}%`, borderRadius: '3px' }}></div>
                           </div>
                         </div>
                       </div>
