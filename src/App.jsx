@@ -2958,60 +2958,6 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
           })}
         </div>
 
-        {/* BATCH SELECTOR (III Year vs IV Year) */}
-        <div className="batch-switcher" style={{
-          display: 'flex',
-          alignItems: 'center',
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '24px',
-          padding: '3px',
-          gap: '4px'
-        }}>
-          {[
-            { id: 'All', label: 'All Batches', count: db?.students?.length || 1765 },
-            { id: '2028', label: 'III Year (2028)', count: db?.students?.filter(s => String(s.batch) === '2028' || s.registerNo?.startsWith('611224') || s.email?.includes('2k24')).length || 1013 },
-            { id: '2027', label: 'IV Year (2027)', count: db?.students?.filter(s => String(s.batch) === '2027' || s.registerNo?.startsWith('611223') || s.email?.includes('2k23')).length || 752 }
-          ].map(b => {
-            const isSelected = selectedBatch === b.id;
-            return (
-              <button
-                key={b.id}
-                onClick={() => setSelectedBatch(b.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: '20px',
-                  border: isSelected ? '1px solid var(--color-brand)' : '1px solid transparent',
-                  background: isSelected ? 'rgba(59, 130, 246, 0.25)' : 'transparent',
-                  color: isSelected ? '#ffffff' : 'var(--text-secondary)',
-                  fontWeight: isSelected ? 650 : 500,
-                  fontSize: '0.8rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: isSelected ? '0 0 12px rgba(59, 130, 246, 0.3)' : 'none'
-                }}
-                title={`Filter by ${b.label}`}
-              >
-                <GraduationCap size={14} style={{ color: isSelected ? 'var(--color-brand)' : 'inherit' }} />
-                <span>{b.label}</span>
-                <span style={{
-                  fontSize: '0.7rem',
-                  padding: '1px 6px',
-                  borderRadius: '10px',
-                  background: isSelected ? 'var(--color-brand)' : 'rgba(255,255,255,0.08)',
-                  color: '#fff',
-                  fontWeight: 600
-                }}>
-                  {b.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
         {/* PROFILE ACTION OR SIGN IN */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <button className="btn btn-secondary" onClick={handleSyncData} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
@@ -3165,6 +3111,91 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
 
         {/* MAIN DASHBOARD CONTENT AREA */}
         <main className="main-content">
+
+          {/* BATCH FILTER BAR (ADMIN, FACULTY, PLACEMENT ONLY) */}
+          {currentRole !== 'Student' && (
+            <div className="glass-card" style={{
+              marginBottom: '1.5rem',
+              padding: '0.85rem 1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '1rem',
+              background: '#ffffff',
+              border: '1px solid var(--border-color)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '8px',
+                  background: 'rgba(59, 130, 246, 0.1)',
+                  color: 'var(--color-brand)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <GraduationCap size={18} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)' }}>Batch Filter & Cohort Selector</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Filter students, metrics, performance ledger, and assessments by academic year</div>
+                </div>
+              </div>
+
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: '#f1f5f9',
+                borderRadius: '10px',
+                padding: '4px',
+                gap: '4px'
+              }}>
+                {[
+                  { id: 'All', label: 'All Batches', count: db?.students?.length || 1765 },
+                  { id: '2028', label: 'III Year (2028 Batch)', count: db?.students?.filter(s => String(s.batch) === '2028' || s.registerNo?.startsWith('611224') || s.email?.includes('2k24')).length || 1013 },
+                  { id: '2027', label: 'IV Year (2027 Batch)', count: db?.students?.filter(s => String(s.batch) === '2027' || s.registerNo?.startsWith('611223') || s.email?.includes('2k23')).length || 752 }
+                ].map(b => {
+                  const isSelected = selectedBatch === b.id;
+                  return (
+                    <button
+                      key={b.id}
+                      onClick={() => setSelectedBatch(b.id)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '0.45rem 1rem',
+                        borderRadius: '7px',
+                        border: isSelected ? '1px solid var(--color-brand)' : '1px solid transparent',
+                        background: isSelected ? 'var(--color-brand)' : 'transparent',
+                        color: isSelected ? '#ffffff' : '#475569',
+                        fontWeight: isSelected ? 650 : 550,
+                        fontSize: '0.85rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: isSelected ? '0 2px 8px rgba(59, 130, 246, 0.3)' : 'none'
+                      }}
+                    >
+                      <span>{b.label}</span>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        padding: '1px 6px',
+                        borderRadius: '10px',
+                        background: isSelected ? 'rgba(255,255,255,0.25)' : '#e2e8f0',
+                        color: isSelected ? '#ffffff' : '#334155',
+                        fontWeight: 700
+                      }}>
+                        {b.count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* SAME-DAY ANALYSIS VIEW */}
           {activeTab === 'analysis' && analysisStats && (
@@ -6441,7 +6472,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                     <div className="glass-card metric-card">
                       <div className="metric-info">
                         <h3>Total Students {selectedBatch !== 'All' ? `(${selectedBatch === '2028' ? 'III-Yr' : 'IV-Yr'})` : ''}</h3>
-                        <p style={{ color: '#fff' }}>{currentBatchStudents.length}</p>
+                        <p style={{ color: 'var(--color-brand)' }}>{currentBatchStudents.length}</p>
                       </div>
                       <div className="metric-icon-wrapper blue">
                         <Users size={20} />
