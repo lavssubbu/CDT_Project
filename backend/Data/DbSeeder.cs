@@ -11,6 +11,23 @@ namespace backend.Data
     {
         public static void SeedData(AppDbContext context)
         {
+            try
+            {
+                // Ensure CompanyPlaced column exists in Students table (SQL Server / SQLite)
+                if (context.Database.IsSqlServer())
+                {
+                    context.Database.ExecuteSqlRaw(@"
+                        IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Students]') AND name = 'CompanyPlaced')
+                        BEGIN
+                            ALTER TABLE [dbo].[Students] ADD [CompanyPlaced] NVARCHAR(MAX) NOT NULL DEFAULT '';
+                        END");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Notice: Schema check: {ex.Message}");
+            }
+
             var seedFilePath = Path.Combine(Directory.GetCurrentDirectory(), "seed_data.json");
             if (File.Exists(seedFilePath))
             {

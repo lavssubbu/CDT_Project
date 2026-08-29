@@ -245,6 +245,27 @@ export default function App() {
   const [selectedBandFilter, setSelectedBandFilter] = useState('All'); // 'All' | '0-39' | '40-49' | '50-59' | '60-100'
   const [interviewFilter, setInterviewFilter] = useState('All'); // 'All' | 'Completed' | 'Pending'
 
+  // Universal Flexible Assessment Excel/CSV Importer States
+  const [flexibleFile, setFlexibleFile] = useState(null);
+  const [flexibleWorkbook, setFlexibleWorkbook] = useState(null);
+  const [flexibleSheetNames, setFlexibleSheetNames] = useState([]);
+  const [flexibleSelectedSheet, setFlexibleSelectedSheet] = useState('');
+  const [flexibleHeaders, setFlexibleHeaders] = useState([]);
+  const [flexibleRawRows, setFlexibleRawRows] = useState([]);
+  const [flexibleConfig, setFlexibleConfig] = useState({
+    assessmentName: '',
+    platform: 'Internal LMS',
+    category: 'Programming',
+    date: new Date().toISOString().split('T')[0],
+    maxMarks: 100,
+    regColumn: '',
+    scoreColumn: '', // The column chosen for Average/Total/Score/Marks
+    emailColumn: '',
+    nameColumn: ''
+  });
+  const [flexibleSearchPreview, setFlexibleSearchPreview] = useState('');
+  const [isImportingFlexible, setIsImportingFlexible] = useState(false);
+
   // Auto-dismiss Toast notification after 3.5 seconds
   useEffect(() => {
     if (!alert) return;
@@ -2833,6 +2854,236 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
     e.target.value = '';
   };
 
+  const handleFlexibleFileSelect = (e) => {
+    const file = e.target.files ? e.target.files[0] : e;
+    if (!file) return;
+    setFlexibleFile(file);
+
+    let cleanName = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ").trim();
+    if (cleanName.startsWith("PracticeAssessmentsC-")) cleanName = cleanName.substring("PracticeAssessmentsC-".length);
+    if (cleanName.endsWith("-grades")) cleanName = cleanName.substring(0, cleanName.length - "-grades".length);
+
+    let detectedCategory = 'Programming';
+    const lName = cleanName.toLowerCase();
+    if (lName.includes('apti') || lName.includes('reasoning') || lName.includes('math') || lName.includes('quant')) {
+      detectedCategory = 'Aptitude';
+    } else if (lName.includes('comm') || lName.includes('verbal') || lName.includes('english')) {
+      detectedCategory = 'Communication';
+    } else if (lName.includes('sql') || lName.includes('db')) {
+      detectedCategory = 'SQL';
+    }
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const data = new Uint8Array(evt.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        setFlexibleWorkbook(workbook);
+        setFlexibleSheetNames(workbook.SheetNames);
+        
+        loadSheetData(workbook, workbook.SheetNames[0], cleanName, detectedCategory);
+        triggerToast(`Loaded "${file.name}" with ${workbook.SheetNames.length} sheet(s)!`);
+      } catch (err) {
+        console.error(err);
+        triggerToast('Failed to parse file. Ensure it is a valid Excel or CSV file.', 'error');
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
+  const loadSheetData = (wb, sheetName, defaultName, defaultCat) => {
+    setFlexibleSelectedSheet(sheetName);
+    const ws = wb.Sheets[sheetName];
+    if (!ws) return;
+
+    const rawRows = XLSX.utils.sheet_to_json(ws, { defval: "" });
+    if (!rawRows || rawRows.length === 0) {
+      setFlexibleHeaders([]);
+      setFlexibleRawRows([]);
+      return;
+    }
+
+    const allHeaders = Array.from(new Set(rawRows.flatMap(r => Object.keys(r))));
+    setFlexibleHeaders(allHeaders);
+    setFlexibleRawRows(rawRows);
+
+    let autoReg = allHeaders.find(h => {
+      const lh = h.toLowerCase();
+      return lh.includes('register') || lh.includes('reg. no') || lh.includes('reg no') || lh.includes('roll no') || lh.includes('rollno') || lh.includes('id number');
+    }) || allHeaders[0] || '';
+
+    let autoEmail = allHeaders.find(h => {
+      const lh = h.toLowerCase();
+      return lh.includes('email') || lh.includes('mail');
+    }) || '';
+
+    let autoName = allHeaders.find(h => {
+      const lh = h.toLowerCase();
+      return (lh.includes('name') || lh.includes('student')) && !lh.includes('assessment') && !lh.includes('company');
+    }) || '';
+
+    let autoScore = allHeaders.find(h => {
+      const lh = h.toLowerCase().trim();
+      return lh === 'average' || lh === 'avg' || lh === 'total' || lh.includes('grand total') || lh.includes('total (100)') || lh.includes('total marks') || lh.startsWith('grade/') || lh === 'score' || lh === 'marks' || lh.includes('percentage');
+    }) || allHeaders.find(h => h.toLowerCase().includes('score') || h.toLowerCase().includes('marks') || h.toLowerCase().includes('avg') || h.toLowerCase().includes('total')) || allHeaders[allHeaders.length - 1] || '';
+
+    let detectedMax = 100;
+    if (autoScore && autoScore.startsWith('Grade/')) {
+      const val = parseFloat(autoScore.replace('Grade/', ''));
+      if (!isNaN(val)) detectedMax = val;
+    }
+
+    setFlexibleConfig(prev => ({
+      ...prev,
+      assessmentName: defaultName || prev.assessmentName || sheetName,
+      category: defaultCat || prev.category || 'Programming',
+      regColumn: autoReg,
+      emailColumn: autoEmail,
+      nameColumn: autoName,
+      scoreColumn: autoScore,
+      maxMarks: detectedMax
+    }));
+  };
+
+  const flexiblePreviewData = useMemo(() => {
+    if (!flexibleRawRows || flexibleRawRows.length === 0) {
+      return { scores: [], stats: null, barData: null };
+    }
+
+    const emailMap = {};
+    const regMap = {};
+    (db?.students || []).forEach(s => {
+      if (s.email) emailMap[s.email.toLowerCase().trim()] = s;
+      if (s.registerNo) regMap[s.registerNo.toLowerCase().trim()] = s;
+      if (s.rollNo) regMap[s.rollNo.toLowerCase().trim()] = s;
+    });
+
+    const maxM = Number(flexibleConfig.maxMarks) || 100;
+    const scoreCol = flexibleConfig.scoreColumn;
+    const regCol = flexibleConfig.regColumn;
+    const emailCol = flexibleConfig.emailColumn;
+    const nameCol = flexibleConfig.nameColumn;
+
+    const scoresList = [];
+    const band0_39 = [];
+    const band40_49 = [];
+    const band50_59 = [];
+    const band60_100 = [];
+
+    flexibleRawRows.forEach((row, idx) => {
+      const regVal = String(row[regCol] || '').trim();
+      const emailVal = String(row[emailCol] || '').trim();
+      const nameVal = String(row[nameCol] || '').trim();
+      const rawScore = row[scoreCol];
+
+      let numScore = null;
+      if (rawScore !== undefined && rawScore !== null && rawScore !== '' && rawScore !== '-' && rawScore !== 'Overall average') {
+        const parsed = parseFloat(rawScore);
+        if (!isNaN(parsed)) numScore = parsed;
+      }
+
+      if (numScore === null) return;
+
+      const pct = Math.min(100, Math.max(0, Math.round((numScore / maxM) * 100)));
+      const studentMatch = regMap[regVal.toLowerCase()] || emailMap[emailVal.toLowerCase()] || regMap[nameVal.toLowerCase()] || null;
+
+      const item = {
+        rowIdx: idx + 1,
+        regNo: studentMatch?.registerNo || regVal || `Student-${idx + 1}`,
+        name: studentMatch?.name || nameVal || 'Student',
+        dept: studentMatch?.departmentCode || studentMatch?.department || '-',
+        rawScore: numScore,
+        pctScore: pct,
+        isMatched: Boolean(studentMatch)
+      };
+
+      scoresList.push(item);
+
+      if (pct < 40) band0_39.push(item);
+      else if (pct < 50) band40_49.push(item);
+      else if (pct < 60) band50_59.push(item);
+      else band60_100.push(item);
+    });
+
+    const total = scoresList.length;
+    const avg = total > 0 ? Math.round(scoresList.reduce((acc, s) => acc + s.pctScore, 0) / total) : 0;
+    const passCount = scoresList.filter(s => s.pctScore >= 60).length;
+    const passPct = total > 0 ? Math.round((passCount / total) * 100) : 0;
+    const highest = total > 0 ? Math.max(...scoresList.map(s => s.pctScore)) : 0;
+    const lowest = total > 0 ? Math.min(...scoresList.map(s => s.pctScore)) : 0;
+
+    const barData = {
+      labels: ['0% - 39% (Critical)', '40% - 49% (Foundation)', '50% - 59% (Developing)', '60% - 100% (Proficient)'],
+      datasets: [
+        {
+          label: 'Students Count',
+          data: [band0_39.length, band40_49.length, band50_59.length, band60_100.length],
+          backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'],
+          borderRadius: 8
+        }
+      ]
+    };
+
+    return {
+      scores: scoresList,
+      stats: {
+        total,
+        avg,
+        passPct,
+        highest,
+        lowest,
+        band0_39: band0_39.length,
+        band40_49: band40_49.length,
+        band50_59: band50_59.length,
+        band60_100: band60_100.length
+      },
+      barData
+    };
+  }, [flexibleRawRows, flexibleConfig, db]);
+
+  const handleConfirmFlexibleImport = async () => {
+    if (!flexiblePreviewData || flexiblePreviewData.scores.length === 0) {
+      triggerToast('No valid student scores detected to import', 'error');
+      return;
+    }
+
+    setIsImportingFlexible(true);
+    triggerToast('Ingesting and processing assessment records...', 'info');
+
+    try {
+      const assName = flexibleConfig.assessmentName.trim() || 'Imported Assessment';
+      const category = flexibleConfig.category || 'Programming';
+      const dateVal = flexibleConfig.date || new Date().toISOString().split('T')[0];
+      const platform = flexibleConfig.platform || 'Internal LMS';
+
+      const csvLines = [
+        'Register,AssessmentName,Platform,Category,Date,MaxMarks,Score,WeakTopics,CorrectTopics'
+      ];
+
+      flexiblePreviewData.scores.forEach(s => {
+        const weak = s.pctScore < 60 ? (category === 'Programming' ? 'Core Logic & Data Structures' : 'Quantitative Ratios & Logic') : '';
+        const correct = s.pctScore >= 60 ? (category === 'Programming' ? 'Syntax & Problem Solving' : 'Basic Arithmetic & Logic') : 'Foundations';
+        csvLines.push(`"${s.regNo}","${assName}","${platform}","${category}","${dateVal}",100,${s.pctScore},"${weak}","${correct}"`);
+      });
+
+      const csvPayload = csvLines.join('\n');
+      await importCsv(csvPayload);
+
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      triggerToast(`Assessment "${assName}" ingested successfully! Mapped ${flexiblePreviewData.scores.length} student scores.`);
+      
+      await loadData(true);
+      setSelectedAnalysisAssessment(assName);
+      setSelectedAnalysisStudentReg('');
+      setActiveTab('analysis');
+    } catch (err) {
+      console.error(err);
+      triggerToast('Failed to write assessment to database server', 'error');
+    } finally {
+      setIsImportingFlexible(false);
+    }
+  };
+
   const handleAutoSyncLms = async () => {
     setSyncingLms(true);
     try {
@@ -3073,7 +3324,7 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <a className={`sidebar-link ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}><Database size={18} /> Platform Master</a>
                 <a className={`sidebar-link ${activeTab === 'performanceLedger' ? 'active' : ''}`} onClick={() => setActiveTab('performanceLedger')}><BarChart2 size={18} /> Performance Ledger</a>
-                <a className={`sidebar-link ${activeTab === 'csv' ? 'active' : ''}`} onClick={() => setActiveTab('csv')}><UploadCloud size={18} /> Assessment Sync (CSV)</a>
+                <a className={`sidebar-link ${activeTab === 'csv' ? 'active' : ''}`} onClick={() => setActiveTab('csv')}><FileSpreadsheet size={18} /> Universal Assessment Sync (Excel / CSV)</a>
                 <a className={`sidebar-link ${activeTab === 'analysis' ? 'active' : ''}`} onClick={() => setActiveTab('analysis')}><TrendingUp size={18} /> Same-Day Analysis</a>
                 <a className={`sidebar-link ${activeTab === 'interview' ? 'active' : ''}`} onClick={() => setActiveTab('interview')}><Mic size={18} /> AI Mock Interview Report</a>
                 <a className={`sidebar-link ${activeTab === 'addAssessment' ? 'active' : ''}`} onClick={() => setActiveTab('addAssessment')}><Plus size={18} /> Schedule Assessment</a>
@@ -6606,61 +6857,444 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
                 </div>
               )}
 
-              {/* CSV UPLOADER PANEL */}
+              {/* UNIVERSAL FLEXIBLE ASSESSMENT & SPREADSHEET INTEGRATOR */}
               {activeTab === 'csv' && (
-                <div className="glass-card">
-                  <div style={{ display: 'flex', justifycontent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Automatic Assessment Integrator Engine</h3>
-                    <button className="btn btn-secondary" onClick={pasteSampleCsv} style={{ fontSize: '0.8rem' }}>
-                      Paste Demo CSV Template
-                    </button>
-                  </div>
-                  
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: '1.5' }}>
-                    To import assessment results automatically, paste CSV lines below. Formatting schema:<br />
-                    <code style={{ color: 'var(--color-brand)', background: 'rgba(0,0,0,0.3)', padding: '0.2rem 0.5rem', borderRadius: '4px', display: 'block', margin: '0.5rem 0' }}>
-                      Register,AssessmentName,Platform,Category,Date,MaxMarks,Score,WeakTopics(separated by semi-colon),CorrectTopics
-                    </code>
-                  </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  {/* UPLOADER HERO CARD */}
+                  <div className="glass-card" style={{ background: '#ffffff', border: '1px solid var(--border-color)', padding: '1.75rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
+                      <div>
+                        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                          <FileSpreadsheet size={26} style={{ color: 'var(--color-brand)' }} />
+                          Universal Flexible Assessment & Spreadsheet Integrator
+                        </h3>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.3rem', maxWidth: '750px' }}>
+                          Upload <strong>ANY Excel (.xlsx, .xls) or CSV spreadsheet</strong>. Select your preferred column (e.g. <em>Average, Total, Score, Marks</em>) to automatically map student records, compute real-time score bands, and generate instant performance analytics.
+                        </p>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button 
+                          className="btn btn-secondary" 
+                          onClick={() => {
+                            // Demo load BE23PT810 coding skills template or sample
+                            const sampleCsv = `Register,AssessmentName,Platform,Category,Date,MaxMarks,Score,WeakTopics,CorrectTopics
+611224243001,Continuous Assessment - Coding Skills,KIOT LMS,Programming,2026-08-01,100,82,Generics,Java OOP
+611224243002,Continuous Assessment - Coding Skills,KIOT LMS,Programming,2026-08-01,100,68,Streams,Data Structures
+611224243003,Continuous Assessment - Coding Skills,KIOT LMS,Programming,2026-08-01,100,45,Collections,Syntax
+611224243004,Continuous Assessment - Coding Skills,KIOT LMS,Programming,2026-08-01,100,92,,Full Stack`;
+                            setCsvInput(sampleCsv);
+                            triggerToast('Loaded sample CSV template in manual box below!');
+                          }}
+                          style={{ fontSize: '0.8rem' }}
+                        >
+                          Demo CSV Template
+                        </button>
+                      </div>
+                    </div>
 
-                  {/* KIOT LMS EXCEL INTEGRATION PANEL */}
-                  <div style={{ border: '1px dashed rgba(16, 185, 129, 0.2)', padding: '1.25rem', borderRadius: '8px', marginBottom: '1.5rem', background: 'rgba(16, 185, 129, 0.02)' }}>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 600, color: '#10b981', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <FileSpreadsheet size={18} />
-                      KIOT LMS Moodle Integration (.xlsx)
+                    {/* DRAG AND DROP FILE INPUT ZONE */}
+                    <div 
+                      style={{
+                        border: '2px dashed var(--color-brand)',
+                        borderRadius: '12px',
+                        padding: '2.5rem 1.5rem',
+                        textAlign: 'center',
+                        background: 'rgba(59, 130, 246, 0.03)',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        marginBottom: '1.25rem'
+                      }}
+                      onClick={() => document.getElementById('flexible-excel-file-input').click()}
+                    >
+                      <input 
+                        type="file" 
+                        accept=".xlsx, .xls, .csv" 
+                        id="flexible-excel-file-input"
+                        style={{ display: 'none' }}
+                        onChange={handleFlexibleFileSelect}
+                      />
+                      <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(59, 130, 246, 0.1)', color: 'var(--color-brand)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                        <UploadCloud size={28} />
+                      </div>
+                      <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+                        {flexibleFile ? `Selected: ${flexibleFile.name}` : 'Drop or Click to Upload Excel (.xlsx, .xls) / CSV'}
+                      </h4>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        {flexibleFile ? `Size: ${(flexibleFile.size / 1024).toFixed(1)} KB • Sheets: ${flexibleSheetNames.length}` : 'Supports Multi-sheet Excel, LMS Moodle Exports, Coding Contests, Continuous Assessments & Placement Marks'}
+                      </p>
+                    </div>
+
+                    {/* CONFIGURATION & COLUMN MAPPERS BAR (WHEN FILE IS LOADED) */}
+                    {flexibleHeaders.length > 0 && (
+                      <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          ⚙️ Step 2: Flexible Column Mapping & Assessment Configuration
+                        </h4>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                          {/* Sheet Selector if multiple sheets */}
+                          {flexibleSheetNames.length > 1 && (
+                            <div>
+                              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.35rem' }}>
+                                Active Excel Sheet
+                              </label>
+                              <select 
+                                className="input-glass select-glass"
+                                style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                                value={flexibleSelectedSheet}
+                                onChange={e => {
+                                  if (flexibleWorkbook) loadSheetData(flexibleWorkbook, e.target.value);
+                                }}
+                              >
+                                {flexibleSheetNames.map(s => (
+                                  <option key={s} value={s}>{s}</option>
+                                ))}
+                              </select>
+                            </div>
+                          )}
+
+                          {/* Assessment Name */}
+                          <div>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.35rem' }}>
+                              Assessment Name / Title
+                            </label>
+                            <input 
+                              type="text" 
+                              className="input-glass"
+                              style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                              value={flexibleConfig.assessmentName}
+                              onChange={e => setFlexibleConfig({...flexibleConfig, assessmentName: e.target.value})}
+                              placeholder="e.g. Coding Skills Continuous Assessment"
+                            />
+                          </div>
+
+                          {/* Category */}
+                          <div>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.35rem' }}>
+                              Category
+                            </label>
+                            <select 
+                              className="input-glass select-glass"
+                              style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                              value={flexibleConfig.category}
+                              onChange={e => setFlexibleConfig({...flexibleConfig, category: e.target.value})}
+                            >
+                              <option value="Programming">Programming / Coding</option>
+                              <option value="Aptitude">Aptitude & Logic</option>
+                              <option value="Communication">Communication & Verbal</option>
+                              <option value="SQL">SQL & DBMS</option>
+                              <option value="Technical">Core Technical</option>
+                            </select>
+                          </div>
+
+                          {/* Platform */}
+                          <div>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.35rem' }}>
+                              Source Platform
+                            </label>
+                            <select 
+                              className="input-glass select-glass"
+                              style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                              value={flexibleConfig.platform}
+                              onChange={e => setFlexibleConfig({...flexibleConfig, platform: e.target.value})}
+                            >
+                              <option value="KIOT LMS">KIOT LMS (Moodle)</option>
+                              <option value="IAMNEO">IAMNEO</option>
+                              <option value="HackerRank">HackerRank</option>
+                              <option value="CodeChef">CodeChef</option>
+                              <option value="AMCAT">AMCAT</option>
+                              <option value="Internal Continuous Assessment">Internal Continuous Assessment (CA)</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* COLUMN SELECTION GRID */}
+                        <div style={{ padding: '1rem', background: '#ffffff', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                          <div style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--color-brand)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                            🎯 Match Columns From Your Spreadsheet:
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                            {/* Score / Average / Marks Column */}
+                            <div style={{ padding: '0.6rem', background: '#eff6ff', borderRadius: '8px', border: '1px solid #bfdbfe' }}>
+                              <label style={{ fontSize: '0.78rem', fontWeight: 800, color: '#1e40af', display: 'block', marginBottom: '0.35rem' }}>
+                                ⭐ Score / Average / Marks Column (Required)
+                              </label>
+                              <select 
+                                className="input-glass select-glass"
+                                style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#3b82f6', fontWeight: 650 }}
+                                value={flexibleConfig.scoreColumn}
+                                onChange={e => setFlexibleConfig({...flexibleConfig, scoreColumn: e.target.value})}
+                              >
+                                <option value="">-- Select Score/Average Column --</option>
+                                {flexibleHeaders.map(h => (
+                                  <option key={h} value={h}>{h}</option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Student Reg No Column */}
+                            <div style={{ padding: '0.6rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                              <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '0.35rem' }}>
+                                🎓 Register / Roll No Column
+                              </label>
+                              <select 
+                                className="input-glass select-glass"
+                                style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                                value={flexibleConfig.regColumn}
+                                onChange={e => setFlexibleConfig({...flexibleConfig, regColumn: e.target.value})}
+                              >
+                                <option value="">-- Select Reg No Column --</option>
+                                {flexibleHeaders.map(h => (
+                                  <option key={h} value={h}>{h}</option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Email Column (Optional) */}
+                            <div style={{ padding: '0.6rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                              <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '0.35rem' }}>
+                                📧 Email Address Column (Optional)
+                              </label>
+                              <select 
+                                className="input-glass select-glass"
+                                style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                                value={flexibleConfig.emailColumn}
+                                onChange={e => setFlexibleConfig({...flexibleConfig, emailColumn: e.target.value})}
+                              >
+                                <option value="">-- Optional: Select Email --</option>
+                                {flexibleHeaders.map(h => (
+                                  <option key={h} value={h}>{h}</option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Max Marks */}
+                            <div style={{ padding: '0.6rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                              <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '0.35rem' }}>
+                                💯 Max Marks Base
+                              </label>
+                              <input 
+                                type="number" 
+                                className="input-glass"
+                                style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
+                                value={flexibleConfig.maxMarks}
+                                onChange={e => setFlexibleConfig({...flexibleConfig, maxMarks: parseFloat(e.target.value) || 100})}
+                                placeholder="100, 50, 35, etc."
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 3: LIVE SCORE BAND ANALYTICS & GRAPH PREVIEW */}
+                    {flexiblePreviewData.stats && (
+                      <div style={{ marginBottom: '1.5rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                          <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <BarChart2 size={20} style={{ color: 'var(--color-brand)' }} />
+                            Step 3: Instant Live Score Band Analytics & Distribution
+                          </h4>
+                          <span className="badge badge-success" style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}>
+                            ✓ {flexiblePreviewData.stats.total} Valid Student Scores Parsed
+                          </span>
+                        </div>
+
+                        {/* METRICS ROW */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
+                          <div className="glass-card metric-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <div className="metric-info">
+                              <h3>Total Students</h3>
+                              <p style={{ color: 'var(--color-brand)', fontWeight: 800 }}>{flexiblePreviewData.stats.total}</p>
+                            </div>
+                            <div className="metric-icon-wrapper blue">
+                              <Users size={18} />
+                            </div>
+                          </div>
+                          <div className="glass-card metric-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <div className="metric-info">
+                              <h3>Cohort Average</h3>
+                              <p style={{ color: 'var(--color-brand)', fontWeight: 800 }}>{flexiblePreviewData.stats.avg}%</p>
+                            </div>
+                            <div className="metric-icon-wrapper purple">
+                              <TrendingUp size={18} />
+                            </div>
+                          </div>
+                          <div className="glass-card metric-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <div className="metric-info">
+                              <h3>Pass Rate (≥60%)</h3>
+                              <p style={{ color: 'var(--color-success)', fontWeight: 800 }}>{flexiblePreviewData.stats.passPct}%</p>
+                            </div>
+                            <div className="metric-icon-wrapper green">
+                              <CheckCircle size={18} />
+                            </div>
+                          </div>
+                          <div className="glass-card metric-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <div className="metric-info">
+                              <h3>Highest / Lowest</h3>
+                              <p style={{ color: 'var(--text-primary)', fontWeight: 800 }}>{flexiblePreviewData.stats.highest}% / {flexiblePreviewData.stats.lowest}%</p>
+                            </div>
+                            <div className="metric-icon-wrapper warning">
+                              <Award size={18} />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 4 SCORE BAND CARDS & BAR GRAPH */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
+                          <div style={{ padding: '1rem', borderRadius: '10px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#dc2626' }}>0% - 39% (Critical)</div>
+                            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#dc2626', marginTop: '0.2rem' }}>{flexiblePreviewData.stats.band0_39} Students</div>
+                            <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Remedial Action Needed</div>
+                          </div>
+                          <div style={{ padding: '1rem', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706' }}>40% - 49% (Foundation)</div>
+                            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#d97706', marginTop: '0.2rem' }}>{flexiblePreviewData.stats.band40_49} Students</div>
+                            <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Core Concept Practice</div>
+                          </div>
+                          <div style={{ padding: '1rem', borderRadius: '10px', background: 'rgba(59, 130, 246, 0.08)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2563eb' }}>50% - 59% (Developing)</div>
+                            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#2563eb', marginTop: '0.2rem' }}>{flexiblePreviewData.stats.band50_59} Students</div>
+                            <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Intermediate Skill Track</div>
+                          </div>
+                          <div style={{ padding: '1rem', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#059669' }}>60% - 100% (Proficient)</div>
+                            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#059669', marginTop: '0.2rem' }}>{flexiblePreviewData.stats.band60_100} Students</div>
+                            <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Placement Ready Cohort</div>
+                          </div>
+                        </div>
+
+                        {/* VISUAL SCORE BAND BAR GRAPH */}
+                        <div style={{ background: '#ffffff', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+                          <h5 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.75rem' }}>
+                            📊 Assessment Score Band Distribution Bar Graph
+                          </h5>
+                          <div style={{ height: '220px' }}>
+                            <Bar 
+                              data={flexiblePreviewData.barData} 
+                              options={{
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false } },
+                                scales: {
+                                  x: { grid: { display: false }, ticks: { color: '#64748b', font: { weight: '600' } } },
+                                  y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true }
+                                }
+                              }} 
+                            />
+                          </div>
+                        </div>
+
+                        {/* STUDENT SCORES PREVIEW DATATABLE */}
+                        <div style={{ background: '#ffffff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                            <h5 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>
+                              📋 Student Data Preview (Showing top 25 records)
+                            </h5>
+                            <input 
+                              type="text"
+                              placeholder="Filter preview..."
+                              className="input-glass"
+                              style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', width: '200px', background: '#f8fafc', color: '#0f172a', borderColor: '#cbd5e1' }}
+                              value={flexibleSearchPreview}
+                              onChange={e => setFlexibleSearchPreview(e.target.value)}
+                            />
+                          </div>
+
+                          <div className="table-container" style={{ maxHeight: '280px', overflowY: 'auto' }}>
+                            <table className="premium-table">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Register No</th>
+                                  <th>Student Name</th>
+                                  <th>Dept</th>
+                                  <th>Raw Score</th>
+                                  <th>Normalized %</th>
+                                  <th>Score Band</th>
+                                  <th>DB Match</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {flexiblePreviewData.scores.filter(s => {
+                                  if (!flexibleSearchPreview) return true;
+                                  const q = flexibleSearchPreview.toLowerCase();
+                                  return s.regNo.toLowerCase().includes(q) || s.name.toLowerCase().includes(q) || s.dept.toLowerCase().includes(q);
+                                }).slice(0, 25).map(s => (
+                                  <tr key={s.rowIdx}>
+                                    <td>{s.rowIdx}</td>
+                                    <td style={{ fontWeight: 700, color: 'var(--color-brand)' }}>{s.regNo}</td>
+                                    <td style={{ fontWeight: 600 }}>{s.name}</td>
+                                    <td>{s.dept}</td>
+                                    <td style={{ fontWeight: 700 }}>{s.rawScore}</td>
+                                    <td style={{ fontWeight: 800, color: s.pctScore >= 60 ? 'var(--color-success)' : s.pctScore >= 40 ? 'var(--color-warning)' : 'var(--color-danger)' }}>
+                                      {s.pctScore}%
+                                    </td>
+                                    <td>
+                                      <span className={`badge ${
+                                        s.pctScore >= 60 ? 'badge-success' : 
+                                        s.pctScore >= 50 ? 'badge-info' : 
+                                        s.pctScore >= 40 ? 'badge-warning' : 'badge-danger'
+                                      }`}>
+                                        {s.pctScore >= 60 ? 'Proficient' : s.pctScore >= 50 ? 'Developing' : s.pctScore >= 40 ? 'Foundation' : 'Critical'}
+                                      </span>
+                                    </td>
+                                    <td>
+                                      {s.isMatched ? (
+                                        <span style={{ color: '#10b981', fontWeight: 600, fontSize: '0.75rem' }}>✓ Mapped</span>
+                                      ) : (
+                                        <span style={{ color: '#f59e0b', fontWeight: 600, fontSize: '0.75rem' }}>⚠ New Record</span>
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        {/* CONFIRM AND INGEST ACTION BUTTONS */}
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                          <button 
+                            className="btn btn-primary" 
+                            onClick={handleConfirmFlexibleImport}
+                            disabled={isImportingFlexible}
+                            style={{ padding: '0.75rem 2rem', fontSize: '0.95rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                          >
+                            <CheckCircle size={18} />
+                            {isImportingFlexible ? 'Ingesting Assessment...' : `Confirm & Ingest ${flexiblePreviewData.scores.length} Records to System`}
+                          </button>
+                          <button 
+                            className="btn btn-secondary" 
+                            onClick={() => {
+                              setFlexibleFile(null);
+                              setFlexibleHeaders([]);
+                              setFlexibleRawRows([]);
+                            }}
+                          >
+                            Clear / Choose Another File
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* OPTIONAL QUICK CSV COPY-PASTE (COLLAPSIBLE) */}
+                  <div className="glass-card" style={{ background: '#ffffff', border: '1px solid var(--border-color)' }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem', color: '#0f172a' }}>
+                      📝 Or Quick Copy-Paste Raw CSV Lines:
                     </h4>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: '1.4' }}>
-                      Select the Excel spreadsheet downloaded directly from the KIOT LMS Portal quiz page. The engine will automatically match student email addresses, calculate percentage grades out of 35.00, and map them to their profile details.
-                    </p>
-                    <input 
-                      type="file" 
-                      accept=".xlsx, .xls" 
-                      id="lms-excel-upload"
-                      style={{ display: 'none' }}
-                      onChange={handleLmsExcelUpload}
-                    />
-                    <button className="btn btn-secondary" onClick={() => document.getElementById('lms-excel-upload').click()} style={{ background: 'rgba(16, 185, 129, 0.1)', borderColor: '#10b981', color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <UploadCloud size={16} /> Choose LMS Excel File
-                    </button>
-                  </div>
-
-                  <div className="slider-container" style={{ marginBottom: '1.5rem' }}>
                     <textarea
                       className="input-glass"
-                      rows="8"
-                      placeholder="Paste CSV rows here..."
-                      style={{ width: '100%', fontFamily: 'Courier, monospace', fontSize: '0.85rem', lineHeight: '1.6' }}
+                      rows="4"
+                      placeholder="Register,AssessmentName,Platform,Category,Date,MaxMarks,Score,WeakTopics,CorrectTopics..."
+                      style={{ width: '100%', fontFamily: 'Courier, monospace', fontSize: '0.85rem', background: '#f8fafc', color: '#0f172a', borderColor: '#cbd5e1', marginBottom: '0.75rem' }}
                       value={csvInput}
                       onChange={e => setCsvInput(e.target.value)}
                     ></textarea>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '1rem' }}>
-                    <button className="btn btn-primary" onClick={handleCsvImport}>
-                      <UploadCloud size={16} /> Import & Process Results
-                    </button>
-                    <button className="btn btn-secondary" onClick={() => { setCsvInput(''); setActiveTab('dashboard'); }}>
-                      Cancel
+                    <button className="btn btn-secondary" onClick={handleCsvImport} disabled={!csvInput.trim()}>
+                      <UploadCloud size={14} /> Process Raw CSV
                     </button>
                   </div>
                 </div>
