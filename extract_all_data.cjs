@@ -55,7 +55,7 @@ if (fs.existsSync(ivFilePath)) {
   const commRows = XLSX.utils.sheet_to_json(commSheet, { header: 1 });
   const aptiRows = aptiSheet ? XLSX.utils.sheet_to_json(aptiSheet, { header: 1 }) : [];
   
-  // Extract real company placed information from Attend. sheet
+  // Extract real company placed information from Attend. sheet (Exact 24 Hexaware & 36 Expleo)
   const attendSheet = ivWb.Sheets['Attend.'];
   const attendRows = attendSheet ? XLSX.utils.sheet_to_json(attendSheet, { header: 1 }) : [];
   const placedMap = {};
@@ -64,10 +64,10 @@ if (fs.existsSync(ivFilePath)) {
       const row = attendRows[r];
       if (!row) continue;
       const reg = String(row[2] || "").trim();
-      let company = String(row[12] || "").trim();
-      const statusDiv = String(row[14] || "").trim();
-      if (reg && reg.match(/^\d{10,14}$/) && (company || statusDiv.toLowerCase().includes('placed'))) {
-        if (!company || company === "Hexaware") company = "Hexaware Technologies";
+      const rawComp = String(row[12] || "").trim();
+      if (reg && reg.match(/^\d{10,14}$/) && rawComp) {
+        let company = rawComp;
+        if (company.toLowerCase() === "hexaware") company = "Hexaware Technologies";
         placedMap[reg] = company;
       }
     }

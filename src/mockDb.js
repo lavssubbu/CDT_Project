@@ -6894,8 +6894,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "9361758330",
     "avatar": "https://images.unsplash.com/photo-1500000000431?w=150&auto=format&fit=crop&q=60",
     "attendance": 96,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223106075",
@@ -9358,8 +9358,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "9043038932",
     "avatar": "https://images.unsplash.com/photo-1500000000585?w=150&auto=format&fit=crop&q=60",
     "attendance": 81,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223244048",
@@ -11262,8 +11262,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "9345536092",
     "avatar": "https://images.unsplash.com/photo-1500000000704?w=150&auto=format&fit=crop&q=60",
     "attendance": 82,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223114079",
@@ -11310,8 +11310,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "9442832287",
     "avatar": "https://images.unsplash.com/photo-1500000000707?w=150&auto=format&fit=crop&q=60",
     "attendance": 94,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223114083",
@@ -11326,8 +11326,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "9047954664",
     "avatar": "https://images.unsplash.com/photo-1500000000708?w=150&auto=format&fit=crop&q=60",
     "attendance": 95,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223114084",
@@ -11502,8 +11502,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "9790079191",
     "avatar": "https://images.unsplash.com/photo-1500000000719?w=150&auto=format&fit=crop&q=60",
     "attendance": 96,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223114095",
@@ -11950,8 +11950,8 @@ export const INITIAL_STUDENTS = [
     "mobile": "6382598670",
     "avatar": "https://images.unsplash.com/photo-1500000000747?w=150&auto=format&fit=crop&q=60",
     "attendance": 82,
-    "status": "Placed",
-    "companyPlaced": "Hexaware Technologies"
+    "status": "Unplaced",
+    "companyPlaced": ""
   },
   {
     "registerNo": "611223114109",
@@ -218486,6 +218486,6 @@ export const INITIAL_NOTIFICATIONS = [
   {
     "registerNo": "all",
     "message": "AY 2026-2027 Unified Student Database updated: III Year (2028 Batch) and IV Year (2027 Batch) active!",
-    "date": "2026-08-29 06:39"
+    "date": "2026-08-29 06:49"
   }
 ];
