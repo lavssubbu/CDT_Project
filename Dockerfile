@@ -14,6 +14,7 @@ WORKDIR /src
 COPY backend/backend.csproj ./backend/
 RUN dotnet restore ./backend/backend.csproj
 COPY backend/ ./backend/
+RUN rm -rf ./backend/wwwroot/* || true
 COPY --from=frontend-builder /app/dist ./backend/wwwroot
 RUN dotnet publish ./backend/backend.csproj -c Release -o /app/publish
 RUN cp ./backend/seed_data.json /app/publish/seed_data.json || true
