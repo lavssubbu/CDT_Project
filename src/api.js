@@ -3,25 +3,23 @@ import { INITIAL_STUDENTS, INITIAL_ASSESSMENTS, INITIAL_PERFORMANCES, INITIAL_NO
 
 const IS_BROWSER = typeof window !== 'undefined';
 const API_ENV_URL = import.meta.env.VITE_API_URL || '';
-const IS_PRODUCTION_DEMO = IS_BROWSER && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && (!API_ENV_URL || API_ENV_URL.includes('localhost'));
+const IS_LOCAL = IS_BROWSER && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-const BASE_URL = API_ENV_URL || 'http://localhost:5296/api';
+const BASE_URL = API_ENV_URL || (IS_LOCAL ? 'http://localhost:5296/api' : '/api');
 
 export const fetchStudents = async () => {
-  if (IS_PRODUCTION_DEMO) return INITIAL_STUDENTS;
   try {
     const res = await fetch(`${BASE_URL}/students`);
     if (!res.ok) throw new Error('Failed to fetch students');
-    return await res.json();
+    const data = await res.json();
+    if (data && data.length > 0) return data;
+    return INITIAL_STUDENTS;
   } catch (err) {
     return INITIAL_STUDENTS;
   }
 };
 
 export const fetchStudent = async (regNo) => {
-  if (IS_PRODUCTION_DEMO) {
-    return INITIAL_STUDENTS.find(s => s.registerNo === regNo) || INITIAL_STUDENTS[0];
-  }
   try {
     const res = await fetch(`${BASE_URL}/students/${regNo}`);
     if (!res.ok) throw new Error('Failed to fetch student details');
@@ -32,7 +30,6 @@ export const fetchStudent = async (regNo) => {
 };
 
 export const saveStudent = async (student) => {
-  if (IS_PRODUCTION_DEMO) return { success: true, student };
   try {
     const res = await fetch(`${BASE_URL}/students`, {
       method: 'POST',
@@ -48,29 +45,30 @@ export const saveStudent = async (student) => {
 };
 
 export const fetchAssessments = async () => {
-  if (IS_PRODUCTION_DEMO) return INITIAL_ASSESSMENTS;
   try {
     const res = await fetch(`${BASE_URL}/assessments`);
     if (!res.ok) throw new Error('Failed to fetch assessments');
-    return await res.json();
+    const data = await res.json();
+    if (data && data.length > 0) return data;
+    return INITIAL_ASSESSMENTS;
   } catch (err) {
     return INITIAL_ASSESSMENTS;
   }
 };
 
 export const fetchPerformances = async () => {
-  if (IS_PRODUCTION_DEMO) return INITIAL_PERFORMANCES;
   try {
     const res = await fetch(`${BASE_URL}/assessments/performances`);
     if (!res.ok) throw new Error('Failed to fetch performance ledger');
-    return await res.json();
+    const data = await res.json();
+    if (data && data.length > 0) return data;
+    return INITIAL_PERFORMANCES;
   } catch (err) {
     return INITIAL_PERFORMANCES;
   }
 };
 
 export const createAssessment = async (assessment) => {
-  if (IS_PRODUCTION_DEMO) return { success: true, assessment };
   try {
     const res = await fetch(`${BASE_URL}/assessments`, {
       method: 'POST',
@@ -86,7 +84,6 @@ export const createAssessment = async (assessment) => {
 };
 
 export const importCsv = async (csvText) => {
-  if (IS_PRODUCTION_DEMO) return { success: true, message: 'Synced locally' };
   try {
     const res = await fetch(`${BASE_URL}/assessments/sync-csv`, {
       method: 'POST',
@@ -102,11 +99,12 @@ export const importCsv = async (csvText) => {
 };
 
 export const fetchNotifications = async () => {
-  if (IS_PRODUCTION_DEMO) return INITIAL_NOTIFICATIONS;
   try {
     const res = await fetch(`${BASE_URL}/notifications`);
     if (!res.ok) throw new Error('Failed to fetch notification feed');
-    return await res.json();
+    const data = await res.json();
+    if (data && data.length > 0) return data;
+    return INITIAL_NOTIFICATIONS;
   } catch (err) {
     return INITIAL_NOTIFICATIONS;
   }
@@ -234,10 +232,6 @@ const getDemoUser = (identifier, role) => {
 };
 
 export const signInApi = async (identifier, password, role) => {
-  if (IS_PRODUCTION_DEMO) {
-    return getDemoUser(identifier, role);
-  }
-
   try {
     const res = await fetch(`${BASE_URL}/auth/signin`, {
       method: 'POST',
@@ -256,23 +250,6 @@ export const signInApi = async (identifier, password, role) => {
 };
 
 export const signUpApi = async (signUpData) => {
-  if (IS_PRODUCTION_DEMO) {
-    return {
-      success: true,
-      message: 'Account registered successfully (Demo Mode)',
-      token: `demo-jwt-token-${Date.now()}`,
-      user: {
-        id: Math.floor(Math.random() * 1000) + 1,
-        email: signUpData.email,
-        username: signUpData.username || signUpData.email.split('@')[0],
-        fullName: signUpData.fullName,
-        role: signUpData.role || 'Student',
-        department: signUpData.department || 'CSE',
-        registerNo: signUpData.registerNo || signUpData.username
-      }
-    };
-  }
-
   try {
     const res = await fetch(`${BASE_URL}/auth/signup`, {
       method: 'POST',
@@ -305,7 +282,6 @@ export const signUpApi = async (signUpData) => {
 };
 
 export const fetchUsersApi = async () => {
-  if (IS_PRODUCTION_DEMO) return [];
   try {
     const res = await fetch(`${BASE_URL}/auth/users`);
     if (!res.ok) throw new Error('Failed to fetch user list');
@@ -317,7 +293,6 @@ export const fetchUsersApi = async () => {
 };
 
 export const syncLmsPortal = async () => {
-  if (IS_PRODUCTION_DEMO) return { importedCount: 5, assessmentName: 'IAMNEO LMS Sync' };
   try {
     const res = await fetch(`${BASE_URL}/assessments/sync-lms-portal`, { method: 'POST' });
     if (!res.ok) throw new Error('Sync failed');
