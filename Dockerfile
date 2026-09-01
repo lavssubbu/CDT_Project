@@ -1,25 +1,17 @@
 # Multi-stage Dockerfile for KIOT-CDT (ASP.NET Core + React Vite)
 
-# Stage 1: Build React Frontend
-FROM node:20-alpine AS frontend-builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-
-# Stage 2: Build .NET Backend
+# Stage 1: Build .NET Backend with Verified Frontend Bundle
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS backend-builder
 WORKDIR /src
 COPY backend/backend.csproj ./backend/
 RUN dotnet restore ./backend/backend.csproj
 COPY backend/ ./backend/
 RUN rm -rf ./backend/wwwroot/* || true
-COPY --from=frontend-builder /app/dist ./backend/wwwroot
+COPY dist/ ./backend/wwwroot/
 RUN dotnet publish ./backend/backend.csproj -c Release -o /app/publish
 RUN cp ./backend/seed_data.json /app/publish/seed_data.json || true
 
-# Stage 3: Runtime Environment
+# Stage 2: Runtime Environment
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:8080
