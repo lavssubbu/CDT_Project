@@ -16,6 +16,7 @@ RUN dotnet restore ./backend/backend.csproj
 COPY backend/ ./backend/
 COPY --from=frontend-builder /app/dist ./backend/wwwroot
 RUN dotnet publish ./backend/backend.csproj -c Release -o /app/publish
+RUN cp ./backend/seed_data.json /app/publish/seed_data.json || true
 
 # Stage 3: Runtime Environment
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final

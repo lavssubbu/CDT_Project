@@ -31,6 +31,14 @@ namespace backend.Data
             }
 
             var seedFilePath = Path.Combine(Directory.GetCurrentDirectory(), "seed_data.json");
+            if (!File.Exists(seedFilePath))
+            {
+                seedFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "seed_data.json");
+            }
+            if (!File.Exists(seedFilePath))
+            {
+                seedFilePath = Path.Combine(Directory.GetCurrentDirectory(), "backend", "seed_data.json");
+            }
             if (File.Exists(seedFilePath))
             {
                 try
