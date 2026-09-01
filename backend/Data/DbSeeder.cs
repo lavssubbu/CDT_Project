@@ -67,12 +67,20 @@ namespace backend.Data
                             {
                                 if (existingStudents.TryGetValue(s.RegisterNo, out var exist))
                                 {
-                                    if (exist.Status != s.Status || exist.CompanyPlaced != s.CompanyPlaced)
-                                    {
-                                        exist.Status = s.Status;
-                                        exist.CompanyPlaced = s.CompanyPlaced;
-                                        updatedExisting = true;
-                                    }
+                                    exist.Name = s.Name;
+                                    exist.DepartmentCode = s.DepartmentCode;
+                                    exist.Section = s.Section;
+                                    exist.Batch = s.Batch;
+                                    exist.CGPA = s.CGPA;
+                                    exist.StandingArrears = s.StandingArrears;
+                                    exist.PlacementEligibility = s.PlacementEligibility;
+                                    exist.Email = s.Email;
+                                    exist.Mobile = s.Mobile;
+                                    exist.Attendance = s.Attendance;
+                                    exist.Status = s.Status;
+                                    exist.CompanyPlaced = s.CompanyPlaced;
+                                    if (!string.IsNullOrEmpty(s.ResumeText)) exist.ResumeText = s.ResumeText;
+                                    updatedExisting = true;
                                 }
                                 else
                                 {
