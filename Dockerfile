@@ -9,6 +9,8 @@ COPY backend/ ./backend/
 RUN rm -rf ./backend/wwwroot/* || true
 COPY dist/ ./backend/wwwroot/
 RUN dotnet publish ./backend/backend.csproj -c Release -o /app/publish
+RUN rm -rf /app/publish/wwwroot/* || true
+RUN cp -r ./dist/* /app/publish/wwwroot/ || true
 RUN cp ./backend/seed_data.json /app/publish/seed_data.json || true
 
 # Stage 2: Runtime Environment
