@@ -18,6 +18,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:8080
 ENV PORT=8080
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 EXPOSE 8080
 COPY --from=backend-builder /app/publish .
 ENTRYPOINT ["dotnet", "backend.dll"]
