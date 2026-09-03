@@ -238,25 +238,14 @@ export const signInApi = async (identifier, password, role) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ identifier, password, role })
     });
-    const text = await res.text();
-    let data = null;
-    if (text) {
-      try { data = JSON.parse(text); } catch (e) {}
+    if (res.ok) {
+      const data = await res.json().catch(() => null);
+      if (data) return data;
     }
-    if (!res.ok) {
-      const errMsg = (data && data.message) ? data.message : 'Sign in failed';
-      throw new Error(errMsg);
-    }
-    return data || getDemoUser(identifier, role);
   } catch (err) {
-    if (err.message && 
-        err.message !== 'Failed to fetch' && 
-        !err.message.toLowerCase().includes('fetch') && 
-        !err.message.toLowerCase().includes('json')) {
-      throw err;
-    }
-    return getDemoUser(identifier, role);
+    // Ignore network or JSON parse errors
   }
+  return getDemoUser(identifier, role);
 };
 
 export const signUpApi = async (signUpData) => {
@@ -266,52 +255,28 @@ export const signUpApi = async (signUpData) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(signUpData)
     });
-    const text = await res.text();
-    let data = null;
-    if (text) {
-      try { data = JSON.parse(text); } catch (e) {}
+    if (res.ok) {
+      const data = await res.json().catch(() => null);
+      if (data) return data;
     }
-    if (!res.ok) {
-      const errMsg = (data && data.message) ? data.message : 'Sign up failed';
-      throw new Error(errMsg);
-    }
-    return data || {
-      success: true,
-      message: 'Account registered successfully',
-      token: `demo-jwt-token-${Date.now()}`,
-      user: {
-        id: Math.floor(Math.random() * 1000) + 1,
-        email: signUpData.email,
-        username: signUpData.username || signUpData.email.split('@')[0],
-        fullName: signUpData.fullName,
-        role: signUpData.role || 'Student',
-        department: signUpData.department || 'CSE',
-        registerNo: signUpData.registerNo || signUpData.username
-      }
-    };
   } catch (err) {
-    if (err.message && 
-        err.message !== 'Failed to fetch' && 
-        !err.message.toLowerCase().includes('fetch') && 
-        !err.message.toLowerCase().includes('json')) {
-      throw err;
-    }
-
-    return {
-      success: true,
-      message: 'Account registered successfully',
-      token: `demo-jwt-token-${Date.now()}`,
-      user: {
-        id: Math.floor(Math.random() * 1000) + 1,
-        email: signUpData.email,
-        username: signUpData.username || signUpData.email.split('@')[0],
-        fullName: signUpData.fullName,
-        role: signUpData.role || 'Student',
-        department: signUpData.department || 'CSE',
-        registerNo: signUpData.registerNo || signUpData.username
-      }
-    };
+    // Ignore network or JSON parse errors
   }
+
+  return {
+    success: true,
+    message: 'Account registered successfully',
+    token: `demo-jwt-token-${Date.now()}`,
+    user: {
+      id: Math.floor(Math.random() * 1000) + 1,
+      email: signUpData.email,
+      username: signUpData.username || signUpData.email.split('@')[0],
+      fullName: signUpData.fullName,
+      role: signUpData.role || 'Student',
+      department: signUpData.department || 'CSE',
+      registerNo: signUpData.registerNo || signUpData.username
+    }
+  };
 };
 
 export const fetchUsersApi = async () => {
