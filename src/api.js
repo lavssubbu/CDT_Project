@@ -12,7 +12,7 @@ export const fetchStudents = async () => {
     const res = await fetch(`${BASE_URL}/students`);
     if (!res.ok) throw new Error('Failed to fetch students');
     const data = await res.json();
-    if (data && data.length > 0) return data;
+    if (data && data.length >= 1700) return data;
     return INITIAL_STUDENTS;
   } catch (err) {
     return INITIAL_STUDENTS;
@@ -49,7 +49,7 @@ export const fetchAssessments = async () => {
     const res = await fetch(`${BASE_URL}/assessments`);
     if (!res.ok) throw new Error('Failed to fetch assessments');
     const data = await res.json();
-    if (data && data.length > 0) return data;
+    if (data && data.length >= 20) return data;
     return INITIAL_ASSESSMENTS;
   } catch (err) {
     return INITIAL_ASSESSMENTS;
@@ -61,7 +61,7 @@ export const fetchPerformances = async () => {
     const res = await fetch(`${BASE_URL}/assessments/performances`);
     if (!res.ok) throw new Error('Failed to fetch performance ledger');
     const data = await res.json();
-    if (data && data.length > 0) return data;
+    if (data && data.length >= 100) return data;
     return INITIAL_PERFORMANCES;
   } catch (err) {
     return INITIAL_PERFORMANCES;
