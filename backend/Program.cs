@@ -3,20 +3,17 @@ using backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Database (SQL Server with SQLite fallback for Linux/Cloud container deployment)
+// Configure Database (SQLite for Linux/Docker cloud containers, SQL Server fallback for local Windows)
 var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    if (!string.IsNullOrEmpty(connString) && (connString.Contains("Server=") || connString.Contains("Data Source=")))
+    if (!OperatingSystem.IsWindows())
     {
-        try
-        {
-            options.UseSqlServer(connString);
-        }
-        catch
-        {
-            options.UseSqlite("Data Source=cdt_database.db");
-        }
+        options.UseSqlite("Data Source=cdt_database.db");
+    }
+    else if (!string.IsNullOrEmpty(connString) && connString.Contains("Server=") && !connString.Contains("(localdb)"))
+    {
+        options.UseSqlServer(connString);
     }
     else
     {
