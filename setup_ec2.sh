@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Ultra-Fast Lightweight Deployment Script for KIOT-CDT on AWS EC2
+# Ultra-Fast Lightweight Deployment Script for KIOT-CDT on AWS EC2 (HTTP + HTTPS)
 # ==============================================================================
 set -e
 
@@ -9,14 +9,14 @@ echo " Starting KIOT-CDT Deployment on AWS EC2 "
 echo "=========================================="
 
 # 1. Free up disk space on EC2 instance
-echo "--> Cleaning package caches & temp files to maximize disk space..."
+echo "--> Cleaning package caches & temp files..."
 sudo apt-get clean -y || true
 sudo rm -rf /tmp/* /var/cache/apt/archives/* || true
 
-# 2. Update and install minimal prerequisites
-echo "--> Installing lightweight prerequisites..."
+# 2. Update and install prerequisites (including OpenSSL & Certbot)
+echo "--> Installing prerequisites & SSL tools..."
 sudo apt-get update -y
-sudo apt-get install -y curl wget unzip nginx libicu-dev
+sudo apt-get install -y curl wget unzip nginx libicu-dev openssl certbot python3-certbot-nginx
 
 # 3. Install lightweight ASP.NET Core 9.0 Runtime (~30MB)
 if ! command -v dotnet &> /dev/null || [[ "$(dotnet --version 2>&1)" != 9.* ]]; then
@@ -30,7 +30,17 @@ fi
 
 echo "--> .NET Runtime ready: $(dotnet --info | grep 'Host:' -A 4 || echo 'OK')"
 
-# 4. Deploy pre-compiled full-stack package
+# 4. Generate SSL Certificate for HTTPS Port 443 (Self-Signed Fallback)
+echo "--> Setting up SSL certificates for HTTPS (Port 443)..."
+sudo mkdir -p /etc/ssl/private /etc/ssl/certs
+if [ ! -f /etc/ssl/certs/cdt_selfsigned.crt ]; then
+    sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+        -keyout /etc/ssl/private/cdt_selfsigned.key \
+        -out /etc/ssl/certs/cdt_selfsigned.crt \
+        -subj "/C=IN/ST=TamilNadu/L=Salem/O=KIOT/OU=CDT/CN=kiot-cdt-pat"
+fi
+
+# 5. Deploy pre-compiled full-stack package
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "--> Deploying pre-compiled release to /var/www/cdt_project..."
 sudo mkdir -p /var/www/cdt_project
@@ -52,7 +62,7 @@ fi
 sudo chown -R www-data:www-data /var/www/cdt_project
 sudo chmod -R 755 /var/www/cdt_project
 
-# 5. Configure systemd service
+# 6. Configure systemd service
 echo "--> Configuring background service (cdt.service)..."
 cat << 'EOF' | sudo tee /etc/systemd/system/cdt.service > /dev/null
 [Unit]
@@ -75,14 +85,21 @@ Environment=DOTNET_ROOT=/usr/share/dotnet
 WantedBy=multi-user.target
 EOF
 
-# 6. Configure Nginx Reverse Proxy
-echo "--> Configuring Nginx on Port 80..."
+# 7. Configure Nginx with BOTH HTTP (Port 80) and HTTPS (Port 443)
+echo "--> Configuring Nginx for HTTP (80) and HTTPS (443)..."
 cat << 'EOF' | sudo tee /etc/nginx/sites-available/default > /dev/null
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    server_name _;
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
 
+    ssl_certificate     /etc/ssl/certs/cdt_selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/cdt_selfsigned.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    server_name _;
     client_max_body_size 50M;
 
     location / {
@@ -98,7 +115,7 @@ server {
 }
 EOF
 
-# 7. Start and verify services
+# 8. Start and verify services
 echo "--> Starting services..."
 sudo systemctl daemon-reload
 sudo systemctl restart nginx
@@ -111,10 +128,15 @@ sleep 2
 sudo apt-get clean -y || true
 sudo rm -rf /tmp/* || true
 
+PUBLIC_IP=$(curl -s http://checkip.amazonaws.com || curl -s ifconfig.me)
+
 echo ""
 echo "============================================================"
 echo " 🎉 Deployment Completed Successfully! "
-echo " Public Portal URL: http://$(curl -s http://checkip.amazonaws.com || curl -s ifconfig.me)"
-echo " Service Status:    sudo systemctl status cdt.service"
-echo " View Live Logs:    sudo journalctl -u cdt.service -f"
+echo " HTTP URL:       http://${PUBLIC_IP}"
+echo " HTTPS URL:      https://${PUBLIC_IP}"
+echo " Named HTTP:     http://kiot-cdt-pat"
+echo " Named HTTPS:    https://kiot-cdt-pat"
+echo " Service Status: sudo systemctl status cdt.service"
+echo " View Live Logs: sudo journalctl -u cdt.service -f"
 echo "============================================================"
