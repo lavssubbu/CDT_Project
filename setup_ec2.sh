@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Automated Setup & Deployment Script for KIOT-CDT on AWS EC2
+# Ultra-Fast Lightweight Deployment Script for KIOT-CDT on AWS EC2
 # ==============================================================================
 set -e
 
@@ -8,52 +8,43 @@ echo "=========================================="
 echo " Starting KIOT-CDT Deployment on AWS EC2 "
 echo "=========================================="
 
-# 1. Update system packages
-echo "--> Updating system packages..."
+# 1. Free up disk space on EC2 instance
+echo "--> Cleaning package caches & temp files to maximize disk space..."
+sudo apt-get clean -y || true
+sudo rm -rf /tmp/* /var/cache/apt/archives/* || true
+
+# 2. Update and install minimal prerequisites
+echo "--> Installing lightweight prerequisites..."
 sudo apt-get update -y
-sudo apt-get install -y curl wget git unzip libicu-dev build-essential
+sudo apt-get install -y curl wget unzip nginx libicu-dev
 
-# 2. Install Node.js LTS
-if ! command -v node &> /dev/null; then
-    echo "--> Installing Node.js LTS..."
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-else
-    echo "--> Node.js already installed: $(node -v)"
-fi
-
-# 3. Install .NET 9.0 (Universal Microsoft Installer)
-if ! command -v dotnet &> /dev/null || [[ "$(dotnet --version)" != 9.* ]]; then
-    echo "--> Installing .NET 9.0 SDK via official Microsoft installer..."
+# 3. Install lightweight ASP.NET Core 9.0 Runtime (~30MB)
+if ! command -v dotnet &> /dev/null || [[ "$(dotnet --version 2>&1)" != 9.* ]]; then
+    echo "--> Installing lightweight ASP.NET Core 9.0 Runtime..."
     wget https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
     chmod +x /tmp/dotnet-install.sh
-    sudo /tmp/dotnet-install.sh --channel 9.0 --install-dir /usr/share/dotnet
+    sudo /tmp/dotnet-install.sh --channel 9.0 --runtime aspnetcore --install-dir /usr/share/dotnet
     sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
-    rm /tmp/dotnet-install.sh
+    rm -f /tmp/dotnet-install.sh
 fi
 
-echo "--> .NET version: $(dotnet --version)"
+echo "--> .NET Runtime ready: $(dotnet --info | grep 'Host:' -A 4 || echo 'OK')"
 
-# 4. Install & Build Frontend
-echo "--> Building React Frontend Bundle..."
+# 4. Deploy pre-compiled full-stack package
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
-
-npm install
-npm run build
-
-# 5. Prepare backend wwwroot and publish release
-echo "--> Packaging and Publishing Full-Stack Backend..."
-rm -rf "$SCRIPT_DIR/backend/wwwroot"
-mkdir -p "$SCRIPT_DIR/backend/wwwroot"
-cp -r "$SCRIPT_DIR/dist/"* "$SCRIPT_DIR/backend/wwwroot/"
-
+echo "--> Deploying pre-compiled release to /var/www/cdt_project..."
 sudo mkdir -p /var/www/cdt_project
-cd "$SCRIPT_DIR/backend"
-dotnet publish -c Release -o /var/www/cdt_project
+sudo rm -rf /var/www/cdt_project/*
 
-# Ensure seed_data.json exists in published output
-if [ -f "$SCRIPT_DIR/backend/seed_data.json" ]; then
+if [ -d "$SCRIPT_DIR/publish" ]; then
+    sudo cp -r "$SCRIPT_DIR/publish/"* /var/www/cdt_project/
+else
+    echo "Error: publish directory not found in repository."
+    exit 1
+fi
+
+# Ensure seed_data.json is present
+if [ -f "$SCRIPT_DIR/backend/seed_data.json" ] && [ ! -f /var/www/cdt_project/seed_data.json ]; then
     sudo cp "$SCRIPT_DIR/backend/seed_data.json" /var/www/cdt_project/seed_data.json
 fi
 
@@ -61,8 +52,8 @@ fi
 sudo chown -R www-data:www-data /var/www/cdt_project
 sudo chmod -R 755 /var/www/cdt_project
 
-# 6. Create systemd service for ASP.NET Core
-echo "--> Configuring systemd service (cdt.service)..."
+# 5. Configure systemd service
+echo "--> Configuring background service (cdt.service)..."
 cat << 'EOF' | sudo tee /etc/systemd/system/cdt.service > /dev/null
 [Unit]
 Description=KIOT CDT Placement & Training Portal
@@ -84,10 +75,8 @@ Environment=DOTNET_ROOT=/usr/share/dotnet
 WantedBy=multi-user.target
 EOF
 
-# 7. Install & Configure Nginx Reverse Proxy
-echo "--> Installing & Configuring Nginx on Port 80..."
-sudo apt-get install -y nginx
-
+# 6. Configure Nginx Reverse Proxy
+echo "--> Configuring Nginx on Port 80..."
 cat << 'EOF' | sudo tee /etc/nginx/sites-available/default > /dev/null
 server {
     listen 80 default_server;
@@ -109,17 +98,23 @@ server {
 }
 EOF
 
-# 8. Reload & Start Services
+# 7. Start and verify services
 echo "--> Starting services..."
 sudo systemctl daemon-reload
 sudo systemctl restart nginx
 sudo systemctl enable --now cdt.service
 sudo systemctl restart cdt.service
 
+sleep 2
+
+# Clean temporary files again
+sudo apt-get clean -y || true
+sudo rm -rf /tmp/* || true
+
 echo ""
 echo "============================================================"
 echo " 🎉 Deployment Completed Successfully! "
-echo " Public IP / DNS: http://$(curl -s http://checkip.amazonaws.com || curl -s ifconfig.me)"
-echo " Service Status: sudo systemctl status cdt.service"
-echo " View Logs:      sudo journalctl -u cdt.service -f"
+echo " Public Portal URL: http://$(curl -s http://checkip.amazonaws.com || curl -s ifconfig.me)"
+echo " Service Status:    sudo systemctl status cdt.service"
+echo " View Live Logs:    sudo journalctl -u cdt.service -f"
 echo "============================================================"

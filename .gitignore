@@ -25,7 +25,6 @@ dist-ssr
 .vercel
 
 # Build outputs
-publish
 backend/bin
 backend/obj
 *.db
