@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Automated Setup & Deployment Script for KIOT-CDT on AWS EC2 (Ubuntu 22.04 / 24.04)
+# Automated Setup & Deployment Script for KIOT-CDT on AWS EC2
 # ==============================================================================
 set -e
 
@@ -11,9 +11,9 @@ echo "=========================================="
 # 1. Update system packages
 echo "--> Updating system packages..."
 sudo apt-get update -y
-sudo apt-get install -y curl wget git unzip libicu-dev
+sudo apt-get install -y curl wget git unzip libicu-dev build-essential
 
-# 2. Install Node.js LTS (v20 or v22)
+# 2. Install Node.js LTS
 if ! command -v node &> /dev/null; then
     echo "--> Installing Node.js LTS..."
     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
@@ -22,20 +22,17 @@ else
     echo "--> Node.js already installed: $(node -v)"
 fi
 
-# 3. Install .NET 9.0 SDK
-if ! command -v dotnet &> /dev/null; then
-    echo "--> Installing .NET 9.0 SDK..."
-    sudo apt-get install -y dotnet-sdk-9.0 || {
-        # Fallback for Ubuntu versions requiring Microsoft package repo
-        wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-        sudo dpkg -i packages-microsoft-prod.deb
-        rm packages-microsoft-prod.deb
-        sudo apt-get update -y
-        sudo apt-get install -y dotnet-sdk-9.0
-    }
-else
-    echo "--> .NET SDK already installed: $(dotnet --version)"
+# 3. Install .NET 9.0 (Universal Microsoft Installer)
+if ! command -v dotnet &> /dev/null || [[ "$(dotnet --version)" != 9.* ]]; then
+    echo "--> Installing .NET 9.0 SDK via official Microsoft installer..."
+    wget https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
+    chmod +x /tmp/dotnet-install.sh
+    sudo /tmp/dotnet-install.sh --channel 9.0 --install-dir /usr/share/dotnet
+    sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
+    rm /tmp/dotnet-install.sh
 fi
+
+echo "--> .NET version: $(dotnet --version)"
 
 # 4. Install & Build Frontend
 echo "--> Building React Frontend Bundle..."
@@ -81,6 +78,7 @@ SyslogIdentifier=cdt-portal
 User=www-data
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=DOTNET_ROOT=/usr/share/dotnet
 
 [Install]
 WantedBy=multi-user.target
