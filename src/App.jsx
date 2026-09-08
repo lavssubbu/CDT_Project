@@ -2993,8 +2993,13 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
           // Count student matches
           let matchCount = 0;
           rows.forEach(r => {
-            const email = String(r['Email address'] || r['Email'] || r['email'] || r['E-Mail ID'] || '').toLowerCase().trim();
-            const regOrId = String(r['Register No.'] || r['Register no'] || r['Register No'] || r['Reg No'] || r['ID number'] || r['Roll no'] || r['Roll No'] || '').toLowerCase().trim();
+            const email = String(r['Email address'] || r['Email'] || r['email'] || r['E-Mail ID'] || r['e-mail'] || r['Mail'] || '').toLowerCase().trim();
+            const regOrId = String(
+              r['Register No.'] || r['Register no'] || r['Register No'] || r['Reg No'] || 
+              r['Reg No.'] || r['Reg.No'] || r['Regno'] || r['Register Number'] ||
+              r['ID number'] || r['Roll no'] || r['Roll No'] || r['Roll No.'] || 
+              r['Rollno'] || r['Roll Number'] || r['Username'] || ''
+            ).toLowerCase().trim();
             if ((email && emailToReg[email]) || (regOrId && (rollToReg[regOrId] || emailToReg[regOrId]))) {
               matchCount++;
             }
@@ -3017,8 +3022,13 @@ print("Subsequence Length:", longest_increasing_subsequence(arr))`
 
         let csvLines = [];
         bestRows.forEach(row => {
-          const email = String(row['Email address'] || row['Email'] || row['email'] || row['E-Mail ID'] || '').toLowerCase().trim();
-          const regOrId = String(row['Register No.'] || row['Register no'] || row['Register No'] || row['Reg No'] || row['ID number'] || row['Roll no'] || r['Roll No'] || '').toLowerCase().trim();
+          const email = String(row['Email address'] || row['Email'] || row['email'] || row['E-Mail ID'] || row['e-mail'] || row['Mail'] || '').toLowerCase().trim();
+          const regOrId = String(
+            row['Register No.'] || row['Register no'] || row['Register No'] || row['Reg No'] || 
+            row['Reg No.'] || row['Reg.No'] || row['Regno'] || row['Register Number'] ||
+            row['ID number'] || row['Roll no'] || row['Roll No'] || row['Roll No.'] || 
+            row['Rollno'] || row['Roll Number'] || row['Username'] || ''
+          ).toLowerCase().trim();
           
           let regNo = emailToReg[email] || rollToReg[regOrId] || emailToReg[regOrId];
           if (!regNo) return;
